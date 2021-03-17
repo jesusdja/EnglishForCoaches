@@ -1,0 +1,186 @@
+﻿@model EnglishForCoachesWeb.Areas.Publico.Models.ArticuloDetailViewModel
+
+@{
+    ViewBag.Title = Model.Articulo.Titulo+ " - English for Coaches - englishforcoaches.com";
+    Layout = "~/Areas/Publico/Views/Shared/_PublicoLayout.cshtml";
+}
+
+<!-- Category Banner -->
+<section id="rst-catbanner-item">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="rst-catbanner-post">
+                    <div class="rst-mainslide">
+                       <img src="~/Imagenes/@(Model.Articulo.ArticuloId)_xl.jpg" alt="@Model.Articulo.Titulo" />
+                        <div class="rst-boxinfo">
+                            <a class="rst-postpic-cat" href="@Url.Action("Categoria", "Articulos", new { Area = "Publico",id=Model.Articulo.Categoria.CategoriaId })"><span>@Model.Articulo.Categoria.Descripcion</span></a>
+                            <p><a href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/"+Model.Articulo.Categoria.DescripcionSeo+"/"+ Model.Articulo.TituloSeo)">@Model.Articulo.Titulo</a></p>
+                            <time><i class="fa fa-clock-o"></i>@Model.Articulo.FechaPublicacion.ToString("MMMM dd, yyyy", new System.Globalization.CultureInfo("en"))</time>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Category Banner -->
+
+<!-- Category Page Content -->
+<section id="rst-itemcontent">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="row">
+                    <article class="col-xs-12 rst-item-content rst-shortcodeslist">
+                       @Html.Raw(Model.Articulo.Cuerpo)
+                    </article>
+                    <!-- End Posts Contents -->
+
+                    <div class="col-xs-12">
+                        <div class="rst-tagsandshare">
+                            <div class="rst-catlist rst-catlisttags">
+                                
+                                @foreach (var tag in Model.Articulo.Tags)
+                                {
+                                <a href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/tag/"+ tag.DescripcionSeo)">@tag.Descripcion</a>
+                                }
+                            </div>
+                            <div class="rst-catlist rst-catlistshare">
+                                <ul>
+                                    <li><a href="https://www.facebook.com/sharer/sharer.php?u=@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/" + Model.Articulo.Categoria.DescripcionSeo + "/" + Model.Articulo.TituloSeo)" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="https://twitter.com/intent/tweet?text=@Model.Articulo.Titulo&url=@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/" + Model.Articulo.Categoria.DescripcionSeo + "/" + Model.Articulo.TituloSeo)" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <!-- End Tags and Share -->
+                    <!-- Comment list -->
+                    <div class="col-xs-12 rst-content-comment">
+                        <div class="rst-section-title rst-section-title-box">
+                            <h4>@Model.Articulo.Comentarios.Where(art=>art.Aceptado).Count() Comments</h4>
+                        </div>
+                        <ol class="commentlist">
+                            @foreach (var comentario in Model.Articulo.Comentarios.Where(art => art.Aceptado))
+                            {
+                            <li class="comment">
+                                <div class="comment-container">
+                                    <div class="comment-data">
+                                        <div class="comment-header">
+                                            <span class="comment-author">@comentario.Nombre</span>
+                                            <time class="comment-date"><i class="fa fa-clock-o"></i>on @comentario.FechaHoraComentario.ToString("MMMM dd, yyyy", new System.Globalization.CultureInfo("en"))</time>
+                                        </div>
+                                        <div class="comment-body">
+                                            <p>@comentario.Texto</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            }
+                        </ol>
+                    </div>
+                    <!-- End comment list -->
+
+                </div>
+                <div class="row rst-comments">
+                    <div class="col-xs-12">
+                        <div class="rst-section-title rst-section-title-box">
+                            <h4>Add Comment</h4>
+                        </div>
+                        <div class="rst-getintouch-form">
+                            <form>
+                                @Html.HiddenFor(model => model.ArticuloId, new { id="HidArticuloId"})
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        @Html.EditorFor(model => model.NombreComentario, new { htmlAttributes = new { @class = "rst-pageinput", @placeholder = "Name", id = "txtNombre" } })
+                                        @Html.ValidationMessageFor(model => model.NombreComentario, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        @Html.EditorFor(model => model.EmailComentario, new { htmlAttributes = new { @class = "rst-pageinput", @placeholder = "E-mail", id = "txtEmail" } })
+                                        @Html.ValidationMessageFor(model => model.EmailComentario, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        @Html.TextAreaFor(model => model.TextoComentario, new { @class = "rst-pageinput", placeholder = "Add your comment", cols = "30", rows = "10", id = "txtTexto" })
+                                        @Html.ValidationMessageFor(model => model.TextoComentario, "", new { @class = "text-danger" })
+
+                                        <div class="col-sm-2">
+                                            <input type="button" onclick="EnviarComentario()" class="rst-pagebutton" value="SEND" />
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <div id="respuestaPostComentario" class="text-danger"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- End Comment Form -->
+
+            </div>
+            <div class="col-sm-4">
+
+                <aside class="widget widget_popular">
+                    @{
+                        Html.RenderPartial("~/Areas/Publico/Views/Shared/_ListaArticulosRecientes.cshtml", Model.ArticulosRecientes, new ViewDataDictionary());
+                    }
+                </aside>
+                <!-- end widget popular -->
+
+            </div>
+            <!-- End Content Sidebar -->
+        </div>
+    </div>
+</section>
+<!-- End Category Page Content -->
+
+
+@section head {
+
+    <meta property="og:image" content="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/imagenes/" + Model.Articulo.ArticuloId + "_xl.jpg")" />
+    <meta property="og:title" content="@Model.Articulo.Titulo" />
+    <meta property="og:url" content="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/" + Model.Articulo.Categoria.DescripcionSeo + "/" + Model.Articulo.TituloSeo)" />
+
+}
+
+
+
+
+@section Scripts {
+
+    <!-- Page JS Code -->
+    <script>
+        var HidArticuloId = $("#HidArticuloId");
+        var txtNombre = $("#txtNombre");
+        var txtEmail = $("#txtEmail");
+        var txtTexto = $("#txtTexto");
+        var respuestaPostComentario = $("#respuestaPostComentario");
+        function EnviarComentario()
+        {
+            var car = {
+                ArticuloId: HidArticuloId.val(),
+                email: txtEmail.val(),
+                nombre: txtNombre.val(),
+                texto: txtTexto.val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "/Publico/Articulos/Comentario",
+                data: car,
+                datatype: "html",
+                success: function (data) {
+                    $('#respuestaPostComentario').html(data);
+                }
+            });
+            
+             txtEmail.val('');
+             txtNombre.val('');
+             txtTexto.val('');
+        }
+    </script>
+}

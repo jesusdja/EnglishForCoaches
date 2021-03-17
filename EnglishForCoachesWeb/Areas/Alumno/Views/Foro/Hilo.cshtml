@@ -1,0 +1,162 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.ForoHiloViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Foro", new { Area = "Alumno" })">Foro</a></li>
+        <li class="active">@Model.hilo.ForoCategoria.Titulo / @Model.hilo.Titulo</li>
+    </ol>
+    <h1 class="page-heading">@Model.hilo.ForoCategoria.Titulo / @Model.hilo.Titulo</h1>
+
+    <div class="jumbotron media">
+        <div class="media-left center">
+            @{
+                var avatarHilo = "/media/upload/avatar/" + Model.hilo.AlumnoId + ".jpg?d=" + DateTime.Now.Millisecond;
+            }
+            <img src="@avatarHilo" alt="" class="img-circle @(Model.hilo.Admin?"avatar_admin":"")" width="40">
+        </div>
+
+        <div class="media-body media-middle">
+
+            <h1 class="page-title m-b-0 h2">@Html.Raw(Model.hilo.Texto)</h1>
+            @{
+                DateTime now = DateTime.Now;
+                TimeSpan elapsed = now.Subtract(Model.hilo.FechaCreacion);
+                string fechaMostrar = "";
+                if (elapsed.TotalDays >= 1)
+                {
+                    fechaMostrar = "Hace " + (int)elapsed.TotalDays + " días";
+                }
+                else
+                {
+                    if (elapsed.TotalHours >= 1)
+                    {
+                        fechaMostrar = "Hace " + (int)elapsed.TotalHours + " hor";
+                    }
+                    else
+                    {
+                        fechaMostrar = "Hace " + (int)elapsed.TotalMinutes + " min";
+                    }
+                }
+            }
+            <p class="text-muted small">by <a href="#">@Model.hilo.CreadoPor</a> | @fechaMostrar</p>
+        </div>
+        <div class="media-right media-bottom">
+            <a href="#commentBox" class="btn btn-white btn-circle"><i class="material-icons">comment</i></a>
+        </div>
+    </div>
+
+    @foreach (var mensaje in Model.hilo.Mensajes)
+    {
+        <div class="media">
+            <div class="media-left center">
+                @{
+                    var avatar = "/media/upload/avatar/" + mensaje.AlumnoId + ".jpg?d=" + DateTime.Now.Millisecond;
+                }
+                <img src="@avatar" alt="" class="img-circle @(mensaje.Admin?"avatar_admin":"")" width="40">
+            </div>
+            <div class="media-body">
+                <div class="card">
+                    <div class="p-a-1">
+                        <p>
+                            <span class="text-info">@mensaje.CreadoPor</span>
+                            @{
+                                elapsed = now.Subtract(mensaje.FechaCreacion);
+                                string fechaMostrarMensaje = "";
+                                if (elapsed.TotalDays >= 1)
+                                {
+                                    fechaMostrarMensaje = "Hace " + (int)elapsed.TotalDays + " días";
+                                }
+                                else
+                                {
+                                    if (elapsed.TotalHours >= 1)
+                                    {
+                                        fechaMostrarMensaje = "Hace " + (int)elapsed.TotalHours + " hor";
+                                    }
+                                    else
+                                    {
+                                        fechaMostrarMensaje = "Hace " + (int)elapsed.TotalMinutes + " min";
+                                    }
+                                }
+                            }
+                            <small class="text-muted">@fechaMostrarMensaje</small>
+                        </p>
+                        <p>
+                            @Html.Raw(mensaje.Texto)
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+                                }
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.hilo.ForoHiloId)
+
+
+
+
+        <div class="card" id="commentBox">
+            <div class="card-header">
+                <h4 class="card-title">Comment</h4>
+            </div>
+            <div class="card-body">
+                @Html.TextAreaFor(model => model.ForoMensaje.Texto, new { @class = "", id = "summernote" })
+            </div>
+        </div>
+
+        <div class="card-block">
+            <div class="media">
+                <div class="right">
+                    <button type="submit" class="btn btn-primary btn-sm btn-rounded pull-xs-right">Enviar<i class="material-icons">send</i></button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+@section Scripts {
+<!-- Required by summernote -->
+@*<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.5.0/css/font-awesome.min.css">
+    <script src="~/Scripts/summernote/summernote.min.js"></script>*@
+
+
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+    <!-- Page JS Code -->
+    <script>
+        (function ($) {
+            /**
+             * jQuery plugin wrapper for compatibility
+             */
+            $.fn.APSummernote = function () {
+                if (!this.length) return;
+                if (typeof $.fn.summernote != 'undefined') {
+                    this.summernote({
+                        popover: {
+                            image: [],
+                            link: [],
+                            air: []
+                        }
+                    });
+                }
+            };
+
+            $('#summernote').APSummernote();
+
+        }(jQuery));
+    </script>
+}

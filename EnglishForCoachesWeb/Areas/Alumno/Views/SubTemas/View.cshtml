@@ -1,0 +1,220 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.SubTemasViewViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index", "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index", "Subtemas", new { Area = "Alumno", id = Model.Tema.TemaId })">@Model.Tema.Descripcion</a></li>
+        <li class="active">@Model.SubTema.Descripcion</li>
+    </ol>
+    <h1 class="page-heading h2" style="min-height:100px;">
+        <span id="botonesExtras" class="pull-xs-right">
+            <button class="btn btn-white" type="button" data-toggle="sidebar" data-target="#sidebarRight">Temario <span class="material-icons">menu</span></button>
+
+            <button onclick="window.location.href='@Url.Action("Index", "Extras", new { Area = "Alumno", id = Model.SubTema.SubTemaId })';" class="btn btn-warning">
+                <span class="icon-text">Extras</span>
+                <i class="material-icons">stars</i>
+            </button>
+        </span>
+        <span>@Model.SubTema.Descripcion</span>
+    </h1>
+
+    <div class="row">
+        <div class="col-sm-2">
+        </div>
+        @*<div class="card">*@
+        @*<div id="ejercicio" class="card-block center">*@
+
+        @foreach (var item in Model.listadoAreas)
+        {
+            string url = "";
+            string estilo = "default";
+            string title = item.Area.Descripcion.ToUpper();
+            if (item.NumContenidos > 0)
+            {
+                url = "href=" + Url.Action("Index", "Bloques", new { Area = "Alumno", id = Model.SubTema.SubTemaId, areaId = item.Area.AreaId });
+                estilo = item.Area.EstiloColor;
+            }
+            else
+            {
+                title = title + " – SIN EJERCICIOS";
+            }
+            <div class="col-xs-3 col-sm-1 center m-b-2">
+                <a @url><div class="btn btn-@estilo btn-circle" data-toggle="tooltip" title="@title"><i class="material-icons">@item.Area.Icono</i></div></a>
+                <small class="text-muted area">@item.Area.Descripcion.ToUpper()</small>
+            </div>
+        }
+        <div class="col-sm-2">
+        </div>
+
+        @*</div>*@
+        @*</div>*@
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @if (Model.GramaticaMostrar != null)
+            {
+                <h3>
+                    @Model.GramaticaMostrar.Orden. @Model.GramaticaMostrar.Titulo
+
+                    <a class="btn btn-sm btn-white" href="@Url.Action("Gramatica", "Vocabularios", new { Area = "Alumno", id = Model.SubTema.SubTemaId, gramaticaId = Model.GramaticaMostrar.GramaticaId })">
+                        <i class="material-icons">list</i>
+                        <span class="icon-text">Vocabulario</span>
+                    </a>
+                    <a class="btn btn-sm btn-white" href="@Url.Action("Index", "Frases", new { Area = "Alumno", id = Model.SubTema.SubTemaId, gramaticaId = Model.GramaticaMostrar.GramaticaId })">
+                        <i class="material-icons">hearing</i>
+                        <span class="icon-text">Audio sentences</span>
+                    </a>
+                </h3>
+
+                <div class="card">
+                    <div id="divCuerpo" class="card-block temario">
+                        @Html.Raw(Model.GramaticaMostrar.GramaticaCuerpo.Cuerpo)
+                    </div>
+                </div>
+            }
+            else
+            {
+
+                <div class="row">
+                    <div class="col-md-12 text-xs-center">
+                        <p>No hay contenidos</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section sidebar {
+
+    <div class="sidebar sidebar-right si-si-3 sidebar-visible-lg-up ls-top-navbar-xs-up sidebar-light bg-white sidebar-visible" id="sidebarRight" data-position="right" data-scrollable data-visible="lg-up">
+        <div class="card">
+            <div class="card-header">
+                <h5>Temario <button class="btn btn-sm btn-white pull-xs-right" type="button" data-toggle="sidebar" data-target="#sidebarRight"><span class="material-icons">input</span></button></h5>
+            </div>
+            @if (Model.MostrarExamen)
+            {
+                string url = Url.Action("Examen", "Examen", new { Area = "Alumno", id = Model.SubTema.SubTemaId });
+                if (!Model.examenesDesbloqueados.Contains(Model.SubTema.SubTemaId))
+                {
+                    url = "javascript:Comprar(" + Model.SubTema.SubTemaId + ")";
+                }
+
+                <div class="card-block text-xs-center">
+                    <a id="a_@Model.SubTema.SubTemaId" class="btn btn-success" href="@url">
+                        @if (Model.examenesDesbloqueados.Contains(Model.SubTema.SubTemaId))
+                        {
+                            <i class="material-icons">lock_open</i>
+                        }
+                        else
+                        {
+                            <i id="i_@Model.SubTema.SubTemaId" class="material-icons">lock</i>
+                        }
+                        <span class="icon-text">Examen</span>
+                    </a>
+                </div>
+            }
+            <div class="card-block text-xs-center">
+                <a class="btn btn-info" href="@Url.Action("Seleccion", "Juegos", new { Area = "Alumno", id = Model.SubTema.SubTemaId })">
+                    <i class="material-icons">casino</i>
+                    <span class="icon-text">Juegos</span>
+                </a>
+            </div>
+            <div class="card-block text-xs-center">
+                <a class="btn btn-primary" href="@Url.Action("Index", "SubTemaVideos", new { Area = "Alumno", id = Model.SubTema.SubTemaId })">
+                    <i class="material-icons">movie</i>
+                    <span class="icon-text">Videos</span>
+                </a>
+            </div>
+
+
+
+            <ul class="list-group">
+                @{
+                    int contador = 0;
+
+                    foreach (var item in Model.Gramaticas)
+                    {
+                        contador++;
+                    <li class="list-group-item@(item.GramaticaId == Model.GramaticaMostrar.GramaticaId ? " active" : "")">
+                        <div class="media">
+                            <div class="media-left">
+                                <div class="text-muted">@contador.</div>
+                            </div>
+                            <div class="media-body">
+                                <a href="@Url.Action("View", "SubTemas", new { Area = "Alumno", id = Model.SubTema.SubTemaId, gramaticaId = item.GramaticaId })">@item.Titulo</a>
+                            </div>
+                        </div>
+                    </li>
+                        }
+                    }
+            </ul>
+        </div>
+    </div>
+
+}
+@section Scripts {
+    <script src="~/Content/Alumno/vendor/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        function Comprar(id) {
+            swal({
+                title: "Desbloquear examen",
+                text: "¿Estás seguro de que desas desbloquear este examen?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#039BE5",
+                confirmButtonText: "Desbloquear",
+                closeOnConfirm: false
+            }, function () {
+
+
+                var url = '@Url.Action("Desbloquear", "Examen", new { Area = "Alumno" })';
+                url = url + '/' + id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function (result) {
+                        if (result == "NoPuntos") {
+                            swal({
+                                title: "No se ha podido desbloquear",
+                                text: "No tienes puntos suficientes",
+                                type: "error",
+                                confirmButtonColor: "#039BE5"
+                            });
+                        }
+                        else {
+
+                            var url = '@Url.Action("Examen", "Examen", new { Area = "Alumno"})/'+id;
+                            $('#a_' + id).attr("href", url);
+                            $('#i_' + id).text("lock_open");
+                            swal({
+                                title: "Desbloqueado",
+                                text: "El examen ha sido desbloqueado",
+                                type: "success",
+                                confirmButtonColor: "#039BE5"
+                            });
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+
+                        swal({
+                            title: "No se ha podido desbloquear",
+                            text: "Error: "+xhr.responseText,
+                            type: "error",
+                            confirmButtonColor: "#039BE5"
+                        });
+                    }
+                });
+            });
+        }
+
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+}

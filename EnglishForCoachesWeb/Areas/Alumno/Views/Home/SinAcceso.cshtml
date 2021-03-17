@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="jumbotron">
+        <h4><i class="material-icons text-danger md-36">not_interested</i> Lo sentimos, no tienes acceso a este contenido.</h4>
+        <hr/>
+        <button type="button" class="btn btn-white" id="btnVolver">
+            <i class="material-icons">home</i>
+            <span class="icon-text">Volver a tu Dashboard</span>
+        </button>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <!-- Page JS Code -->
+    <script>
+       
+    var btnVolver = $('#btnVolver');
+
+
+
+    $(document).ready(function () {
+        btnVolver.on('click', function () {
+            window.location.href= "@Url.Action("Index", "Home", new { Area = "Alumno" })";
+       });
+    });
+
+
+    </script>
+}

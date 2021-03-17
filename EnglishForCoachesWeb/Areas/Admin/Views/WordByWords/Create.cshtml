@@ -1,0 +1,169 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.WordByWordCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.bloque.SubTema.TemaId })">
+                    @Model.bloque.SubTema.Tema.Descripcion
+                </a>
+                / <a href="@Url.Action("Index", "Bloques", new {id = @Model.bloque.SubTema.SubTemaId })">
+                    @Model.bloque.SubTema.Descripcion
+                </a> /  @Model.bloque.Descripcion
+            </h1>
+            <h3>
+                Nuevo ejercicio
+            </h3>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+
+    @using (Html.BeginForm("Create", "WordByWords", FormMethod.Post, new { @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        @Html.HiddenFor(model => model.WordByWord.SubTemaId)
+        @Html.HiddenFor(model => model.WordByWord.TipoEjercicioId)
+        @Html.HiddenFor(model => model.WordByWord.Enunciado,new {@id="HidEnunciado" })
+        @Html.HiddenFor(model => model.WordByWord.AreaId)
+        @Html.HiddenFor(model => model.WordByWord.BloqueId)
+
+        <div class="block">
+            <div class="block-content block-content-full">
+
+
+
+                <div class="form-group">
+                    <div class="col-sm-11">
+                        <label class="" for="textWords">Word</label>
+                        <div class="form-material">
+                            <input id="textWords" class="form-control" type="text" />
+                            @Html.ValidationMessageFor(model => model.WordByWord.Enunciado, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" onclick="anadirWord();" type="button"><i class="fa fa-plus-circle"></i></button>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <ul id="ulWords">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <input type="submit" name="command" value="Guardar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    <h3>
+        Listado ejercicios
+    </h3>
+
+    <div class="block">
+        <div class="block-content">
+            <table class="table table-hover table-borderless">
+                <thead>
+                    <tr>
+                        <th>
+                            Descripción
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.bloque.WordByWords)
+                    {
+                        <tr>
+                            <td>
+                                @item.Descripcion
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Editar contenido"
+                                            onclick="location.href='@Url.Action("Edit", Model.bloque.TipoEjercicio.Controlador, new {Area = "Admin", id= item.Id })';">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+
+
+                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Eliminar contenido"
+                                            onclick="if(confirm('¿Está seguro que desea borrar el contenido?')) location.href='@Url.Action("Delete", Model.bloque.TipoEjercicio.Controlador, new {Area = "Admin" , id=item.Id })';">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+
+
+                                </div>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<!-- END Page Content -->
+
+@section Scripts {
+
+    <!-- Page JS Code -->
+    <script>
+        var HidEnunciado = $("#HidEnunciado");
+        var textWords = $("#textWords");
+        var ulWords = $("#ulWords");
+        var arrWords = [];
+        var re = new RegExp(' ', 'g');
+
+        function anadirWord() {
+            var val = textWords.val();
+            if (val != '') {
+
+                arrWords.push(val);
+                ulWords.append('<li id="'+val.replace(re,'_') +'">' + val +
+                    '<button class="btn btn-default" onclick="quitarWord(\'' + val + '\');" type="button"><i class="fa fa-minus-circle"></i></button> </li>');
+                HidEnunciado.val(arrWords.join('#'));
+                textWords.val('');
+            }
+        }
+
+        function quitarWord(val) {
+            var index = arrWords.indexOf(val);
+            if (index > -1) {
+                arrWords.splice(index, 1);
+                $('#' + val.replace(re, '_')).remove();
+
+            }
+            HidEnunciado.val(arrWords.join('#'));
+        }
+
+            $(document).ready(function () {
+               
+
+            });
+
+    </script>
+}

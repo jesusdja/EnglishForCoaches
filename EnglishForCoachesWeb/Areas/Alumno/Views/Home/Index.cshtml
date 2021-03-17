@@ -1,0 +1,267 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.HomeIndexViewModel
+@using System.Security.Claims
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <ol class="breadcrumb">
+        <li class="active">Dashboard</li>
+    </ol>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="card-title">Temas</h4>
+                            <p class="card-subtitle">Esta es tu progresión en los diferentes temas</p>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group list-group-fit m-b-0">
+
+                    @foreach (var temaHome in Model.temasHome)
+                    {
+                        <li class="list-group-item">
+                            <div class="media">
+                                <div class="media-body media-middle">
+                                    <a href="@Url.Action("Index", "SubTemas", new { Area = "Alumno",Id= temaHome.Tema.TemaId })">@temaHome.Tema.Descripcion</a>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <div class="center">
+                                        <span class="label label-pill label-@Model.ColorEstilo(temaHome.Porcentaje) m-b-05">@temaHome.Porcentaje%</span>
+                                        <progress class="progress progress-@Model.ColorEstilo(temaHome.Porcentaje) m-b-0" value="@temaHome.Porcentaje" max="100" style="width:100px">@temaHome.Porcentaje%</progress>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-header bg-white">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="card-title">Exámenes</h4>
+                            <p class="card-subtitle">Estos son los últimos exámenes que has hecho</p>
+                        </div>
+                        <div class="media-right media-middle">
+                            <a class="btn btn-white" href="@Url.Action("Index",  "Examen", new { Area = "Alumno" })"> Ver todos</a>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group list-group-fit m-b-0">
+                    @foreach (var item in Model.Examenes)
+                    {
+                        <li class="list-group-item">
+                            <div class="media">
+                                <div class="media-body media-middle">
+                                    <div>
+                                        <a href="@Url.Action("View", "SubTemas", new { Area = "Alumno", id=item.SubTemaId })">@item.SubTema.Descripcion</a>
+                                    </div>
+                                    <small class="text-light"><span class="label label-default">@item.FechaExamen.ToString("dd MMM yyyy")</span> <a href="@Url.Action("Index", "SubTemas", new { Area = "Alumno", id=item.SubTema.TemaId })">@item.SubTema.Tema.Descripcion</a></small>
+                                </div>
+                                <div class="media-right center">
+                                    <h4 class="m-b-0 @Model.ColorResultado(item.Aprobado)">@item.Aciertos/@item.Total</h4>
+                                    <small class="text-muted-light">@Model.TextoExamen(item.Aprobado)</small>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+
+
+
+        <div class="col-md-5">
+
+            <div class="card">
+                <ul class="list-group list-group-fit">
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-left">
+                                <i class="material-icons text-default">assignment_ind</i>
+                            </div>
+                            <div class="media-body media-middle">
+                                @{
+                                    var nombre = ((ClaimsIdentity)User.Identity).FindFirst("NombreUsuario").Value;
+                                }
+                                @nombre
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-left">
+                                <i class="material-icons text-warning">stars</i>
+                            </div>
+                            <div class="media-body media-middle">
+                                @Model.Puntos <span class="text-muted"> puntos</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-left">
+                                <i class="material-icons text-muted-light">create</i>
+                            </div>
+                            <div class="media-body media-middle">
+                                @Model.NRealizados <small class="text-muted">ejercicios realizados</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-left">
+                                <i class="material-icons text-muted-light">lock_open</i>
+                            </div>
+                            <div class="media-body media-middle">
+                                @Model.NExtras <small class="text-muted">extras desbloqueados</small>
+                            </div>
+                        </div>
+                    </li>
+
+                    @*<li class="list-group-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <i class="material-icons text-muted-light">school</i>
+                                </div>
+                                <div class="media-body media-middle">
+                                    @Model.NLecciones <small class="text-muted">lecciones</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <i class="material-icons text-muted-light">description</i>
+                                </div>
+                                <div class="media-body media-middle">
+                                    @Model.NUnidades <small class="text-muted">unidades didácticas</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <i class="material-icons text-muted-light">create</i>
+                                </div>
+                                <div class="media-body media-middle">
+                                    @Model.NPracticas <small class="text-muted">prácticas</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <i class="material-icons text-muted-light">list</i>
+                                </div>
+                                <div class="media-body media-middle">
+                                    @Model.NVocabulario <small class="text-muted">entradas de vocabulario</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <i class="material-icons text-muted-light">hearing</i>
+                                </div>
+                                <div class="media-body media-middle">
+                                    @Model.NFrases <small class="text-muted">frases</small>
+                                </div>
+                            </div>
+                        </li>*@
+                </ul>
+            </div>
+
+
+            <div class="card">
+                <div class="card-header bg-white">
+                    <h4 class="card-title">Actualidad</h4>
+                    <p class="card-subtitle">Consulta las últimas noticias</p>
+                </div>
+                <table class="table text-subhead v-middle">
+                    <tbody>
+                        @foreach (var noticia in Model.Noticias)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="label label-default">@noticia.Fecha.ToShortDateString()</div>
+                                </td>
+                                <td><a href="@Url.Action("View","Noticias",new { area="Alumno",id=noticia.NoticiaId})" target="_blank">@noticia.Titulo</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="card">
+                <div class="card-header bg-white">
+                    <div class="media">
+                        <div class="media-body media-middle">
+                            <h4 class="card-title">Actividad del foro</h4>
+                            <p class="card-subtitle">Últimos temas y comentarios</p>
+                        </div>
+                        <div class="media-right media-middle">
+                            <a class="btn btn-white" href="@Url.Action("Index","Foro",new { area="Alumno"})"> <i class="material-icons">keyboard_arrow_right</i></a>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group list-group-fit">
+
+                    @foreach (var hilo in Model.Hilos)
+                    {
+                        <li class="list-group-item">
+                            <div class="media m-b-0">
+                                <div class="media-left media-middle">
+                                    <a >
+                                        @{
+                                            var avatar = "/media/upload/avatar/" + hilo.AlumnoRespuestaId + ".jpg?d=" + DateTime.Now.Millisecond;
+                                        }
+                                        <img src="@avatar" alt="@hilo.RespondidoPor" width="40" class="img-circle @(hilo.RespondidoPorAdmin?"avatar_admin":"")">
+                                    </a>
+                                </div>
+                                <div class="media-body media-middle">
+                                    <p class="m-b-0">
+                                        <a href="@Url.Action("Hilo", "Foro", new { area = "Alumno", id = hilo.ForoHiloId })">@hilo.Titulo</a>
+                                        <br>
+                                    </p>
+                                    <p class="m-b-0">
+                                        <small>por: <span class="text-info">@hilo.RespondidoPor</span></small>
+                                    </p>
+                                    @{
+                                        DateTime now = DateTime.Now;
+                                        TimeSpan elapsed = now.Subtract(hilo.FechaRespuesta);
+                                        string fechaMostrar = "";
+                                        if (elapsed.TotalDays >= 1)
+                                        {
+                                            fechaMostrar = "Hace " + (int)elapsed.TotalDays + " días";
+                                        }
+                                        else
+                                        {
+                                            if (elapsed.TotalHours >= 1)
+                                            {
+                                                fechaMostrar = "Hace " + (int)elapsed.TotalHours + " hor";
+                                            }
+                                            else
+                                            {
+                                                fechaMostrar = "Hace " + (int)elapsed.TotalMinutes + " min";
+                                            }
+                                        }
+                                    }
+                                    <small class="text-muted-light">@fechaMostrar</small>
+                                </div>
+                            </div>
+                        </li>
+                                        }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,149 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.SubTemasIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                @Model.Tema.Descripcion
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="block">
+                <div class="block-header">
+                    <ul class="block-options">
+                        <li>
+                            <button type="button" onclick="location.href='@Url.Action("Create", "SubTemas", new { Area = "Admin", Id=Model.Tema.TemaId })';"><i class="si si-note"></i> Nuevo subtema</button>
+                        </li>
+                        <li>
+                            <button type="button" onclick="location.href='@Url.Action("Video", "Temas", new { Area = "Admin", Id=Model.Tema.TemaId })';"><i class="si si-camcorder"></i> Configurar video</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="block-content">
+                    <table class="table table-hover table-borderless">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.listadoSubTemas[0].Descripcion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.listadoSubTemas[0].Orden)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.listadoSubTemas)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action("Index", "Bloques", new { Area = "Admin", Id = @item.SubTemaId })" data-toggle="tooltip" title="" data-original-title="Ver ejercicios">
+                                            @item.Descripcion
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @{
+                                            string disabledTop = "";
+                                            string disabledDown = "";
+                                        }
+                                        @if (item.Orden == Model.listadoSubTemas.First().Orden)
+                                        {
+                                            disabledTop = "disabled";
+                                        }
+                                        @if (item.Orden == Model.listadoSubTemas.Last().Orden)
+                                        {
+                                            disabledDown = "disabled";
+                                        }
+                                        <button @disabledTop value="@item.SubTemaId" posicion="top" class="arrowTopDown btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Subir posición">
+                                            <i class="fa fa-arrow-up"></i>
+                                        </button>
+
+                                        <button @disabledDown value="@item.SubTemaId" posicion="down" class="arrowTopDown btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Bajar posición">
+                                            <i class="fa fa-arrow-down"></i>
+                                        </button>
+
+                                    </td>
+
+                                    <td class="text-center">
+                                        <div class="btn-group">
+                                            <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Editar subtema"
+                                                    onclick="location.href='@Url.Action("Edit", "SubTemas", new {Area = "Admin" , id=item.SubTemaId })';">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+
+                                            <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Mover subtema"
+                                                    onclick="location.href='@Url.Action("Move", "SubTemas", new {Area = "Admin", id= item.SubTemaId })';">
+                                                <i class="fa fa-files-o"></i>
+                                            </button>
+
+                                            @*<button id="removeItem" value="@item.SubTemaId" class="btn btn-xs btn-default" type="button" ata-toggle="tooltip" title="" data-original-title="eliminar subtema"
+                                                onclick="location.href='@Url.Action("Delete", "SubTemas", new {Area = "Admin" , id=item.SubTemaId })';">
+                                                 <i class="fa fa-times"></i></button>*@
+                                            <button value="@item.SubTemaId" class="removeItem btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Eliminar subtema">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- END Page Content -->
+
+
+@section Scripts {
+    <!-- Page JS Code -->
+    <script>
+
+        //ELIMINAR SUBTEMA
+        $('.removeItem').click(function (event) {
+            if (confirm('¿Seguro que quieres eliminar el subtema? Se eliminará todos los ejercicios.')) {
+                var IdSubtema = $(this).attr("value");
+            var url = '@Url.Action("Delete", "SubTemas", new { Area = "Admin" })';
+                $.ajax({
+                    url: url+'?id=' + IdSubtema,
+                    type: "POST",
+                    success: function () {
+                        // Recargo la página
+                        location.reload();
+                    }
+                });
+            }
+        });
+
+        //SUBIR/BAJAR ORDEN SUBTEMA
+        $('.arrowTopDown').click(function (event) {
+            var IdSubtema = $(this).attr("value");
+            var posicion = $(this).attr("posicion");
+            var url = '@Url.Action("modificarOrden", "SubTemas", new { Area = "Admin" })';
+            $.ajax({
+                url: url +'?id=' + IdSubtema + "&posicion=" + posicion,
+                type: "POST",
+                success: function () {
+                    // Recargo la página
+                    location.reload();
+                }
+            });
+        });
+    </script>
+}

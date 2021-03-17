@@ -1,0 +1,168 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.DocumentosIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index", "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li class="active">Documentos</li>
+    </ol>
+
+    <h1 class="page-heading h2">Documentos</h1>
+
+    <div class="card">
+        <div class="card-block">
+            <div data-toggle="tree">
+                <ul style="display: none;">
+
+
+                    @{
+                        var documentosGenerales = Model.Documentos.Where(doc => !doc.TemaId.HasValue).ToList();
+                    }
+                    @foreach (var documento in documentosGenerales)
+                    {
+                        if (!string.IsNullOrEmpty(documento.Descripcion))
+                        {
+                            <li id="doc_@documento.DocumentoId"> <i style="cursor: pointer;">@documento.Titulo - <small>@documento.Descripcion</small></i></li>
+                        }
+                        else
+                        {
+                            <li id="doc_@documento.DocumentoId"> <i style="cursor: pointer;">@documento.Titulo</i></li>
+                        }
+                    }
+                    @foreach (var tema in Model.Temas)
+                    {
+                        var documentosTema = Model.Documentos.Where(doc => doc.TemaId.Value == tema.TemaId && !doc.SubTemaId.HasValue).ToList();
+                        var subtemas = Model.Subtemas.Where(sub => sub.TemaId == tema.TemaId).ToList();
+                        <li class="folder">
+                            @tema.Descripcion
+                            <ul>
+                                @foreach (var documento in documentosTema)
+                                {
+                                    if (!string.IsNullOrEmpty(documento.Descripcion))
+                                    {
+                                        <li id="doc_@documento.DocumentoId"> <i style="cursor: pointer;">@documento.Titulo - <small>@documento.Descripcion</small></i></li>
+                                    }
+                                    else
+                                    {
+                                        <li id="doc_@documento.DocumentoId"> <i style="cursor: pointer;">@documento.Titulo</i></li>
+                                    }
+                                }
+                 
+                                @foreach (var subtema in subtemas)
+                                {
+                                    var documentosSubTema = Model.Documentos.Where(doc => doc.SubTemaId.Value == subtema.SubTemaId).ToList();
+                                    <li class="folder">
+                                        @subtema.Descripcion
+                                        <ul>
+                                            @foreach (var documento in documentosSubTema)
+                                            {
+                                                if (!string.IsNullOrEmpty(documento.Descripcion))
+                                                {
+                                                <li id="doc_@documento.DocumentoId"> <i style="cursor: pointer;">@documento.Titulo - <small>@documento.Descripcion</small></i></li>
+                                                }
+                                                else
+                                                {
+                                                    <li id="doc_@documento.DocumentoId"> <i style="cursor: pointer;">@documento.Titulo</i></li>
+                                                }
+                                            }
+                                        </ul>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+        @section Scripts {
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.5.0/css/font-awesome.min.css">
+            <script src="https://cdn.jsdelivr.net/jquery.ui/1.11.4/jquery-ui.min.js"></script>
+            <script src="~/Content/Alumno/vendor/jquery.fancytree-all.min.js"></script>
+
+            <!-- Page JS Code -->
+            <script>
+
+                function GetDocument(id){
+                    if(id.indexOf("doc_")>-1)
+                    {
+                        console.log(id);
+                        var win = window.open("Download/" + id.replace("doc_", ""), '_blank');                        
+                    }
+                }
+
+                (function ($) {
+
+                    var tree_glyph_options = {
+                        map: {
+                            checkbox: "fa fa-square-o fa-fw",
+                            checkboxSelected: "fa fa-check-square fa-fw",
+                            checkboxUnknown: "fa fa-check-square fa-fw fa-muted",
+                            error: "fa fa-exclamation-triangle fa-fw",
+                            expanderClosed: "fa fa-caret-right fa-fw",
+                            expanderLazy: "fa fa-angle-right fa-fw",
+                            expanderOpen: "fa fa-caret-down fa-fw",
+                            doc: "fa fa-file-o fa-fw",
+                            noExpander: "",
+                            docOpen: "fa fa-file fa-fw",
+                            loading: "fa fa-refresh fa-spin fa-fw",
+                            folder: "fa fa-folder fa-fw",
+                            folderOpen: "fa fa-folder-open fa-fw"
+                        }
+                    };
+                    var tree_dnd_options = {
+                        autoExpandMS: 400,
+                        focusOnClick: true,
+                        preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+                        preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+                        dragStart: function (node, data) {
+                            return true;
+                        },
+                        dragEnter: function (node, data) {
+                            return true;
+                        },
+                        dragDrop: function (node, data) {
+                            data.otherNode.moveTo(node, data.hitMode);
+                        }
+                    };
+
+                    /**
+                     * jQuery plugin wrapper for compatibility
+                     */
+                    $.fn.APFancyTree = function () {
+                        if (!this.length) return;
+
+                        if (typeof $.fn.fancytree == 'undefined') return;
+
+                        var extensions = ["glyph"];
+                        if (typeof this.attr('data-tree-dnd') !== "undefined") {
+                            extensions.push("dnd");
+                        }
+                        this.fancytree({
+                            extensions: extensions,
+                            glyph: tree_glyph_options,
+                            dnd: tree_dnd_options,
+                            clickFolderMode: 3,
+                                click: function (event, data) {
+                                    var node = data.node;
+                                    GetDocument(node.key);
+                                },
+                            checkbox: typeof this.attr('data-tree-checkbox') !== "undefined" || false,
+                            selectMode: typeof this.attr('data-tree-select') !== "undefined" ? parseInt(this.attr('data-tree-select')) : 2
+                        });
+                    };
+
+                    // using default options
+                    $('[data-toggle="tree"]').each(function () {
+                        $(this).APFancyTree();
+                    });
+
+                }(jQuery));
+
+            </script>
+        }

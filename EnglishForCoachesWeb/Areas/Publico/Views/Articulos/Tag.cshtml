@@ -1,0 +1,73 @@
+﻿@model EnglishForCoachesWeb.Areas.Publico.Models.TagViewModel
+
+@{
+    ViewBag.Title = "Articles tagged with '" + Model.Tag.Descripcion + "' - English for Coaches - englishforcoaches.com";
+    Layout = "~/Areas/Publico/Views/Shared/_PublicoLayout.cshtml";
+}
+<!-- Category Page Content -->
+<section id="rst-catcontent">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="rst-section-title rst-section-title-box">
+                    <h4>Articles tagged with &quot; @Model.Tag.Descripcion &quot;</h4>
+                    <div class="rst-shortmenu">
+                        <div class="rst-viewstyle">
+                            <a href="#" class="rst-view-gird"></a>
+                            <a href="#" class="rst-view-list active"></a>
+                        </div>
+                    </div>
+                </div>
+                @{
+                    Html.RenderPartial("~/Areas/Publico/Views/Shared/_ListaArticulos.cshtml", Model.ArticulosBusqueda, new ViewDataDictionary());
+                }
+@if (Model.NumPaginas > 1)
+{
+                <div class="row">
+                    <div class="col-xs-12">
+                        <nav class="wp-pagenavi">
+                            @if (Model.PaginaActual > 1)
+                            {
+                                <a class="page-prev" href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/tag/" + Model.Tag.DescripcionSeo + "?page=" + (Model.PaginaActual - 1) )">Prev</a>
+                            }
+                            @for (int pagina = 1; pagina <= Model.NumPaginas; pagina++)
+                            {
+                                <a class="page-numbers @(Model.PaginaActual == pagina ? "current" : "")" href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/tag/" + Model.Tag.DescripcionSeo + "?page=" + pagina )">@pagina</a>
+                            }
+                            @if (Model.PaginaActual < Model.NumPaginas)
+                            {
+                                <a class="page-next" href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/tag/" + Model.Tag.DescripcionSeo + "?page=" + (Model.PaginaActual + 1) )">Next</a>
+                            }
+                        </nav>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+}
+            </div>
+            <div class="col-sm-4">
+                <aside class="widget widget_popular">
+                    @{
+                        Html.RenderPartial("~/Areas/Publico/Views/Shared/_ListaArticulosRecientes.cshtml", Model.ArticulosRecientes, new ViewDataDictionary());
+                    }
+                </aside>
+                <!-- end widget popular -->
+            </div>
+            <!-- End Content Sidebar -->
+        </div>
+    </div>
+</section>
+<!-- End Category Page Content -->
+
+@section head {
+    @if (Model.NumPaginas > 1)
+    {
+        if (Model.PaginaActual > 1)
+        {
+            <link rel="prev" href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/tag/" + Model.Tag.DescripcionSeo + "?page=" + (Model.PaginaActual - 1) )">
+        }
+        if (Model.PaginaActual < Model.NumPaginas)
+        {
+            <link rel="next" href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/tag/" + Model.Tag.DescripcionSeo + "?page=" + (Model.PaginaActual + 1) )">
+        }
+    }
+}

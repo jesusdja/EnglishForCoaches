@@ -1,0 +1,26 @@
+﻿@model IEnumerable<EnglishForCoachesWeb.Database.Articulo>
+
+<div class="row rst-cat-postlist">
+    @foreach (var item in Model)
+    {
+        <article class="col-sm-12 rst-catpost">
+            <div class="rst-postpic">
+                <a href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/"+item.Categoria.DescripcionSeo+"/"+ item.TituloSeo)"><img src="~/Imagenes/@(item.ArticuloId)_m.jpg" alt="@item.Titulo" /></a>
+                <a class="rst-postpic-cat" href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/"+item.Categoria.DescripcionSeo )"><span>@item.Categoria.Descripcion</span></a>
+            </div>
+            <div class="rst-postinfo">
+                <a class="rst-postpic-cat" href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/"+item.Categoria.DescripcionSeo )"><span>@item.Categoria.Descripcion</span></a>
+                <h6><a href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority)+ "/"+item.Categoria.DescripcionSeo+"/"+ item.TituloSeo)">@item.Titulo</a></h6>
+                <time><i class="fa fa-clock-o"></i>@item.FechaPublicacion.ToString("MMMM dd, yyyy", new System.Globalization.CultureInfo("en"))</time>
+                <p>@Html.Raw(item.CuerpoResumen) ...</p>
+            </div>
+            <div class="clear"></div>
+        </article>
+    }
+    <!-- End Category Posts -->
+
+    @if (Model.Count() == 0)
+    {
+        <p>No articles found</p>
+    }
+</div>

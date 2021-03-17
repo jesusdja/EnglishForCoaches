@@ -1,0 +1,170 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.FillTheGapEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.bloque.SubTema.TemaId })">
+                    @Model.bloque.SubTema.Tema.Descripcion
+                </a>
+                / <a href="@Url.Action("Index", "Bloques", new {id = @Model.bloque.SubTema.SubTemaId })">
+                    @Model.bloque.SubTema.Descripcion
+                </a>
+                / <a href="@Url.Action("Create", "Tests", new {id = @Model.bloque.BloqueId })">
+                    @Model.bloque.Descripcion
+                </a> /  Editar fill the gap
+            </h1>
+</div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+    @using (Html.BeginForm("Edit", "FillTheGaps", FormMethod.Post, new { @class = "form-horizontal push-10-t" })) {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        @Html.HiddenFor(model => model.FillTheGap.Id)
+        @Html.HiddenFor(model => model.FillTheGap.TipoEjercicioId)
+        @Html.HiddenFor(model => model.FillTheGap.SubTemaId)
+        @Html.HiddenFor(model => model.FillTheGap.Respuestas, new { @id = "hRespuestas" })
+        @Html.HiddenFor(model => model.FillTheGap.BloqueId)
+        @Html.HiddenFor(model => model.FillTheGap.AreaId)
+        @Html.HiddenFor(model => model.ExamenId)
+
+        if (Model.ExamenId.HasValue) {
+            <div class="block-content block-content-full">
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-default" type="button"
+                                onclick="location.href='@Url.Action("Edit", "ErroresExamens", new { Area = "Admin", id = Model.ExamenId.Value })';">
+                            <i class="fa fa-search"> Volver a examen</i>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="block">
+            <div class="block-content block-content-full">
+
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.FillTheGap.Enunciado, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.FillTheGap.Enunciado, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FillTheGap.Enunciado, "", new { @class = "text-danger" })
+                            <div class="help-block text-right">Frase con huecos (carácter especial #) y conjunto de respuestas</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.FillTheGap.Explicacion, htmlAttributes: new { @class = "" })
+                            @Html.TextAreaFor(model => model.FillTheGap.Explicacion, new { @class = "form-control", @rows = "3" })
+                            @Html.ValidationMessageFor(model => model.FillTheGap.Explicacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.FillTheGap.PreguntaExamen, htmlAttributes: new { @class = "" })
+                            @Html.CheckBox("FillTheGap.PreguntaExamen", Model.FillTheGap.PreguntaExamen ?? false)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-11">
+                        <label class="" for="textRespuestas">Respuestas</label>
+                        <div class="form-material">
+                            <input id="textRespuestas" class="form-control" type="text" />
+                            @Html.ValidationMessageFor(model => model.FillTheGap.Respuestas, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" onclick="anadirRespuesta();" type="button"><i class="fa fa-plus-circle"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <ul id="ulRespuestas"></ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <input type="submit" name="command" value="Guardar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- END Page Content -->
+
+@section Scripts {
+
+    <!-- Page JS Code -->
+    <script>              
+
+
+        var hRespuestas = $("#hRespuestas");
+        var textRespuestas = $("#textRespuestas");
+        var ulRespuestas = $("#ulRespuestas");
+        var arrRespuestas = [];
+
+        function anadirRespuesta() {
+            var val = textRespuestas.val();
+            if (val != '') {
+                arrRespuestas.push(val);
+                ulRespuestas.append('<li id="'+val+'"> ' + val +
+                    '<button class="btn btn-default" onclick="quitarRespuesta(\'' + val + '\');" type="button"><i class="fa fa-minus-circle"></i></button> </li>');
+                hRespuestas.val(arrRespuestas.join('#'));
+                textRespuestas.val('');
+            }
+        }
+
+        function quitarRespuesta(val) {
+            var index = arrRespuestas.indexOf(val);
+            if (index > -1) {
+                arrRespuestas.splice(index, 1);
+                $('#' + val).remove();
+
+            }
+            hRespuestas.val(arrRespuestas.join('#'));
+        }
+
+
+        $(document).ready(function () {
+          
+            var respuestas = hRespuestas.val();
+            arrRespuestas = respuestas.split('#');
+            for (var i = 0; i < arrRespuestas.length; i++) {
+                ulRespuestas.append('<li id="' + arrRespuestas[i] + '">' + arrRespuestas[i] +
+                   '<button class="btn btn-default" onclick="quitarRespuesta(\'' + arrRespuestas[i] + '\');" type="button"><i class="fa fa-minus-circle"></i></button> </li>');
+            }
+        });
+
+    </script>
+}

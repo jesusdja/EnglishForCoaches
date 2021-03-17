@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html class="bootstrap-layout">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+
+    <link rel="shortcut icon" href="~/Content/Usuario/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="~/Content/Usuario/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/Content/Usuario/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/Content/Usuario/images/apple-touch-icon-114x114.png">
+
+    <!-- Prevent the demo from appearing in search engines (REMOVE THIS) -->
+    <meta name="robots" content="noindex">
+
+    <!-- Material Design Icons  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Roboto Web Font -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+
+    @Styles.Render("~/Content/UsuarioCss")
+
+</head>
+
+<body class="layout-container ls-top-navbar si-l3-md-up">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-primary navbar-full navbar-fixed-top">
+
+        <!-- Toggle sidebar -->
+        <button class="navbar-toggler pull-xs-left" type="button" data-toggle="sidebar" data-target="#sidebarLeft"><span class="material-icons">menu</span></button>
+
+        <!-- Brand -->
+        <a href="_dashboard.html" class="navbar-brand"><img src="~/Content/Usuario/images/logo_alumno.png"></a>
+        @*<a href="http://www.rfef.es" class="navbar-brand" target="_blank"><div id="logo_RFEF"></div></a>*@
+
+        <!-- Search -->
+        <!--<form class="form-inline pull-xs-left hidden-sm-down">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Buscador">
+                <span class="input-group-btn"><button class="btn" type="button"><i class="material-icons">buscador</i></button></span>
+            </div>
+        </form>-->
+        <!-- // END Search -->
+
+        <!--<ul class="nav navbar-nav hidden-sm-down">
+            <li class="nav-item">
+                <a class="nav-link" href="_get-help.html">Preguntas frecuentes</a>
+            </li>
+        </ul>-->
+
+        <!-- Menu -->
+        <ul class="nav navbar-nav pull-xs-right">
+
+
+            <!-- User dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link active dropdown-toggle p-a-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false">
+                    <img src="~/Content/Usuario/images/avatar.jpg" alt="Avatar" class="img-circle" width="40">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-list" aria-labelledby="Preview">
+                    <a class="dropdown-item" href="@Url.Action("Perfil",  "Home", new { Area = "Usuario" })"><i class="material-icons md-18">person</i> <span class="icon-text">Editar perfil</span></a>
+                    <a class="dropdown-item" href="#">Salir</a>
+                </div>
+            </li>
+            <!-- // END User dropdown -->
+
+        </ul>
+        <!-- // END Menu -->
+
+    </nav>
+    <!-- // END Navbar -->
+    <!-- Sidebar -->
+    <div class="sidebar sidebar-left sidebar-light sidebar-visible-md-up si-si-3 ls-top-navbar-xs-up sidebar-transparent-md" id="sidebarLeft" data-scrollable>
+
+        <ul class="sidebar-menu">
+            <li class="sidebar-menu-item active">
+                <a class="sidebar-menu-button" href="@Url.Action("Index",  "Home", new { Area = "Usuario" })">
+                    <i class="sidebar-menu-icon material-icons">home</i> Dashboard
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">
+                    <i class="sidebar-menu-icon material-icons">font_download</i> Gramática
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">
+                    <i class="sidebar-menu-icon material-icons">collections_bookmark</i> Unidades didácticas
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">
+                    <i class="sidebar-menu-icon material-icons">flag</i> English for football
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-heading">RECURSOS</div>
+        <ul class="sidebar-menu">
+            <!--<li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="_forum.html">
+                    <i class="sidebar-menu-icon material-icons">forum</i> Foro
+                    <span class="sidebar-menu-label label label-default">3</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="#">
+                    <i class="sidebar-menu-icon material-icons">import_contacts</i> Documentación
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="#">
+                    <i class="sidebar-menu-icon material-icons">note</i> Actualidad
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="_chat.html">
+                    <i class="sidebar-menu-icon material-icons">comment</i> Mensajes
+                    <span class="sidebar-menu-label label label-default">2</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="_ui-calendar.html">
+                    <i class="sidebar-menu-icon material-icons">date_range</i> Agenda
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="_student-view-course.html">
+                    <i class="sidebar-menu-icon material-icons">stars</i> Extras
+                </a>
+            </li>-->
+            <li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="@Url.Action("Vocabulario",  "Home", new { Area = "Usuario" })">
+                    <i class="sidebar-menu-icon material-icons">list</i> Vocabulario
+                </a>
+            </li>
+            <!--<li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="#">
+                    <i class="sidebar-menu-icon material-icons">casino</i> Juegos
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="#">
+                    <i class="sidebar-menu-icon material-icons">playlist_add</i> Mi glosario
+                </a>
+            </li>-->
+            <li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="@Url.Action("Examenes",  "Home", new { Area = "Usuario" })">
+                    <i class="sidebar-menu-icon material-icons">lock_open</i> Examenes
+                </a>
+            </li>
+            <!--<li class="sidebar-menu-item">
+                <a class="sidebar-menu-button" href="#">
+                    <i class="sidebar-menu-icon material-icons">file_download</i> Descargas
+                </a>
+            </li>-->
+        </ul>
+    </div>
+    <!-- // END Sidebar -->
+
+    @RenderSection("sidebar", required: false)
+
+    <!-- Content -->
+    <div class="layout-content" data-scrollable>
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/UsuarioJs")
+    @Scripts.Render("~/bundles/UsuarioChartsJs")
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

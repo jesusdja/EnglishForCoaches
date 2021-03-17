@@ -1,0 +1,72 @@
+﻿@{
+    Layout = "~/Areas/Usuario/Views/Shared/_UsuarioLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Usuario" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></li>
+        <li><a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Cortesia, disculpas y felicitaciones</a></li>
+        <li><a href="@Url.Action("Area",  "Home", new { Area = "Usuario" })">TRAINING</a></li>
+        <li class="active">Lorem ipsum dolor sit amet</li>
+    </ol>
+
+    <div class="card-group">
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="m-b-0">
+                    <strong>25</strong>
+                </h4>
+                <small class="text-muted-light">TOTAL</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-success m-b-0">
+                    <strong>3</strong>
+                </h4>
+                <small class="text-muted-light">CORRECTAS</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-danger m-b-0">
+                    <strong>5</strong>
+                </h4>
+                <small class="text-muted-light">INCORRECTAS</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-primary m-b-0">
+                    <strong>17</strong>
+                </h4>
+                <small class="text-muted-light">RESTANTES</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-white p-a-1">
+            <div class="media">
+                <div class="media-body  media-middle">
+                    <h4 class="bloque bloque-frases card-title" style="margin:1% !important; text-align: right;">Lorem ipsum</h4>
+                    <h4 class="bloque bloque-frases card-title text-success" style="margin:1% !important;">dolor sit amet</h4>
+
+                    <h4 class="bloque bloque-frases card-title" style="margin:1% !important; text-align: right;">Lorem ipsum</h4>
+                    <h4 class="bloque bloque-frases card-title text-danger" style="margin:1% !important;">dolor sit amet</h4>
+
+                    <button type="button" class="btn btn-white">
+                        <i class="material-icons">done</i>
+                        <span class="icon-text">Resolver</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-red center">
+        <div class="card-block">
+            <p>Incorrecto <a href="#" class="btn btn-primary btn-sm btn-rounded pull-xs-right">Volver <i class="material-icons">settings_backup_restore</i></a></p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,157 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.FrasesIndexViewModel
+@{
+    /**/
+
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li class="active">Mis Frases</li>
+    </ol>
+
+    <h1 class="page-heading h2">Mis Frases</h1>
+
+    @if (Model.frases.Count == 0)
+    {
+        <div class="row">
+            <div class="col-md-12 text-xs-center">
+                <p>No hay contenidos</p>
+            </div>
+        </div>
+    }
+    @foreach (var item in Model.frases)
+    {
+        <div class="card">
+            <div class="card-block bg-white">
+                <div class="row">
+                    <div class="col-md-1">
+                        <button onclick="Reproducir('en_@item.FraseId');" id="btn_frase_en_@item.FraseId"
+                                class="btn btn-secondary btn-circle"
+                                type="button" @(string.IsNullOrEmpty(item.FicheroAudio_en) ? "disabled" : "")>
+                            <i class="material-icons">hearing</i>
+                        </button>
+                        @if (!string.IsNullOrEmpty(item.FicheroAudio_en))
+                        {
+                            <audio preload="none" id="audio_frase_en_@item.FraseId">
+                                <source src="~/media/upload/frases_mp3/@item.FicheroAudio_en" type="audio/mpeg" />
+                            </audio>
+                        }
+                    </div>
+                    <div class="col-md-1">
+                        <h4 style="padding-top: 6px;">
+                            <a id="a_@(item.FraseId+"_en")" href="javascript:MostrarTexto('@(item.FraseId+"_en")')" class="language en"></a>
+                        </h4>
+                    </div>
+                    <div class="col-md-4">
+                        <h4 id="hTexto_@(item.FraseId+"_en")" style="padding-top: 6px;">@item.Palabra_en</h4>
+                    </div>
+                    @*<div class="col-md-1">
+            <button onclick="Reproducir('es_@item.FraseId');" id="btn_frase_es_@item.FraseId"
+                    class="btn btn-secondary btn-circle"
+                    type="button" @(string.IsNullOrEmpty(item.FicheroAudio_es) ? "disabled" : "")>
+                <i class="material-icons">hearing</i>
+            </button>
+            @if (!string.IsNullOrEmpty(item.FicheroAudio_es))
+            {
+                <audio preload="none" id="audio_frase_es_@item.FraseId">
+                    <source src="~/media/upload/frases_mp3/@item.FicheroAudio_es" type="audio/mpeg" />
+                </audio>
+            }
+        </div>*@
+                    <div class="col-md-1">
+                        <h4 style="padding-top: 6px;">
+                            <a id="a_@(item.FraseId+"_es")" href="javascript:MostrarTexto('@(item.FraseId+"_es")')" class="language es"></a>
+                        </h4>
+                    </div>
+                    <div class="col-md-4">
+                        <h4 id="hTexto_@(item.FraseId+"_es")" style="padding-top: 6px;">@item.Palabra_es</h4>
+                    </div>
+                    <div class="col-md-1 right">
+                        <div id="div_glosario_@item.FraseId" data-toggle="tooltip" title="@(Model.glosario.Contains(item.FraseId) ? "Quitar de mis frases" : "Añadir a mis frases")" class="btn" fraseId="@item.FraseId">
+                            <i class="material-icons @(Model.glosario.Contains(item.FraseId) ? "text-warning" : "text-muted-light")"
+                               id="icon_glosario_@item.FraseId">star</i>
+                            <small class="text-muted area">Añadir a mi glosario</small>
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(@item.Comentario))
+                        {
+                            <div class="card-block">
+                                <button class="btn btn-info btn-circle try-sweet-simpleMessage" data-toggle="tooltip" type="button" title="Comentario" data-comentario="@item.Comentario" onclick="ClickComentario(this)"> <i class="material-icons">info_outline</i> </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/Content/Alumno/vendor/sweetalert.min.js"></script>
+    <!-- Page JS Code -->
+    <script>
+        function ClickComentario(btn) {
+            var message = $(btn).attr("data-comentario")
+            swal({
+                title: "Comentario",
+                text: message,
+                confirmButtonColor: "#039BE5"
+            });
+        }
+
+        $(document).ready(function () {
+            //$('[id^="hTexto_"]').each(function (index) {
+            //    $(this).hide();
+            //});
+
+               $('[id^="div_glosario_"]').each(function (index) {
+                $(this).on('click', function () {
+                    var id = $(this).attr("fraseId");
+                    AddRemoveGlosario('@Url.Action("AddGlosario", "Frases", new {Area = "Alumno" })/'+id,id);
+                });
+            });
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        function AddRemoveGlosario(url, fraseId) {
+            $.get(url, function (data) {
+                console.log(data);
+                var icon = $("#icon_glosario_" + fraseId);
+                if (data == "Eliminado") {
+                    icon.removeClass("text-warning");
+                    icon.addClass("text-muted-light");
+                } else {
+                    icon.removeClass("text-muted-light");
+                    icon.addClass("text-warning");
+                }
+            });
+        }
+
+
+
+        function MostrarTexto(item) {
+            $('#a_' + item).removeClass("off");
+
+            var texto = $('#hTexto_' + item);
+            texto.show();
+        }
+
+        function GenerarEventoEnded(button, audio) {
+            return function () {
+                button.removeClass("flash");
+                audio.off('ended')
+            };
+        }
+
+        function Reproducir(id) {
+            var button = $('#btn_frase_' + id);
+            var audio = $('#audio_frase_' + id);
+
+
+            button.addClass('flash');
+            audio.on('ended', GenerarEventoEnded(button, audio));
+            document.getElementById('audio_frase_' + id).play();
+        }
+    </script>
+}

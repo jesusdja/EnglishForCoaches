@@ -1,0 +1,129 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.Shared.UsuarioLactatusBase
+                                    <div class="form-group">
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="form-material form-material-primary">
+                                                @Html.TextBoxFor(m => m.UsuarioLactatus.Nombre, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.UsuarioLactatus.Nombre, null, new { @class = "help-block animated fadeInDown" })
+                                                @Html.LabelFor(m => m.UsuarioLactatus.Nombre)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="form-material form-material-primary">
+                                                @Html.TextBoxFor(m => m.UsuarioLactatus.Apellido1, new { @class = "form-control", placeholder = "" })
+                                                @Html.ValidationMessageFor(model => model.UsuarioLactatus.Apellido1, null, new { @class = "help-block animated fadeInDown" })
+                                                @Html.LabelFor(m => m.UsuarioLactatus.Apellido1)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="form-material form-material-primary">
+                                                @Html.TextBoxFor(m => m.UsuarioLactatus.Apellido2, new { @class = "form-control", placeholder = "" })
+                                                @Html.ValidationMessageFor(model => model.UsuarioLactatus.Apellido2, null, new { @class = "help-block animated fadeInDown" })
+                                                @Html.LabelFor(m => m.UsuarioLactatus.Apellido2)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-8 col-xs-12">
+                                            <div class="form-material form-material-primary">
+                                                @Html.TextBoxFor(m => m.UsuarioLactatus.Email, new { @class = "form-control", placeholder = "" })
+                                                @Html.ValidationMessageFor(model => model.UsuarioLactatus.Email, null, new { @class = "help-block animated fadeInDown" })
+                                                @Html.LabelFor(m => m.UsuarioLactatus.Email)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="form-material form-material-primary">
+                                                @Html.TextBoxFor(m => m.UsuarioLactatus.Telefono, new { @class = "form-control", placeholder = "" })
+                                                @Html.ValidationMessageFor(model => model.UsuarioLactatus.Telefono, null, new { @class = "help-block animated fadeInDown" })
+                                                @Html.LabelFor(m => m.UsuarioLactatus.Telefono)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="form-material form-material-primary">
+                                                @Html.TextBoxFor(m => m.UsuarioLactatus.FechaNacimiento, new { @class = "js-masked-date form-control", placeholder = "dd/mm/aaaa" })
+                                                @Html.ValidationMessageFor(model => model.UsuarioLactatus.FechaNacimiento, null, new { @class = "help-block animated fadeInDown" })
+                                                @Html.LabelFor(m => m.UsuarioLactatus.FechaNacimiento)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="form-material form-material-primary">
+                                                @Html.TextBoxFor(m => m.UsuarioLactatus.Altura, new { @class = "form-control", placeholder = "Centímetros" })
+                                                @Html.ValidationMessageFor(model => model.UsuarioLactatus.Altura, null, new { @class = "help-block animated fadeInDown" })
+                                                @Html.LabelFor(m => m.UsuarioLactatus.Altura)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="form-material form-material-primary">
+                                                @Html.TextBoxFor(m => m.Peso.Cantidad, new { @class = "form-control", placeholder = "Kilogramos" })
+                                                @Html.ValidationMessageFor(model => model.Peso.Cantidad, null, new { @class = "help-block animated fadeInDown" })
+                                                @Html.LabelFor(m => m.Peso.Cantidad)
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="form-group">
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="form-material form-material-primary">
+                                                @Html.TextBoxFor(m => m.UsuarioLactatus.ActividadFisicaSemanal, new { @class = "form-control", placeholder = "Número de horas" })
+                                                @Html.ValidationMessageFor(model => model.UsuarioLactatus.ActividadFisicaSemanal, null, new { @class = "help-block animated fadeInDown" })
+                                                @Html.LabelFor(m => m.UsuarioLactatus.ActividadFisicaSemanal)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="form-material form-material-primary">
+                                                @Html.DropDownListFor(model => model.UsuarioLactatus.DeporteId, Model.DeporteSelectList, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.UsuarioLactatus.DeporteId, null, new { @class = "help-block animated fadeInDown" })
+                                                @Html.LabelFor(m => m.UsuarioLactatus.DeporteId)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xs-12">
+                                            <div class="form-material form-material-primary">
+                                                @Html.DropDownListFor(model => model.UsuarioLactatus.EstadoFormaId, Model.EstadoFormaSelectListSelectList, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.UsuarioLactatus.EstadoFormaId, null, new { @class = "help-block animated fadeInDown" })
+                                                @Html.LabelFor(m => m.UsuarioLactatus.EstadoFormaId)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12">
+                                            <div class="form-material form-material-primary">
+                                                @Html.TextAreaFor(m => m.UsuarioLactatus.MarcasRecientes,4,1, new { @class = "form-control", placeholder = "" })
+                                                @Html.ValidationMessageFor(model => model.UsuarioLactatus.MarcasRecientes, null, new { @class = "help-block animated fadeInDown" })
+                                                @Html.LabelFor(m => m.UsuarioLactatus.MarcasRecientes)
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+
+<div class="form-group">
+                                        <div class="col-xs-12 text-center">
+                                            <label class="css-input switch switch-sm switch-primary">
+                                                  <input type="checkbox"  value="true" @(Model.UsuarioLactatus.Pulsometro ? "checked=\"checked\"" : "") name="UsuarioLactatus.Pulsometro" id="UsuarioLactatus_Pulsometro" /><span></span> ¿Utilizas pulsómetro?
+                                                <input type="hidden" value=false name="UsuarioLactatus.Pulsometro" />
+                                            </label>
+                                        </div>
+                                    </div>
+<div class="form-group" id="divPulsometro">
+    <div class="col-md-6 col-xs-12">
+        <div class="form-material form-material-primary">
+            @Html.TextBoxFor(m => m.UsuarioLactatus.PulsometroModelo, new { @id = "modeloPulsometro", @class = "form-control", placeholder = "" })
+            @Html.ValidationMessageFor(model => model.UsuarioLactatus.PulsometroModelo, null, new { @class = "help-block animated fadeInDown" })
+            @Html.LabelFor(m => m.UsuarioLactatus.PulsometroModelo)
+        </div>
+    </div>
+    <div class="col-md-3 col-xs-12">
+        <div class="form-material form-material-primary">
+            @Html.TextBoxFor(m => m.UsuarioLactatus.PulsometroFcMax, new { @id = "FcMaxPulsometro", @class = "form-control", placeholder = "" })
+            @Html.ValidationMessageFor(model => model.UsuarioLactatus.PulsometroFcMax, null, new { @class = "help-block animated fadeInDown" })
+            @Html.LabelFor(m => m.UsuarioLactatus.PulsometroFcMax)
+        </div>
+    </div>
+    <div class="col-md-3 col-xs-12">
+        <div class="form-material form-material-primary">
+            @Html.TextBoxFor(m => m.UsuarioLactatus.PulsometroFcReposo, new { @id = "FcReposoPulsometro", @class = "form-control", placeholder = "" })
+            @Html.ValidationMessageFor(model => model.UsuarioLactatus.PulsometroFcReposo, null, new { @class = "help-block animated fadeInDown" })
+            @Html.LabelFor(m => m.UsuarioLactatus.PulsometroFcReposo)
+        </div>
+    </div>
+</div>

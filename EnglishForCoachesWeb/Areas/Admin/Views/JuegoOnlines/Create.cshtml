@@ -1,0 +1,103 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.JuegoOnlinesCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.Subtema.TemaId })">
+                    @Model.Subtema.Tema.Descripcion
+                </a>
+                / <a href="@Url.Action("Index", "JuegoOnlines", new {id = @Model.Subtema.SubTemaId })">
+                    @Model.Subtema.Descripcion
+                </a> /
+                Nuevo juego online
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+    @using (Html.BeginForm("Create", "JuegoOnlines", FormMethod.Post, new { @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.Subtema.SubTemaId)
+
+        <div class="block">
+            <div class="block-content block-content-full">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.DropDownListFor(model => model.JuegoOnline.TipoJuegoOnlineId, Model.tipoJuegoOnlinesSelectList, new { @class = "form-control" })
+                            @Html.LabelFor(model => model.JuegoOnline.TipoJuegoOnline, htmlAttributes: new { @class = "" })
+                            @Html.ValidationMessageFor(model => model.JuegoOnline.TipoJuegoOnline, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.JuegoOnline.Descripcion, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.JuegoOnline.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.JuegoOnline.Descripcion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.JuegoOnline.Explicacion, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.JuegoOnline.Explicacion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.JuegoOnline.Explicacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group" >
+                    <div class="col-sm-12">
+                        <h5>
+                            Clientes
+                        </h5>
+                        @for (var j = 0; j < Model.Clientes.Count; j++)
+                        {
+                            <div class="col-sm-4">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(m => m.Clientes[j].Selected, new { id = "chk_" + j })
+                                        @Html.HiddenFor(m => m.Clientes[j].Text)
+                                        @Html.HiddenFor(m => m.Clientes[j].Value)
+                                        <span>@Model.Clientes[j].Text</span>
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="block-content block-content-full">
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <input type="submit" name="command" class="btn btn-default" value="Siguiente" />
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+<!-- END Page Content -->

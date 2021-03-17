@@ -1,0 +1,41 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.SubTemaVideosIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index", "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.SubTema.TemaId })">@Model.SubTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.SubTema.SubTemaId})">@Model.SubTema.Descripcion</a></li>
+        <li class="active">Videos</li>
+    </ol>
+
+    <h1 class="page-heading h2">Videos</h1>
+    <div class="row">
+        @foreach (var item in Model.SubTemaVideos)
+            {
+
+            <div class="col-md-6">
+                <div class="card">
+
+                    <div class="video-container">
+                        @Html.Raw(item.UrlVideo)
+                    </div>
+                    <div class="card-block">
+                        <div class="media m-b-05">
+                            <div class="media-body media-middle">
+                                <h4 class="card-title m-b-0">@item.Titulo</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+
+</div>

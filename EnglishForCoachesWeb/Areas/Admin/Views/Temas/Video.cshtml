@@ -1,0 +1,59 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.TemasVideoViewModel
+
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                Editar Tema en
+@Model.Tema.Descripcion
+ 
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+
+    @using (Html.BeginForm("Video", "Temas", FormMethod.Post, new {@class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.Tema.TemaId)
+        @Html.HiddenFor(model => model.Tema.Descripcion)
+        @Html.HiddenFor(model => model.Tema.IconoAdmin)
+        @Html.HiddenFor(model => model.Tema.IconoUsuario)
+        @Html.HiddenFor(model => model.Tema.Introduccion)
+
+        <div class="block">
+            <div class="block-content block-content-full">
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Tema.UrlVideo, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Tema.UrlVideo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Tema.UrlVideo, "", new { @class = "text-danger" })                               
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="block-content block-content-full">
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <input type="submit" value="Guardar Video" name="command" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+    }
+</div>
+<!-- END Page Content -->
+

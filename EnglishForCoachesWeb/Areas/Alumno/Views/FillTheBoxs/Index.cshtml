@@ -1,0 +1,418 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.FillTheBoxIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.bloque.SubTema.TemaId })">@Model.bloque.SubTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.bloque.SubTema.SubTemaId})">@Model.bloque.SubTema.Descripcion</a></li>
+        <li><a href="@Url.Action("Index",  "Bloques", new { Area = "Alumno" ,id=Model.bloque.SubTemaId,areaId=Model.bloque.Area.AreaId})">@Model.bloque.Area.Descripcion</a></li>
+        <li class="active">@Model.bloque.Descripcion</li>
+    </ol>
+
+    <div class="card-group">
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="m-b-0">
+                    <strong>@Model.fillTheBoxs.Count</strong>
+                </h4>
+                <small class="text-muted-light">TOTAL</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-success m-b-0">
+                    <strong id="mostrarCorrectas">0</strong>
+                </h4>
+                <small class="text-muted-light">CORRECTAS</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-danger m-b-0">
+                    <strong id="mostrarIncorrectas">0</strong>
+                </h4>
+                <small class="text-muted-light">INCORRECTAS</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-primary m-b-0">
+                    <strong id="mostrarRestantes">@Model.fillTheBoxs.Count</strong>
+                </h4>
+                <small class="text-muted-light">RESTANTES</small>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.bloque.Explicacion))
+    {
+        <div class="card card-stats-primary">
+            <div class="card-block">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <i class="material-icons text-muted-light">info_outline</i>
+                    </div>
+                    <div class="media-body media-middle">
+                        @Model.bloque.Explicacion
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- IMAGEN -->
+
+    <div class="card" id="divImgFilltheBox">
+        <img id="imgFilltheBox" width="100%">
+    </div>
+
+    <!-- IMAGEN -->
+
+    <div class="card">
+        <div class="card-header bg-white p-a-1">
+            <div class="media">
+                <div class="media-left media-middle">
+                    <h4 class="m-b-0">
+                        <strong id="mostrarNPregunta"></strong>
+                    </h4>
+                    <span id="btnAudio" class="btn btn-primary btn-circle pull-xs-left" onclick="document.getElementById('audio_sentence').play();">
+                        <i class="material-icons">hearing</i>
+                    </span>
+                </div>
+                <div class="media-body  media-middle">
+                    <h4 class="card-title" id="hTitulo">Titulo</h4>
+                    <audio id="audio_sentence">
+                        <source src="" id="audio_source" type="audio/mpeg" />
+                    </audio>
+                    <div id="divEnunciado" style="display: inline;position:static;">
+                    </div>
+                    <button type="button" class="btn btn-white" id="btnResolver">
+                        <i class="material-icons">done</i>
+                        <span class="icon-text">Resolver</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-header bg-white p-a-1">
+            <div class="media">
+                <div class="media-body  media-middle">
+                    <div id="divBloques" style="display: inline;position:static;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-success center" id="divExplicacion">
+        <div class="card-block">
+            <div class="media">
+                <div class="media-body media-middle" id="divExplicacionTexto">
+                    Explicacion
+                </div>
+                <div class="media-right" id="divSiguiente">
+                    <a href="javascript:SiguientePregunta();" class="btn btn-primary btn-sm btn-rounded pull-xs-right">Siguiente <i class="material-icons">send</i></a>
+                </div>
+                <div class="media-right" id="divFinalizar">
+                    <a href="@Url.Action("Index",  "Bloques", new { Area = "Alumno" ,id=Model.bloque.SubTemaId,areaId=Model.bloque.Area.AreaId})"
+                       class="btn btn-primary btn-sm btn-rounded pull-xs-right">Finalizar<i class="material-icons">send</i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        @section sidebar {
+
+            <div class="sidebar sidebar-right si-si-3 sidebar-visible-lg-up ls-top-navbar-xs-up sidebar-light bg-white sidebar-visible" id="sidebarRight" data-position="right" data-scrollable="" data-visible="lg-up">
+
+                <div class="sidebar-heading">Bloque</div>
+                <ul class="list-group list-group-fit">
+                    @{ int numero = 0;}
+                    @foreach (var item in Model.fillTheBoxs)
+                    {
+                        numero++;
+                        <li class="list-group-item" id="li_fillTheBox_@item.Id">
+                            <span class="media">
+                                <span class="media-left">
+                                    <span id="span_test_@item.Id" class="btn btn-white btn-circle@(Model.mistakes.Contains(item.Id)?" btn-danger":"")">#@numero</span>
+                                </span>
+                                <span class="media-body media-middle">
+                                    @item.Descripcion
+                                </span>
+                            </span>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+        }
+
+        @section Scripts {
+            <!-- Page JS Code -->
+            @Scripts.Render("~/bundles/AlumnoJQueryJs")
+
+            <script>
+        var arrayPreguntas = [];
+
+    @foreach (var d in Model.fillTheBoxs)
+    {
+        @:arrayPreguntas.push("@d.Id");
+    }
+
+        var current = 0;
+        var acertadas = 0;
+        var falladas = 0;
+        var divExplicacion = $('#divExplicacion');
+                var divExplicacionTexto = $('#divExplicacionTexto');
+                var hTitulo = $('#hTitulo');
+                
+                var divImgFilltheBox = $('#divImgFilltheBox');
+        var divEnunciado = $('#divEnunciado');
+        var divBloques = $('#divBloques');
+
+        var btnResolver = $('#btnResolver');
+
+        var mostrarCorrectas = $('#mostrarCorrectas');
+        var mostrarIncorrectas = $('#mostrarIncorrectas');
+        var mostrarRestantes = $('#mostrarRestantes');
+        var mostrarNPregunta = $('#mostrarNPregunta');
+
+        var divSiguiente = $('#divSiguiente');
+        var divFinalizar = $('#divFinalizar');
+
+        $(document).ready(function () {
+            var firstLi = $('#li_fillTheBox_' + arrayPreguntas[current]);
+            firstLi.addClass("active");
+            
+            divBloques.sortable();
+            divBloques.disableSelection();
+
+
+            CargarPregunta();
+
+            divFinalizar.hide();
+            divExplicacion.hide();
+        });
+
+        function CargarPregunta() {
+
+            btnResolver.on('click', function () {
+                Resolver();
+            });
+            btnResolver.show();
+
+            mostrarNPregunta.text('#'+ (current+1));
+            var url = '@Url.Action("GetFillTheBox", "FillTheBoxs", new { Area = "Alumno" })';
+            url = url + '/' + arrayPreguntas[current];
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (result) {
+
+                    if (result.Audio) {
+                        document.getElementById("audio_source").src = "/media/upload/audio_fillthebox/" + result.Audio;
+                        document.getElementById("audio_sentence").load();
+
+                        $("#btnAudio").show();
+                    } else {
+                        $("#btnAudio").hide();
+                    }
+
+                    hTitulo.text(result.Titulo);
+
+                    if (result.Imagen) {
+                        document.getElementById("imgFilltheBox").src = "/media/upload/imagen_fillthebox/" + result.Imagen;
+                        divImgFilltheBox.show();
+                    } else {
+                        divImgFilltheBox.hide();
+                    }
+                    //bloques
+                    divEnunciado.empty();
+                    divBloques.empty();
+                    var contador = 0;
+                    for (var i = 0; i < result.Enunciado.length; i++) {
+                        if (result.Enunciado[i] !== '') {
+                            if (result.Enunciado[i] !== '#') {
+                                divEnunciado.append("<div class='bloque preguntaFillTheWord text-default' data-state='lifeless' id='divTrozo_" + contador + "'>" + result.Enunciado[i] + "</div>");
+
+                            } else {
+                                divEnunciado.append("<div class='rellenoFillTheWord text-default' data-state='lifeless' id='divTrozoRelleno_" + contador + "'></div>");
+
+                                var divRelleno = $('#divTrozoRelleno_' + contador);
+                                divRelleno.sortable({
+                                    cursor: 'n-resize',
+                                    connectWith: ".rellenoFillTheWord,#divBloques",
+                                    appendTo: 'body',
+                                    receive: function (event, ui) {
+                                        // so if > 10
+                                        if ($(this).children().length > 1) {
+                                            //ui.sender: will cancel the change.
+                                            //Useful in the 'receive' callback.
+                                            $(ui.sender).sortable('cancel');
+                                        }
+                                    }
+                                });
+                                divEnunciado.disableSelection();
+                                contador++;
+                            }
+                        }
+                    }
+
+                    contador=0;
+                    for (var i = 0; i < result.Respuestas.length; i++) {
+                        divBloques.append("<div class='respuestaFillTheBox text-default' id='divTrozoRes_" + contador + "'>" + result.Respuestas[i] + "</div>");
+                      //  $('#divTrozoRes_' + contador).mousedown(mouseDownDivEnunciado);
+                        contador++;
+                    }
+
+                    divBloques.sortable({
+                        cursor: 'n-resize',
+                        connectWith: ".rellenoFillTheWord",
+                        appendTo: 'body'
+                    });
+                    divBloques.disableSelection();
+
+                }
+            });
+        }
+
+        function mouseDownDivEnunciado() {
+            if ($(this).data('state') === 'lifeless') {
+                console.log("disable");
+                $($(this).parent).sortable('disable');
+            }
+            else {
+                console.log("enable");
+                $($(this).parent).sortable('enable');
+            }
+        }
+
+        function Resolver() {
+            btnResolver.off('click');
+            btnResolver.hide();
+            $('.Box').prop("disabled", true);
+            var divsRespuesta = $('[id*="divTrozoRelleno_"]');
+            for (var i = 0; i < divsRespuesta.length; i++) {
+                $(divsRespuesta[i]).sortable("disable");
+            } 
+            var divs = document.getElementsByTagName("div");
+            for (var i = 0; i < divs.length; i++) {
+                $(divs[i]).data('state', 'lifeless');
+            }
+            var trozosFrase = divEnunciado.find('div').get();
+
+            var respuestas = [];
+            for (var i = 0; i < trozosFrase.length; i++) {
+                var trozo = $(trozosFrase[i]);
+                var esRespuesta = trozo.has('div');
+                if (esRespuesta.length >0) {
+               //     respuestas.push(esRespuesta.text());
+                } else {
+                    respuestas.push(trozo.text());
+                }
+
+            }
+
+            var postData = { respuestas: respuestas };
+
+            var url = '@Url.Action("Contestar", "FillTheBoxs", new { Area = "Alumno" })';
+            url = url + '/' + arrayPreguntas[current];
+            $.ajax({
+                url: url,
+                type: "POST",
+                success: function (result) {
+                    var span_test = $('#span_test_' + arrayPreguntas[current]);
+                    span_test.removeClass("btn-white");
+
+                    var aciertos = result.correctas;
+
+                    var trozosFrase = divEnunciado.find('div').get();
+                    console.log(trozosFrase);
+                    var contador =0;
+                    for (var i = 0; i < trozosFrase.length; i++) {
+                        var divTrozo = $(trozosFrase[i]);
+                        var esRespuesta = divTrozo.has('div');
+                        if (esRespuesta.length == 0) {
+                            divTrozo.removeClass("text-default");
+                            if (aciertos[contador]) {
+                                divTrozo.addClass("fillTheWord-text-success");
+                            } else {
+                                divTrozo.addClass("fillTheWord-text-danger");
+                                correcta = false;
+                            }
+                            contador++;
+                        }
+                    }
+
+                    //for (var i = 0; i < aciertos.length; i++) {
+                    //    var divTrozo = $('#divTrozoRes_'+[i]);
+                    //    console.log(divTrozo);
+                    //    divTrozo.removeClass("text-default");
+                    //    if (aciertos[i]) {
+                    //        divTrozo.addClass("text-success");
+                    //    } else {
+                    //        divTrozo.addClass("text-danger");
+                    //        correcta = false;
+                    //    }
+                    //}
+
+
+                    var _resultado = "Incorrecto";
+                    if (result.Correcto) {
+                        _resultado = "Correcto";
+                        $('.Box').addClass('success');
+
+                        acertadas++;
+                        span_test.removeClass("btn-danger");
+                        span_test.addClass("btn-success");
+                        divExplicacion.addClass("card-success");
+                    }
+                    else
+                    {
+
+                        falladas++;
+                        span_test.removeClass("btn-success");
+                        span_test.addClass("btn-danger");
+                        divExplicacion.addClass("card-red");
+                    }
+
+                    divExplicacionTexto.text(result.Explicacion);
+                    //divExplicacionTexto.text(_resultado);
+
+                    mostrarCorrectas.text(acertadas);
+                    mostrarIncorrectas.text(falladas);
+                    mostrarRestantes.text(arrayPreguntas.length - (acertadas + falladas));
+
+                    divExplicacion.show();
+                    if (current == arrayPreguntas.length - 1) {
+                        divSiguiente.hide();
+                        divFinalizar.show();
+                    }
+                },
+                data: postData,
+                dataType: "json",
+                traditional: true
+            });
+        }
+
+        function SiguientePregunta() {
+
+            var currentLi = $('#li_fillTheBox_' + arrayPreguntas[current]);
+            currentLi.removeClass("active");
+            current++;
+            var nextLi = $('#li_fillTheBox_' + arrayPreguntas[current]);
+            nextLi.addClass("active");
+
+            CargarPregunta();
+
+            divExplicacion.hide();
+            divExplicacion.removeClass("card-success");
+            divExplicacion.removeClass("card-red");
+        }
+            </script>
+        }

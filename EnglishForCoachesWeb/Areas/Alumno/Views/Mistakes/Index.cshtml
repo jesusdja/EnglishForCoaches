@@ -1,0 +1,89 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.MistakesIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index", "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li class="active">Mistakes</li>
+    </ol>
+
+    <h1 class="page-heading h2">Mistakes</h1>
+
+    <div class="row">
+        @foreach (var mistake in Model.mistakes)
+        {
+            var pregunta = Model.preguntas.FirstOrDefault(preg => preg.bloqueId == mistake.BloqueId && preg.preguntaId == mistake.PreguntaId);
+            if (pregunta != null)
+            {
+                string urlMistakes = Url.Action("Index", pregunta.controlador, new { Area = "Alumno", id = mistake.BloqueId, mistakes = true });
+            <div class="card m-b-1">
+            <div class="card-header bg-white">
+                <div class="media">
+                    <div class="media-body media-middle">
+                        <h4 class="card-title"><a href="@urlMistakes">@pregunta.enunciado </a></h4>
+                        <p class="m-b-0">@pregunta.tema / @pregunta.subtema / @pregunta.area </p>
+                    </div>
+                    <div class="media-right media-bottom"> <a href="@urlMistakes" class="btn btn-white">Ver</a> </div>
+                </div>
+            </div>
+        </div>
+            }
+        }
+
+        <div class="col-sm-12">
+            <div class="dataTables_paginate paging_simple_numbers" id="datatable-example_paginate">
+                <ul class="pagination">
+
+                    <li class="paginate_button previous @(1 == Model.Pagina ? "disabled":"")" aria-controls="datatable-example" tabindex="0" id="datatable-example_previous">
+                        <a href="javascript:IrAPagina(@(Model.Pagina-5))">Anterior</a>
+                    </li>
+
+                    @for (int i = Model.PaginaMin; i <= Model.PaginaMax; i++)
+                    {
+                        <li class="paginate_button @(i == Model.Pagina ? "active":"")" aria-controls="datatable-example" tabindex="0">
+                            <a href="javascript:IrAPagina(@i)">@i</a>
+                        </li>
+                    }
+
+                    <li class="paginate_button next @(Model.NPaginas == Model.Pagina ? "disabled":"")" aria-controls="datatable-example" tabindex="0" id="datatable-example_next">
+                        <a href="javascript:IrAPagina(@(Model.Pagina+5))">Siguiente</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            @using (Html.BeginForm("Index", "Mistakes", FormMethod.Post, new { id = "FormBusqueda" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(model => model.Pagina, new { id = "HidPagina" })
+
+            }
+        </div>
+
+    </div>
+
+</div>
+@section Scripts {
+
+    <!-- Page JS Code -->
+    <script>
+        var HidPagina = $("#HidPagina");
+
+
+        function IrAPagina(pagina) {
+            HidPagina.val(pagina);
+            document.getElementById("FormBusqueda").submit();
+        }
+
+
+        $(document).ready(function () {
+
+
+        });
+
+    </script>
+}

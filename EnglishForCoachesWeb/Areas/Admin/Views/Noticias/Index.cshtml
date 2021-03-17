@@ -1,0 +1,148 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.NoticiaIndexViewModel
+@using System.Security.Claims
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                Noticias
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="block">
+                <div class="block-header">
+                    <ul class="block-options">
+                        <li>
+                            <button type="button" onclick="location.href='@Url.Action("Create", "Noticias", new { Area = "Admin"})';"><i class="si si-note"></i> Nueva Noticia</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="block-header">
+                    @using (Html.BeginForm("Index", "Noticias", FormMethod.Post, new { id = "FormBusqueda" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.HiddenFor(model => model.Pagina, new { id = "HidPagina" })
+                        <div class="col-sm-12">
+                            <div class="input-group input-group-lg">
+                                @Html.TextBoxFor(model => model.TextoBusqueda, new { @class = "form-control", placeholder = "Buscar…" })
+
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+
+                <div class="block-content">
+                    <table class="table table-hover table-borderless">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.listadoNoticias[0].Titulo)
+                                </th>
+                                <th>
+                                    Grupo
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.listadoNoticias)
+                            {
+                                <tr>
+                                    <td>
+                                            @item.Titulo 
+                                       
+                                    </td>
+                                    <td>
+                                        @if (item.NoticiaGrupos.Count > 0)
+                                        {
+                                            @item.NoticiaGrupos.Select(gu => gu.GrupoUsuario.Descripcion).Aggregate((i, j) => i + ", " + j)
+                                        }
+                                    </td>
+   
+                                    <td class="text-center">
+                                        <div class="btn-group">
+@{var UsuarioId = ((ClaimsIdentity)User.Identity).FindFirst("UserId").Value;
+    if (item.UsuarioId == UsuarioId || User.IsInRole("Admin"))
+    {
+                                            <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Editar gramática"
+                                                    onclick="location.href='@Url.Action("Edit", "Noticias", new { Area = "Admin", id = item.NoticiaId })';">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button onclick="if(confirm('¿Está seguro que desea borrar el Noticia?')) location.href='@Url.Action("Delete", "Noticias", new { Area = "Admin", id = item.NoticiaId })';"
+                                                    class="removeItem btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Eliminar Noticia">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+        }
+    }
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                            }
+                        </tbody>
+                    </table>
+                    <nav>
+                        <ul class="pagination pagination-sm">
+                            <li class="@(1 == Model.Pagina ? "disabled":"")">
+                                <a href="javascript:IrAPagina(@(Model.Pagina-5))"><i class="fa fa-angle-double-left"></i></a>
+                            </li>
+                            @for (int i = Model.PaginaMin; i <= Model.PaginaMax; i++)
+                            {
+                                <li class="@(i == Model.Pagina ? "active":"")">
+                                    <a href="javascript:IrAPagina(@i)">@i</a>
+                                </li>
+                            }
+                            <li class="@(Model.NPaginas == Model.Pagina ? "disabled":"")">
+                                <a href="javascript:IrAPagina(@(Model.Pagina+5))"><i class="fa fa-angle-double-right"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- END Page Content -->
+
+
+@section Scripts {
+
+    <!-- Page JS Code -->
+    <script>
+        var HidPagina = $("#HidPagina");
+
+
+        function IrAPagina(pagina) {
+            HidPagina.val(pagina);
+            document.getElementById("FormBusqueda").submit();
+        }
+
+
+
+
+        $(document).ready(function () {
+
+
+        });
+
+    </script>
+}

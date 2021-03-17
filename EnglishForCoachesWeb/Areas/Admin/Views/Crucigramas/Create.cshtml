@@ -1,0 +1,134 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.CrucigramaCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.bloque.SubTema.TemaId })">
+                    @Model.bloque.SubTema.Tema.Descripcion
+                </a>
+                / <a href="@Url.Action("Index", "Bloques", new {id = @Model.bloque.SubTema.SubTemaId })">
+                    @Model.bloque.SubTema.Descripcion
+                </a> /  @Model.bloque.Descripcion
+            </h1>
+            <h3>
+                Nuevo ejercicio
+            </h3>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+
+    @using (Html.BeginForm("Create", "Crucigramas", FormMethod.Post, new { @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        @Html.HiddenFor(model => model.Crucigrama.Id)
+        @Html.HiddenFor(model => model.Crucigrama.SubTemaId)
+        @Html.HiddenFor(model => model.Crucigrama.TipoEjercicioId)
+        @Html.HiddenFor(model => model.Crucigrama.AreaId)
+        @Html.HiddenFor(model => model.Crucigrama.BloqueId)
+
+        <div class="block">
+            <div class="block-content block-content-full">
+
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Crucigrama.Enunciado, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Crucigrama.Enunciado, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Crucigrama.Enunciado, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Crucigrama.Verticales, htmlAttributes: new { @class = "" })
+                            @Html.TextAreaFor(model => model.Crucigrama.Verticales, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Crucigrama.Verticales, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Crucigrama.Horizontales, htmlAttributes: new { @class = "" })
+                            @Html.TextAreaFor(model => model.Crucigrama.Horizontales, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Crucigrama.Horizontales, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="crucigrama">
+                    <div class="form-group">
+                        @for (int j = 0; j < 12; j++)
+                        {
+                            <div class="col-xs-1">
+                                <input class="form-control input-sm" disabled="disabled" maxlength="1" type="text" value="@(j+1)">
+                            </div>
+                        }
+                    </div>
+
+                    @for (int i = 0; i < 12; i++)
+                {
+                        <div class="form-group">
+                            @for (int j = 0; j < 12; j++)
+                            {
+                                <div class="col-xs-1">
+                                    @*@Html.TextBoxFor(x => Model.Letras[i][j], new { @class = "form-control input-sm", @maxlength = "1" })*@
+
+                                    @{
+                                        String classStyle =null;
+                                        var htmlAttributes = new Dictionary<string, object>
+                                                                        {
+                                                                        { "maxlength", "1" },
+                                                                        { "id", "inp_"+i+"_"+j }
+                                                                        };
+                                        classStyle = "form-control";
+                                        if (Model.Letras[i][j] != "")
+                                        {
+                                            //htmlAttributes.Add("disabled", "disabled");
+                                            classStyle = classStyle+ " label-info";
+                                        }
+
+                                        if (j == 0) //VERTICAL
+                                        {
+
+                                            htmlAttributes.Add("placeholder", i + 1);
+                                        }
+
+                                        htmlAttributes.Add("class", classStyle.ToString());
+                                        @Html.TextBoxFor(x => Model.Letras[i][j], htmlAttributes);
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <input type="submit" name="command" value="Guardar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+<!-- END Page Content -->

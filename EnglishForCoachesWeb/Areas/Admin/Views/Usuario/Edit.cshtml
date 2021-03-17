@@ -1,0 +1,216 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.UsuarioEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                Editar Usuario
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+
+    @using (Html.BeginForm("Edit", "Usuario", FormMethod.Post, new { @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.Usuario.Id)
+        @Html.HiddenFor(model => model.Usuario.TipoUsuarioId)
+        if (User.IsInRole("AdministradorGrupo"))
+        {
+            @Html.HiddenFor(model => model.Usuario.GrupoUsuarioId)
+        }
+
+        <div class="block">
+            <div class="block-content block-content-full">
+
+
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <div class="form-material">
+                            <img src="~/media/upload/avatar/@(Model.Usuario.Id+ ".jpg")" />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-5">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Usuario.Email, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Usuario.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Usuario.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-5">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "" })
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Usuario.Nombre, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Usuario.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Usuario.Nombre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Usuario.Apellido1, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Usuario.Apellido1, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Usuario.Apellido1, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Usuario.Apellido2, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Usuario.Apellido2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Usuario.Apellido2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Usuario.PuntosTotal, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Usuario.PuntosTotal, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Usuario.PuntosTotal, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Usuario.PuntosActual, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Usuario.PuntosActual, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Usuario.PuntosActual, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                            <div class="col-sm-4">
+                                <div class="form-material">
+                                    @Html.DropDownListFor(model => model.Usuario.ClienteId, Model.ClienteSelectList, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Usuario.ClienteId, null, new { @class = "help-block animated fadeInDown" })
+                                    @Html.LabelFor(model => model.Usuario.ClienteId, htmlAttributes: new { @class = "" })
+                                </div>
+                            </div>
+                        <div class="col-sm-4">
+
+                            <div class="form-material">
+                                @Html.DropDownListFor(model => model.Usuario.GrupoUsuarioId, Model.GrupoUsuarioSelectList, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Usuario.GrupoUsuarioId, null, new { @class = "help-block animated fadeInDown" })
+                                @Html.LabelFor(model => model.Usuario.GrupoUsuarioId, htmlAttributes: new { @class = "" })
+                            </div>
+                        </div>
+                    }
+                </div>
+
+
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <h4>
+                                Modificar acceso
+                            </h4>
+                            <div class="form-material">
+                                @Html.RadioButtonFor(model => model.Usuario.BloquearSubtemas, false, new { onclick = "showMe();" }) Acceso total
+                                @Html.RadioButtonFor(model => model.Usuario.BloquearSubtemas, true, new { id = "chkAcceso", onclick = "showMe();" }) Acceso parcial
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="divAcceso">
+                        <div class="form-group">
+                            @for (var i = 0; i < Model.AccesoTemas.Count; i++)
+                {
+                                <div class="col-sm-4">
+                                    <h5>
+                                        @Model.AccesoTemas[i].Tema.Descripcion
+                                    </h5>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input onclick="seleccionarTodos(@i,@Model.AccesoTemas[i].SubTemas.Count,this)" type="checkbox" value="true">
+                                            Todas
+                                        </label>
+                                    </div>
+                                    @for (var j = 0; j < Model.AccesoTemas[i].SubTemas.Count; j++)
+                                    {
+                                        <div class="checkbox">
+                                            <label>
+
+                                                @Html.CheckBoxFor(m => m.AccesoTemas[i].SubTemas[j].Selected, new { id = "chk_" + i + "_" + j })
+                                                @Html.HiddenFor(m => m.AccesoTemas[i].SubTemas[j].Text)
+                                                @Html.HiddenFor(m => m.AccesoTemas[i].SubTemas[j].Value)
+                                                <span>@Model.AccesoTemas[i].SubTemas[j].Text</span>
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+        </div>
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <input type="submit" name="command" value="Guardar usuario" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- END Page Content -->
+
+
+@section Scripts {
+
+    <!-- Page JS Code -->
+    <script>
+        function seleccionarTodos(tema, cantidad,chkTodos){ 
+            for (var i=0;i<cantidad;i++)
+            {
+                var chbox = document.getElementById("chk_" + tema + "_"+i);                
+                chbox.checked=chkTodos.checked;
+            }
+        }
+
+
+            function showMe() {
+
+                var chbox = document.getElementById("chkAcceso");
+         
+                if (chbox.checked) {
+                    $("#divAcceso").show();
+                } else {
+                    $("#divAcceso").hide();
+                }
+            }
+
+
+            $(document).ready(function () {
+                showMe();
+            });
+    </script>
+
+}

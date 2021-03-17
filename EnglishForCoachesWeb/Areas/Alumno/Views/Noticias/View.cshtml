@@ -1,0 +1,61 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.NoticiasViewViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index", "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Noticias", new { Area = "Alumno"})">Noticias</a></li>
+        <li class="active">@Model.Noticia.Titulo</li>
+    </ol>
+    <h1 class="page-heading h2">
+        @Model.Noticia.Titulo
+    </h1>
+
+    <div class="row">
+        <div class="@(string.IsNullOrEmpty(Model.Noticia.FicheroAdjunto)?"col-md-12":"col-md-8")">
+            <!-- NOTICIA -->
+            <div class="card">
+                @{
+                    var imagen = "/content/alumno/images/img_defecto.jpg";
+                    if (!string.IsNullOrEmpty(Model.Noticia.Foto))
+                    {
+                        imagen = "/media/upload/Noticias_imagenes/" + Model.Noticia.Foto;
+                    }
+                }
+                <img src="@imagen" alt="@Model.Noticia.Titulo" width="100%">
+                <div class="card-block">
+                    @Html.Raw(Model.Noticia.Texto)
+                </div>
+            </div>
+            <!-- NOTICIA -->
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.Noticia.FicheroAdjunto))
+        {
+        <!-- ADJUNTOS -->
+        <div class="col-md-4">
+            <div class="card">
+                <ul class="list-group list-group-fit">
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-left"> <i class="material-icons text-muted-light">attach_file</i> </div>
+                            <div class="media-body media-middle"><a href="/media/upload/Noticias_adjuntos/@Model.Noticia.FicheroAdjunto" title="Installation">Fichero adjunto</a> </div>
+                        </div>
+                    </li>
+                    @*<li class="list-group-item">
+                        <div class="media">
+                            <div class="media-left"> <i class="material-icons text-muted-light">attach_file</i> </div>
+                            <div class="media-body media-middle"><a href="#" title="The MVC architectural pattern">The MVC architectural pattern</a> </div>
+                        </div>
+                    </li>*@
+                </ul>
+            </div>
+        </div>
+        <!-- ADJUNTOS -->
+        }
+    </div>
+
+</div>

@@ -1,0 +1,154 @@
+﻿@{
+    Layout = "~/Areas/Usuario/Views/Shared/_UsuarioLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Usuario" })">Dashboard</a></li>
+        <li class="active">Exámenes</li>
+    </ol>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="card-title">Exámenes</h4>
+                            <p class="card-subtitle">Estos son todos los exámenes que has hecho</p>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group list-group-fit m-b-0">
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <div>
+                                    <a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Título del subtema</a>
+                                </div>
+                                <small class="text-light"><span class="label label-default">12 ene 2017</span> <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></small>
+                            </div>
+                            <div class="media-right center">
+                                <h4 class=" m-b-0 text-success">30/30</h4>
+                                <small class="text-muted-light">Superado</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <div>
+                                    <a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Título del subtema</a>
+                                </div>
+                                <small class="text-light"><span class="label label-default">29 dic 2016</span> <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></small>
+                            </div>
+                            <div class="media-right center">
+                                <h4 class=" m-b-0 text-success">28/30</h4>
+                                <small class="text-muted-light">Superado</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <div>
+                                    <a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Título del subtema</a>
+                                </div>
+                                <small class="text-light"><span class="label label-default">23 dic 2016</span> <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></small>
+                            </div>
+                            <div class="media-right center">
+                                <h4 class=" m-b-0 text-danger">25/30</h4>
+                                <small class="text-muted-light">No&nbsp;superado</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <div>
+                                    <a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Título del subtema</a>
+                                </div>
+                                <small class="text-light"><span class="label label-default">12 ene 2017</span> <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></small>
+                            </div>
+                            <div class="media-right center">
+                                <h4 class=" m-b-0 text-success">30/30</h4>
+                                <small class="text-muted-light">Superado</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <div>
+                                    <a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Título del subtema</a>
+                                </div>
+                                <small class="text-light"><span class="label label-default">29 dic 2016</span> <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></small>
+                            </div>
+                            <div class="media-right center">
+                                <h4 class=" m-b-0 text-success">28/30</h4>
+                                <small class="text-muted-light">Superado</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <div>
+                                    <a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Título del subtema</a>
+                                </div>
+                                <small class="text-light"><span class="label label-default">23 dic 2016</span> <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></small>
+                            </div>
+                            <div class="media-right center">
+                                <h4 class=" m-b-0 text-danger">25/30</h4>
+                                <small class="text-muted-light">No&nbsp;superado</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <div>
+                                    <a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Título del subtema</a>
+                                </div>
+                                <small class="text-light"><span class="label label-default">12 ene 2017</span> <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></small>
+                            </div>
+                            <div class="media-right center">
+                                <h4 class=" m-b-0 text-success">30/30</h4>
+                                <small class="text-muted-light">Superado</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <div>
+                                    <a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Título del subtema</a>
+                                </div>
+                                <small class="text-light"><span class="label label-default">29 dic 2016</span> <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></small>
+                            </div>
+                            <div class="media-right center">
+                                <h4 class=" m-b-0 text-success">28/30</h4>
+                                <small class="text-muted-light">Superado</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <div>
+                                    <a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Título del subtema</a>
+                                </div>
+                                <small class="text-light"><span class="label label-default">23 dic 2016</span> <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></small>
+                            </div>
+                            <div class="media-right center">
+                                <h4 class=" m-b-0 text-danger">25/30</h4>
+                                <small class="text-muted-light">No&nbsp;superado</small>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>

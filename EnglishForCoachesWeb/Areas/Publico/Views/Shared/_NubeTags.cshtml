@@ -1,0 +1,7 @@
+﻿@model IEnumerable<EnglishForCoachesWeb.Areas.Publico.Models.ArticuloBaseViewModel.TagNube>
+
+
+@foreach (var tagNube in Model)
+{
+    <li class="@("size"+tagNube.Size)"><a href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/tag/"+tagNube.Tag.DescripcionSeo)" title="@tagNube.Tag.Descripcion">@tagNube.Tag.Descripcion</a></li>
+}

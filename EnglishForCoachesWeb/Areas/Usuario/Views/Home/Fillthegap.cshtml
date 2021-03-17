@@ -1,0 +1,129 @@
+﻿@{
+    Layout = "~/Areas/Usuario/Views/Shared/_UsuarioLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Usuario" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></li>
+        <li><a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Cortesia, disculpas y felicitaciones</a></li>
+        <li><a href="@Url.Action("Area",  "Home", new { Area = "Usuario" })">TRAINING</a></li>
+        <li class="active">Lorem ipsum dolor sit amet</li>
+    </ol>
+
+    <div class="card-group">
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="m-b-0">
+                    <strong>25</strong>
+                </h4>
+                <small class="text-muted-light">TOTAL</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-success m-b-0">
+                    <strong>3</strong>
+                </h4>
+                <small class="text-muted-light">CORRECTAS</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-danger m-b-0">
+                    <strong>5</strong>
+                </h4>
+                <small class="text-muted-light">INCORRECTAS</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-primary m-b-0">
+                    <strong>17</strong>
+                </h4>
+                <small class="text-muted-light">RESTANTES</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-white p-a-1">
+            <div class="media">
+                <div class="media-left media-middle">
+                    <h4 class="m-b-0">
+                        <strong>#3</strong>
+                    </h4>
+                </div>
+                <div class="media-body  media-middle">
+                    <h4 class="card-title">
+                        Lorem
+                        <input type="text" class="form-control" style="display: inline-block; width: 120px; border-color: #F44336; border-bottom: 3px dotted" value="ipsum" />
+                        dolor sit
+                        <input type="text" class="form-control" style="display: inline-block; width: 120px; border-color: #66BB6A; border-bottom: 3px dotted" value="ipsum" />
+                        <button type="button" class="btn btn-white">
+                            <i class="material-icons">done</i>
+                            <span class="icon-text">Resolver</span>
+                        </button>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-red center">
+        <div class="card-block">
+            <p>Incorrecto <a href="#" class="btn btn-primary btn-sm btn-rounded pull-xs-right">Siguiente <i class="material-icons">send</i></a></p>
+        </div>
+    </div>
+</div>
+
+
+@section sidebar {
+
+<div class="sidebar sidebar-right si-si-3 sidebar-visible-lg-up ls-top-navbar-xs-up sidebar-light bg-white sidebar-visible" id="sidebarRight" data-position="right" data-scrollable="" data-visible="lg-up">
+    
+    <div class="sidebar-heading">Bloque</div>
+    <ul class="list-group list-group-fit">
+        <li class="list-group-item">
+                <span class="media">
+                    <span class="media-left">
+                        <span class="btn btn-success btn-circle">#1</span>
+                    </span>
+                    <span class="media-body media-middle">
+                        This car belong to my brother. It is....
+                    </span>
+                </span>
+        </li>
+        <li class="list-group-item">
+                <span class="media">
+                    <span class="media-left">
+                        <span class="btn btn-danger btn-circle">#2</span>
+                    </span>
+                    <span class="media-body media-middle">
+                        Is that our train? No, ..... Arrives in 15 minutes.
+                    </span>
+                </span>
+        </li>
+        <li class="list-group-item active">
+                <span class="media">
+                    <span class="media-left">
+                        <span class="btn btn-white btn-circle">#3</span>
+                    </span>
+                    <span class="media-body media-middle">
+                        I have a horse. ...... Name is espinar.
+                    </span>
+                </span>
+        </li>
+        <li class="list-group-item">
+                <span class="media">
+                    <span class="media-left">
+                        <span class="btn btn-white btn-circle">#4</span>
+                    </span>
+                    <span class="media-body media-middle">
+                        This is my ...... Car
+                    </span>
+                </span>
+        </li>
+    </ul>
+</div>
+    
+}

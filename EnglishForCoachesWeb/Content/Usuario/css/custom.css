@@ -1,0 +1,182 @@
+/*a {
+    color: #303030!important;
+    text-decoration: none;
+}
+a:focus, a:hover {
+    color: #535353!important;
+    text-decoration: underline;
+}
+
+.active>.sidebar-menu-button, .sidebar-light .active>.sidebar-menu-button .sidebar-menu-icon {
+    color: #303030!important;
+}
+.bg-primary {
+    background-color: #303030!important;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: #131313!important;
+}
+.navbar-dark .form-inline .form-control {
+    background: #535353;
+    color: rgba(255,255,255,.5);
+    border-color: rgba(0,0,0,.05);
+}
+
+.card.card-stats-primary {
+    border-left: 3px solid #303030;
+}*/
+
+
+.material-icons.red{
+	color: #F44336;
+}
+.material-icons.green{
+	color: #66BB6A;
+}
+
+.navbar-brand {
+    margin-right: 0;
+}
+
+#logo_EnglishForFootball
+{
+    width: 180px;
+    background: url(../images/logo_alumno.png) no-repeat left center;
+    height: 56px;
+}
+
+#logo_RFEF{
+    width: 173px;
+    background: url(../images/logo_RFEF.png) no-repeat left center;
+    height: 56px;
+	margin-right:20px;
+}
+
+	
+
+/* EJERCICIOS */
+.btn-success {
+    color: #fff;
+    background-color: #66BB6A;
+    border-color: #66BB6A;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #F44336;
+    border-color: #F44336;
+}
+
+/* BOTONES EJERCICIOS */
+#ejercicio .btn-circle {
+    width: 60px;
+    height: 60px;
+    line-height: 58px;
+}
+#ejercicio .btn i.material-icons {
+    font-size: xx-large;
+}
+
+
+a.card.link {
+    background-color: #fff;
+    text-decoration: none;
+}
+
+a.card.link:hover {
+    background-color: #eaeaea;
+}
+
+a.card.link .card-title {
+    font-size: 1rem;
+}
+
+a.card.link .card-footer, a.card.link .card-header {
+    background-color: rgba(0,0,0,0);
+}
+
+.pagination-sm .page-link {
+    padding: .275rem .3rem;
+}
+
+.pagination {
+    margin-top: 0;
+}
+
+.language {
+    width: 36px;
+    height: 24px;
+    display: inline-block;
+}
+
+.language.en {
+    background: url(../images/en.png) no-repeat;
+}
+
+.language.en.off {
+    background: url(../images/en_desactivado.png) no-repeat;
+}
+
+.language.es {
+    background: url(../images/es.png) no-repeat;
+}
+
+.language.es.off {
+    background: url(../images/es_desactivado.png) no-repeat;
+}
+
+.card-block.temario{
+    font-size: 0.9rem;
+}
+
+.bloque {
+    padding: 15px;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    display: inline-block;
+    background-color: #ececec;
+}
+
+.bloque-frases {
+    width: 47%;
+}
+
+@media only screen and (max-width: 965px)
+{	
+	.navbar .form-inline .input-group .form-control {
+		padding-right: 0px;
+	}
+}
+
+@media only screen and (max-width: 920px)
+{	
+	#logo_RFEF{
+		width: 38px;
+		background: url(../images/logo_RFEF_mini.png) no-repeat left center;
+	}
+}
+
+@media only screen and (max-width: 400px)
+{	
+	#logo_EnglishForFootball{
+		width: 54px;
+		background: url(../images/logo_alumno_mini.png) no-repeat left center;
+	}
+}
+
+@media only screen and (max-width: 450px)
+{	
+	/* BOTONES EJERCICIOS */
+	#ejercicio .btn-circle {
+		width: 40px;
+		height: 40px;
+		line-height: 38px;
+	}
+	#ejercicio .btn i.material-icons {
+		font-size: large;
+	}
+    .navbar-brand>img {
+        width: 170px;
+        margin-top: 2px;
+    }
+}

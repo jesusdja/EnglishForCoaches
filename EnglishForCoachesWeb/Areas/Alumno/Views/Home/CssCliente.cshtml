@@ -1,0 +1,119 @@
+﻿@model EnglishForCoachesWeb.Database.Clientes.Cliente
+@{
+    /**/
+
+    /**/
+
+    /**/
+
+    /**/
+
+    /**/
+
+    var color = Model.EstiloColor;
+
+    int colorInt = int.Parse(Model.EstiloColor.Replace("#", ""), System.Globalization.NumberStyles.HexNumber);
+    int colorIntRestar = int.Parse("020202", System.Globalization.NumberStyles.HexNumber);
+
+    int resultado = colorInt - colorIntRestar;
+    string colorOscuro = "#" + resultado.ToString("X");
+}
+
+    a {
+    color: @color !important;
+    }
+
+    .bg-primary {
+    color: #fff !important;
+    background-color: @color !important;
+
+    }
+    a.bg-primary:focus, a.bg-primary:hover {
+    background-color: @colorOscuro !important;
+    }
+
+
+    .sidebar-light .active > .sidebar-menu-button {
+    color: @color !important;
+    }
+    .sidebar-light .active > .sidebar-menu-button .sidebar-menu-icon {
+    color: @color !important;
+    }
+    .btn-primary {
+    color: #fff !important;
+    background-color: @color !important;
+    border-color: @color !important;
+    }
+    .btn-primary:hover {
+    background-color: @colorOscuro !important;
+    border-color: #0b76cc;
+    }
+    .btn-primary:focus, .btn-primary.focus {
+    background-color: @colorOscuro !important;
+    border-color: #0b76cc; }
+    .btn-primary:active, .btn-primary.active,
+    .open > .btn-primary.dropdown-toggle {
+    background-color: @colorOscuro !important;
+    border-color: #0b76cc;
+    background-image: none; }
+    .btn-primary:active:hover, .btn-primary:active:focus, .btn-primary:active.focus, .btn-primary.active:hover, .btn-primary.active:focus, .btn-primary.active.focus,
+    .open > .btn-primary.dropdown-toggle:hover,
+    .open > .btn-primary.dropdown-toggle:focus,
+    .open > .btn-primary.dropdown-toggle.focus {
+    color: #fff !important;
+    background-color: #0a68b4;
+    border-color: #08528d; }
+    .btn-primary.disabled:focus, .btn-primary.disabled.focus, .btn-primary:disabled:focus, .btn-primary:disabled.focus {
+    background-color: @color !important;
+    border-color: @color !important;
+    }
+    .btn-primary.disabled:hover, .btn-primary:disabled:hover {
+    background-color: @color !important;
+    border-color: @color !important;
+    }
+
+    .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: @color !important;
+    border-color: @color !important;
+    }
+
+    /*
+    para mantener el color
+    */
+    .sidebar-light .sidebar-menu-button {
+    color: rgba(0,0,0,.54) !important;
+    }
+    .card-info, .card-primary, .card-red, .card-success, .card-warning, .list-group-item.active [class*=text-], .list-group-item.active a {
+    color: #fff !important;
+    }
+
+    .btn-default, .btn-white {
+    color: #818a91 !important;
+    background-color: #fff !important;
+    border-color: #eceeef !important;
+    }
+    .btn-info {
+    color: #fff !important;
+    }
+
+    .active.btn-default, .active.btn-default:hover, .btn-white.active, .btn-white.active:hover {
+    background: @colorOscuro !important;
+    color: #fff !important;
+    border-color: @colorOscuro !important;
+    }
+
+    .pagination .paginate_button.disabled a {
+    color: #818a91 !important;
+    }
+
+    .pagination .paginate_button.active a {
+    color: #fff !important;
+    background-color:@color !important;
+    border-color:@color !important;
+    }
+
+    .page-item.active .page-link, .page-item.active .page-link:focus, .page-item.active .page-link:hover {
+        color: #fff !important;
+        background-color:@color !important;
+        border-color:@color !important;
+    }

@@ -1,0 +1,40 @@
+﻿@using EnglishForCoachesWeb.Models;
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Perfil de usuario";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+                <!-- Page Header -->
+                <div class="content bg-gray-lighter">
+                    <div class="row items-push">
+                        <div class="col-sm-7">
+                            <h1 class="page-heading">
+                                @User.Identity.GetUserName()
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Page Header -->
+
+                <!-- Page Content -->
+                <div class="content">
+
+                    @if (ViewBag.StatusMessage == null)
+                    {
+                    <div class="alert alert-info alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <p>@ViewBag.StatusMessage</p>
+                    </div>
+                    }
+
+                    @Html.Partial("_ChangePasswordPartial")
+
+                </div>
+                <!-- END Page Content -->
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/globalization")
+}

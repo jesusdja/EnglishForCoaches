@@ -1,0 +1,65 @@
+﻿@using EnglishForCoachesWeb.Helpers
+@using System.Security.Claims
+
+<!DOCTYPE html>
+<html class="bootstrap-layout">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+
+    <link rel="shortcut icon" href="~/Content/Alumno/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="~/Content/Alumno/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/Content/Alumno/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/Content/Alumno/images/apple-touch-icon-114x114.png">
+
+    <!-- Prevent the demo from appearing in search engines (REMOVE THIS) -->
+    <meta name="robots" content="noindex">
+
+    <!-- Material Design Icons  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Roboto Web Font -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link href="/Content/Alumno/vendor/sweetalert.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/Content/Alumno/css/datatables.min.css">
+    <link rel="stylesheet" href="/Content/Alumno/vendor/fancytree.min.css">
+    @Styles.Render("~/Content/AlumnoCss")
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.5.0/css/font-awesome.min.css">
+
+    @RenderSection("Css", required: false)
+    <link href="@Url.Action("CssCliente","Home")" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="login">
+
+
+
+    <!-- Content -->
+        @RenderBody()
+
+
+    @*@Scripts.Render("~/bundles/AlumnoJs")
+    
+    @Scripts.Render("~/bundles/AlumnoChartsJs")*@
+    <script src="/Content/Alumno/vendor/jquery.min.js"></script>
+    <script src="/Content/Alumno/vendor/tether.min.js"></script>
+    <script src="/Content/Alumno/vendor/bootstrap.min.js"></script>
+    <script src="/Content/Alumno/vendor/adminplus.js"></script>
+    <script src="/Content/Alumno/js/main.min.js"></script>
+    <script src="/Content/Alumno/js/colors.js"></script>
+
+
+    <script src="/Content/Alumno/vendor/raphael-min.js"></script>
+    <script src="/Content/Alumno/vendor/morris.min.js"></script>
+
+
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

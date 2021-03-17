@@ -1,0 +1,46 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.ExamenesIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li class="active">Exámenes</li>
+    </ol>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="card-title">Exámenes</h4>
+                            <p class="card-subtitle">Estos son todos los exámenes que has hecho</p>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group list-group-fit m-b-0">
+@foreach (var item in Model.Examenes)
+{
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <div>
+                                    <a href="@Url.Action("View", "SubTemas", new { Area = "Alumno", id=item.SubTema.SubTemaId })">@item.SubTema.Descripcion</a>
+                                </div>
+                                <small class="text-light"><span class="label label-default">@item.FechaExamen.ToString("dd MMM yyyy")</span> <a href="@Url.Action("Index", "SubTemas", new { Area = "Alumno", id=item.SubTema.TemaId })">@item.SubTema.Tema.Descripcion</a></small>
+                            </div>
+                            <div class="media-right center">
+                                <h4 class="m-b-0 @Model.ColorResultado(item.Aprobado)">@item.Aciertos/@item.Total</h4>
+                                <small class="text-muted-light">@Model.TextoExamen(item.Aprobado)</small>
+                            </div>
+                        </div>
+                    </li>
+}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

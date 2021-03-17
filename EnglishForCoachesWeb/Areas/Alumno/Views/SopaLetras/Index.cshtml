@@ -1,0 +1,461 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.SopaLetrasIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+
+<div class="container">
+    <ol class="breadcrumb">
+
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.juegoOnline.SubTema.TemaId })">@Model.juegoOnline.SubTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.juegoOnline.SubTema.SubTemaId})">@Model.juegoOnline.SubTema.Descripcion</a></li>
+
+        <li class="active">@Model.juegoOnline.Descripcion</li>
+    </ol>
+
+
+
+    @if (!string.IsNullOrWhiteSpace(Model.juegoOnline.Explicacion))
+    {
+        <div class="card card-stats-primary">
+            <div class="card-block">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <i class="material-icons text-muted-light">info_outline</i>
+                    </div>
+                    <div class="media-body media-middle">
+                        @Model.juegoOnline.Explicacion
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.SopaLetras.Enunciado))
+    {
+        <div class="card card-stats-primary">
+            <div class="card-block">
+                <div class="media">
+                    <div class="media-body media-middle">
+                        @Model.SopaLetras.Enunciado
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="card card-stats-primary">
+        @foreach (var definicion in Model.Definiciones)
+        {
+            <div class="card-block">
+                <div class="media">
+                    <div id="divDefinicion_@definicion.VocabularioId" class="media-body media-middle">
+                        @definicion.Definicion
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- sopa de letras -->
+    <div class="row">
+        <div class="sopaLetrasContainer">
+            <div id="sopaLetras" class="noselect"  style="touch-action: none;">
+
+
+                @*@for (int y = 0; y < 12; y++)
+                    {
+
+                        for (int x = 0; x < 12; x++)
+                        {
+                            <div class="col-xs-1 celdaSopaLetras" id="celda_@y _@x" data-y="@y" data-x="@x">
+                                <div class="form-material letraSopaLetras" id="letra_@y _@x" data-y="@y" data-x="@x">
+                                    <span>@Model.Letras[y][x]</span>
+                                </div>
+                            </div>
+                        }
+                    }*@
+
+            </div>
+
+            <div id="divComentario">
+                <div class="card-block">
+                    <div class="media">
+                        <div class="media-body media-middle" id="divComentarioTexto">
+                            Comentario
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="divResultado">
+                <div class="card-block">
+                    <div class="media">
+                        <div class="media-body media-middle" id="divResultadoTexto">
+                            Resultado
+                        </div>
+                        <div class="media-right" id="btnRepetir">
+                            <a href="@Url.Action("Index",  "SopaLetras", new { Area = "Alumno" ,id=Model.juegoOnline.JuegoOnlineId})"
+                               class="btn btn-primary btn-sm btn-rounded pull-xs-right">Repetir<i class="material-icons">settings_backup_restore</i></a>
+                        </div>
+                        <div class="media-right">
+                            <a href="@Url.Action("Index",  "JuegoOnlines", new { Area = "Alumno" ,id=Model.juegoOnline.SubTemaId})"
+                               class="btn btn-primary btn-sm btn-rounded pull-xs-right">Cerrar<i class="material-icons">clear</i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<audio id="audio_acierto">
+    <source id="audio_acierto_source" src="~/Content/Alumno/audio/acierto.mp3" type="audio/mpeg" />
+</audio>
+
+<audio id="audio_fallo">
+    <source src="~/Content/Alumno/audio/fallo.mp3" type="audio/mpeg" />
+</audio>
+
+
+
+
+
+@section Scripts {
+
+    <script src="~/Scripts/Shared/bodyScrollLock.js"></script>
+
+    <script src="~/Scripts/wordfind.js"></script>
+    <!-- Page JS Code -->
+    <script>
+
+        var btnResolver=$('#btnResolver');
+        var btnRepetir=$('#btnRepetir');
+
+        var divResultado = $("#divResultado");
+                    var divResultadoTexto = $("#divResultadoTexto");
+
+                    var divComentario = $("#divComentario");
+                    var divComentarioTexto = $("#divComentarioTexto");
+
+                    var divSopaLetras = $("#sopaLetras");
+        var nAciertos = 0;
+        var aciertosDivs = [];
+        var currentDivs = [];
+        var mouseDown = false;
+        var direction = "";
+        var palabra = "";
+                    var arrayVocabularios = [];
+
+    @foreach (var d in Model.Vocabularios)
+    {
+        @:arrayVocabularios.push( "@d");
+    }
+
+                    function cargarSopaLetras() {
+
+
+                        var puzzle = wordfind.newPuzzle(arrayVocabularios, {
+                            // Set dimensions of the puzzle
+                            height: 12,
+                            width: 12,
+                            // or enable all with => orientations: wordfind.validOrientations,
+                            orientations: wordfind.validOrientations,//['horizontal', 'vertical'],
+                            // Set a random character the empty spaces
+                            fillBlanks: true,
+                            preferOverlap: false
+                        });
+                       // console.log(puzzle);
+                        divSopaLetras.empty();
+
+                        for (var i = 0; i < puzzle.length; i++) {
+                            var lineaPuzzle = puzzle[i];
+                            //var lineaDiv = $(' <div class="form-group"></div>');
+                            //divSopaLetras.append(lineaDiv);
+
+                            for (var j = 0; j < lineaPuzzle.length; j++) {
+                                var celdaPuzzle = lineaPuzzle[j];
+
+                                var celdaDiv = $('<div class="col-xs-1 celdaSopaLetras" id="celda_'+i+' _'+j+'" data-y="'+i+'" data-x="'+j+'">'+
+                                      '<div class="form-material letraSopaLetras" id="letra_'+i+' _'+j+'" data-y="'+i+'" data-x="'+j+'">'+
+                                      '<span>' + celdaPuzzle + '</span>' +
+                                      '</div>' +
+                                      '</div>' );
+
+
+
+                                divSopaLetras.append(celdaDiv);
+
+                            }
+                        }
+                    }
+
+        var is_iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+        $(document).ready(function () {
+
+
+            if (is_iOS) {
+                //document.getElementById("sopaLetras").addEventListener('touchstart touchmove touchend', function (e) {
+                //    e.preventDefault();
+                //});
+                //document.getElementById("sopaLetras").ontouchmove = function (event) {
+                //    event.preventDefault();
+                //}
+            }
+            //console.log(document.getElementById("sopaLetras"));
+            //bodyScrollLock.disableBodyScroll(document.getElementById("sopaLetras"));
+
+            btnRepetir.hide();
+            divResultado.hide();
+            divComentario.hide();
+            cargarSopaLetras();
+            $('.celdaSopaLetras').height($('.celdaSopaLetras').width());
+
+
+            $(".letraSopaLetras").bind('touchstart mousedown', function (e) {
+                event.preventDefault();
+             //   console.log('touchstart mousedown');
+                iniciarSeleccion(this);
+               // return false;
+            }).bind('mouseenter', function (e) {
+            //    event.preventDefault();
+            //    console.log('mouseenter');
+                anyadirSeleccion(this);
+
+               // return false;
+
+                }).bind('touchend mouseup', function (e) {
+                 //   event.preventDefault();
+                 //   console.log('touchend mouseup');
+                    terminarSeleccion();
+
+               //     return false;
+                })
+            $(".letraSopaLetras").on('touchmove', function (e) {
+            //    event.preventDefault();
+               // console.log("touchmove");
+                var ele = document.elementFromPoint(e.originalEvent.touches[0].clientX, e.originalEvent.touches[0].clientY);
+
+                var target = $(ele);
+                var divObjetivo;
+                if (target.is("span")) {
+                    divObjetivo = target.parent();
+                }
+                if (target.is("div")) {
+                    if (target.attr('id').includes("letra", 0)) {
+                        divObjetivo = target;
+                    }
+                    if (target.attr('id').includes("celda", 0)) {
+                        divObjetivo = target.children()[0];
+                    }
+                }
+                if (divObjetivo) {
+                    anyadirSeleccion(divObjetivo);
+                }
+
+            //    return false;
+            });
+        });
+
+        var last_touched_button = '';
+
+        function iniciarSeleccion(div) {
+            if (!mouseDown) {
+                mouseDown = true;
+                desmarcarDivs();
+                $div = $(div);
+                if (currentDivs.indexOf($div) < 0) {
+                    currentDivs.push($div);
+                    $div.parent().addClass("sopaLetrasSeleccionado");
+                    palabra += $($div.children()[0]).text();
+                }
+            }
+        }
+
+        function getDirection(currentDiv) {
+            var previousDiv = currentDivs[currentDivs.length - 1];
+            var xDiference = previousDiv.data("x") - currentDiv.data("x");
+            var yDiference = previousDiv.data("y") - currentDiv.data("y");
+
+            var result = "";
+            if (xDiference < 0 ) {
+                result+= "right";
+            }
+            if (xDiference > 0 ) {
+                result += "left";
+            }
+            if (yDiference < 0 ) {
+                result += "down";
+            }
+            if (yDiference > 0 ) {
+                result += "up";
+            }
+
+            return result;
+        }
+
+        function direccionCorrecta(currentDiv) {
+            currentDirection = getDirection( currentDiv);
+            //console.log("current "+currentDirection);
+            //console.log("inicial " +direction);
+            if (direction == '') {
+                return false;
+            }
+
+            if (currentDirection == direction) {
+                return true;
+            }
+            return false;
+        }
+
+        function esConsecutivo(currentDiv) {
+            var previousDiv = currentDivs[currentDivs.length - 1];
+            var xDiference = previousDiv.data("x") - currentDiv.data("x");
+            if (xDiference < 0) xDiference *= -1;
+            if (xDiference > 1) {
+                return false;
+            }
+
+            var yDiference = previousDiv.data("y") - currentDiv.data("y");
+            if (yDiference < 0) yDiference *= -1;
+
+            if (yDiference > 1) {
+                return false;
+            }
+
+            return true;
+        }
+
+        function anyadirSeleccion(div) {
+            if (mouseDown) {
+                $div = $(div);
+                if (direction == "") {
+                    direction = getDirection( $div);
+                }
+
+                if (direccionCorrecta($div)) {
+                    if (esConsecutivo($div)) {
+                        //console.log("currentDivs");
+                        //console.log(currentDivs);
+                        //console.log("new div");
+                        //console.log($div);
+                        if (currentDivs.indexOf($div) < 0) {
+                            currentDivs.push($div);
+                            $div.parent().addClass("sopaLetrasSeleccionado");
+
+                          //  console.log("add" + $($div.children()[0]).text());
+                            palabra += $($div.children()[0]).text();
+                        }
+                    }
+                }
+            }
+        }
+        function terminarSeleccion() {
+            mouseDown = false;
+
+            validar();
+
+        }
+
+
+        function desmarcarDivs() {
+            for (var div of currentDivs) {
+                div.parent().removeClass("sopaLetrasSeleccionado");
+            }
+            direction = "";
+            currentDivs = [];
+            palabra = "";
+        }
+
+
+
+        function validar() {
+
+            divComentario.hide();
+
+            var enviados = true;
+            for (var div of currentDivs) {
+                if (aciertosDivs.indexOf(div)<0) {
+                    enviados = false;
+                }
+            }
+          //  console.log("enviados:" + enviados)
+            if (!enviados) {
+                llamadaValidar();
+            } else {
+                desmarcarDivs();
+            }
+
+        }
+
+        function llamadaValidar() {
+            var firstDiv = currentDivs[0];
+            var lastDiv = currentDivs[currentDivs.length - 1];
+              var postData = {
+                firstDiv_x: firstDiv.data("x"),
+                firstDiv_y: firstDiv.data("y"),
+                lastDiv_x: lastDiv.data("x"),
+                lastDiv_y: lastDiv.data("y"),
+                  acertadas: nAciertos,
+                  palabra: palabra
+            };
+
+            //console.log("llamadaValidar")
+            //console.log(postData)
+
+            var url = '@Url.Action("Contestar", "SopaLetras", new { Area = "Alumno" })';
+            url = url+ '/' + @(Model.juegoOnline.JuegoOnlineId);
+            $.ajax({
+                url: url,
+                type: "POST",
+                contentType: "application/json; charset=UTF-8",
+                success: function (result) {
+
+                    if (result.Correcto) {
+                        nAciertos++;
+
+                        document.getElementById('audio_acierto_source').src = "/media/upload/audio/" + result.FicheroAudio;
+
+                        document.getElementById('audio_acierto').load();
+                        document.getElementById('audio_acierto').play();
+                        for (var div of currentDivs) {
+                            div.parent().addClass("sopaLetrasCorrecto");
+                            aciertosDivs.push(div);
+                        }
+
+                        $("#divDefinicion_" + result.VocabularioId).addClass("definicionsopaLetrasAcertada");
+
+                    } else {
+                        document.getElementById('audio_fallo').play();
+                    }
+                    desmarcarDivs();
+
+
+                    if (result.Comentario) {
+                        divComentarioTexto.text(result.Comentario);
+                        divComentario.addClass("card-success");
+                        divComentario.show();
+                    }
+                    if (result.Finalizado) {
+                        //divResultadoTexto.text("¡¡¡Has completado la sopa de letras!!!\r\n" + result.textoFinalizado);
+                        //divResultado.addClass("card-success");
+
+
+                        //divResultado.show();
+
+
+                        var urlCompletado = '@Url.Action("Completado", "SopaLetras", new { Area = "Alumno",id=Model.juegoOnline.JuegoOnlineId })';
+
+                        window.location.replace(urlCompletado);
+                    }
+
+                },
+                data: JSON.stringify(postData),
+                dataType: "json",
+                traditional: true
+            });
+        }
+
+    </script>
+}

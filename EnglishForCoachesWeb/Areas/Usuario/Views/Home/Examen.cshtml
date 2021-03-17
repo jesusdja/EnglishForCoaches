@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "~/Areas/Usuario/Views/Shared/_UsuarioLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Usuario" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></li>
+        <li><a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Cortesia, disculpas y felicitaciones</a></li>
+        <li class="active">Examen</li>
+    </ol>
+
+    <div class="card-group">
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="m-b-0">
+                    <strong>30</strong>
+                </h4>
+                <small class="text-muted-light">TOTAL</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-primary m-b-0">
+                    <strong>17</strong>
+                </h4>
+                <small class="text-muted-light">RESTANTES</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-white p-a-1">
+            <div class="media">
+                <div class="media-left media-middle">
+                    <h4 class="m-b-0">
+                        <strong>#3</strong>
+                    </h4>
+                </div>
+                <div class="media-body  media-middle">
+                    <h4 class="card-title">
+                        Lorem
+                        <input type="text" class="form-control" style="display: inline-block; width: 120px; border-bottom: 3px dotted" />
+                        dolor sit
+                        <input type="text" class="form-control" style="display: inline-block; width: 120px; border-bottom: 3px dotted" />
+                        <button type="button" class="btn btn-white">
+                            <i class="material-icons">done</i>
+                            <span class="icon-text">Siguiente</span>
+                        </button>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="jumbotron">
+        <h4><i class="material-icons text-success md-36">done</i> ¡Enhorabuena! Has superado el examen.</h4>
+        <p class="lead">Has desbloqueado una nueva lección: <i class="material-icons text-success">lock_open</i> <a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Cortesia, disculpas y felicitaciones</a></p>
+        <hr />
+        <div class="media">
+            <div class="media-left">
+                <h4 class="m-b-0"><span class="text-success">28</span>/30</h4>
+            </div>
+            <div class="media-body media-middle">
+                <progress class="progress progress-striped progress-success" value="90" max="100">90%</progress>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron">
+        <h4><i class="material-icons text-danger md-36">not_interested</i> Lo sentimos, no has superado el examen.</h4>
+        <hr/>
+        <div class="media">
+            <div class="media-left">
+                <h4 class="m-b-0"><span class="text-danger">15</span>/30</h4>
+            </div>
+            <div class="media-body media-middle">
+                <progress class="progress progress-striped progress-danger" value="50" max="100">50%</progress>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,167 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.CalendarioIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+@section Css {    
+    <link rel="stylesheet" href="/Content/Alumno/css/fullcalendar.min.css">
+}
+
+
+
+
+
+
+<div class="container-fluid">
+
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li class="active">Registro de actividad</li>
+    </ol>
+
+    <div class="row">
+        <div class="col-md-7">
+            <!-- Calendar -->
+            <div id="calendar"></div>
+
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" id="lblFecha"></h4>
+                </div>
+                <ul class="list-group" id="listaEventos"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+        @section Scripts {
+            <!-- Required by Calendar (fullcalendar) -->
+            <script src="/Content/Alumno/vendor/moment.min.js"></script>
+            <script src="/Content/Alumno/vendor/locale/es.js"></script>
+            <!-- Fullcalendar -->
+            <script src="/Content/Alumno/vendor/fullcalendar.min.js"></script>
+            <script src="/Content/Alumno/vendor/fullcalendar/es.js"></script>
+
+            <!-- Page JS Code -->
+            <script>
+
+
+
+
+
+                (function ($) {
+
+                    var date = new Date();
+                    var calendarMonth = ("0" + (date.getMonth() + 1)).slice(-2);
+
+               
+
+                    var iconos = {
+                        "AccesoUsuario": "<i class='material-icons text-muted-light'>lock_open</i>",
+                        "BloqueRealizado": "<i class='material-icons text-muted-light'>create</i>",
+                        "Examen": "<i class='material-icons text-muted-light'>done</i>",
+                        "ExtraDesbloqueado": "<i class='material-icons text-muted-light'>star</i>",
+                        "ForoMensaje": "<i class='material-icons text-muted-light'>chat</i>",
+                        "VocabularioGlosario": "<i class='material-icons text-muted-light'>view_headline</i>",
+                    };
+
+
+                    function renderSidebar(fecha) {
+                        var url = '@Url.Action("GetEventsDay", "Calendario", new { Area = "Alumno" })';
+                        url = url + '?fecha=' + moment(fecha).format("DD-MM-YYYY");
+                        var lblFecha = $('#lblFecha');
+                        lblFecha.text(moment(fecha).format("LL"));
+                        $.ajax({
+                            url: url,
+                            type: "GET",
+                            success: function (result) {
+                                var ul = $('#listaEventos');
+                                ul.empty();
+                                for (var i = 0; i < result.length; i++) {
+                                    ul.append('<li class="list-group-item">' +
+                                                '<div class="media">' +
+                                                    '<div class="media-left">' +
+                                                    iconos[result[i].tipo] +
+                                                    '</div>' +
+                                                    '<div class="media-body media-middle">' +
+                                                    '<small>' + result[i].texto + '</small>' +
+                                                    '</div>' +
+                                                    '<div class="media-right">' +
+                                                    '<small class="text-muted-light">' + result[i].hora + '</small>' +
+                                                    '</div>' +
+                                                '</div>' +
+                                                '</li>');
+                                }
+                            }
+                        });
+
+                    }
+
+
+                    @*function CargarEventos() {
+                        var url = '@Url.Action("GetEvents", "Calendario", new { Area = "Alumno" })';
+                        url = url + '?month='+ (moment().month() +1);
+                        $.ajax({
+                            url: url,
+                            type: "GET",
+                            success: function (result) {
+                                cargarCalendario(result);
+                            }
+                        });
+                    }*@
+
+                    function cargarCalendario() {
+
+                        if ($('#calendar').length > 0) {
+
+                            /* initialize the calendar
+                             -----------------------------------------------------------------*/
+
+                            $('#calendar').fullCalendar({
+                                header: {
+                                    left: 'prev',
+                                    center: 'title',
+                                    right: 'next'
+                                },
+                                editable: true,
+                                eventLimit: true, // allow "more" link when too many events                                
+                                events: '@Url.Action("GetEvents", "Calendario", new { Area = "Alumno" })',
+                                eventClick: function (event) {
+                                    eventClickAction(event);
+                                },
+                                eventRender: function (event, element) {
+                                    eventList = eventList + event;
+                                    element.css('background-color', event.bg);
+                                },
+                                loading: function (bool) {
+                                    if (bool) {
+                                        $('#loading').toggle(bool);
+                                    }
+                                },
+                                viewRender: function (view, element) {
+                                }
+
+                            });
+
+                            function eventClickAction(event) {
+                                renderSidebar(event.start);
+                            }
+                        }
+
+                    }
+
+
+                    // object containing events
+                    var eventList = new Object();
+                    
+                    cargarCalendario();
+                    renderSidebar(moment());
+
+                }(jQuery));
+            </script>
+        }

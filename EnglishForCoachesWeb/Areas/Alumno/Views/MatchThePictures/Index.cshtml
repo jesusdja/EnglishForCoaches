@@ -1,0 +1,227 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.MatchThePictureIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index", "Subtemas", new { Area = "Alumno", id = Model.bloque.SubTema.TemaId })">@Model.bloque.SubTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View", "Subtemas", new { Area = "Alumno", id = Model.bloque.SubTema.SubTemaId })">@Model.bloque.SubTema.Descripcion</a></li>
+        <li><a href="@Url.Action("Index", "Bloques", new { Area = "Alumno", id = Model.bloque.SubTemaId, areaId = Model.bloque.Area.AreaId })">@Model.bloque.Area.Descripcion</a></li>
+        <li class="active">@Model.bloque.Descripcion</li>
+    </ol>
+
+  
+
+    @if (!string.IsNullOrWhiteSpace(Model.bloque.Explicacion))
+    {
+        <div class="card card-stats-primary">
+            <div class="card-block">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <i class="material-icons text-muted-light">info_outline</i>
+                    </div>
+                    <div class="media-body media-middle">
+                        @Model.bloque.Explicacion
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @{int numero = 0; }
+ 
+
+    <div  id='divPreguntas' class="row">
+        @for (var i=0;i< Model.Imagenes.Count;i++)
+        {
+            numero++;
+            <div class="col-md-2 col-sm-4 col-xs-4">
+                <div class="card"  id="dropTarget_@i" >
+                    <div data-value="@Model.Imagenes[i]" id="divImagen_@i" style="background-image:url('../../../media/upload/MatchThePicture/@Model.Imagenes[i]');" class="mtp-imagen"></div>
+                    <div data-value="@Model.Palabras[i]" class="card-block palabraDraggable mtp-cuadroTexto" id="divPalabra_@i">
+                        <h5 class="mtp-header">@Model.Palabras[i]</h5>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+  
+
+
+        <div class="card" id="divResolver">
+            <div class="card-header bg-white p-a-1">
+                <div class="media">
+                    <div class="media-body  media-middle">                    
+
+                        <button type="button" id="btnResolver" class="btn btn-white">
+                            <i class="material-icons">done</i>
+                            <span class="icon-text">Resolver</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="card card-success center" id="divResultado">
+            <div class="card-block">
+                <div class="media">
+                    <div class="media-body media-middle" id="divResultadoTexto">
+                        Resultado
+                    </div>
+                    <div class="media-right" id="btnRepetir">
+                        <a href="@Url.Action("Index",  "MatchThePictures", new { Area = "Alumno" ,id=Model.bloque.BloqueId})"
+                           class="btn btn-primary btn-sm btn-rounded pull-xs-right">Repetir<i class="material-icons">settings_backup_restore</i></a>
+                    </div>
+                    <div class="media-right">
+                        <a href="@Url.Action("Index",  "Bloques", new { Area = "Alumno" ,id=Model.bloque.SubTemaId,areaId=Model.bloque.Area.AreaId})"
+                           class="btn btn-primary btn-sm btn-rounded pull-xs-right">Cerrar<i class="material-icons">clear</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+@section Scripts {
+
+@Scripts.Render("~/bundles/AlumnoJQueryJs")
+@*<script src="~/Content/Alumno/vendor/jquery.ui.swappable.js"></script>*@
+
+    <!-- Page JS Code -->
+    <script>
+
+        var nPalabras=@Model.Palabras.Count;
+
+        
+        var divResolver=$('#divResolver');
+        var btnResolver=$('#btnResolver');
+        var btnRepetir=$('#btnRepetir');
+        
+        var divPreguntas = $("#divPreguntas");
+
+        var divResultado = $("#divResultado");
+        var divResultadoTexto = $("#divResultadoTexto");
+
+
+        $(document).ready(function () {
+            btnRepetir.hide();
+            divResultado.hide();
+
+            for (var i=0;i< nPalabras;i++)
+            {
+                $( "#divPalabra_"+i ).draggable({ opacity: 0.7,
+                    helper: "clone",
+                    revert: 'invalid',
+                    appendTo: 'body' ,                    
+                        zIndex: 10000
+                //    stack: ".palabraDraggable"
+                });
+                $('#dropTarget_'+i).droppable({
+                    accept: ".palabraDraggable",
+                  //  stack: ".palabraDraggable",
+                    classes: {
+                        "ui-droppable-active": "mtp-droppable-active",
+                        "ui-droppable-hover": "mtp-droppable-hover"
+                    },
+                    drop: function(ev, ui) {
+                        var dropped = ui.draggable;
+                        var droppedOn = $(this);     
+                        var droppedOnH5 =droppedOn.find('div');
+                        console.log(droppedOnH5);
+                        var droppedParent=dropped.parent();
+                        $(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn);
+                        if(droppedOnH5.length>0){
+                            $(droppedOnH5[1]).detach().css({top: 0,left: 0}).appendTo(droppedParent);
+                        }
+                    }
+                });
+            }
+
+            btnResolver.on('click', function () {
+                validar();
+            });
+
+        });
+
+
+        function validar() {
+            btnResolver.off('click');
+            divResolver.hide();
+            var respuestas=[];
+
+            var divs = divPreguntas.find('div').get();
+            console.log(divs);
+            var pregunta ="";
+            for (var i = 0; i < divs.length; i++)
+            {
+                if(divs[i].id){
+                    var div=$('#'+divs[i].id);
+      
+                    if(div.attr('id').indexOf("divImagen_")!=-1){
+                  
+                        pregunta = div.attr('data-value');
+                    }
+                    if(div.attr('id').indexOf("divPalabra_")!=-1){
+                        div.draggable("disable");
+                        var respuesta = div.attr('data-value');
+                        respuestas.push(pregunta + respuesta)
+                    }
+                }
+            }
+            console.log(respuestas);
+        var postData = { respuestas: respuestas };
+
+        var url = '@Url.Action("Contestar", "MatchThePictures", new { Area = "Alumno" })';
+        url = url+ '/' + @(Model.bloque.BloqueId);
+        $.ajax({
+            url: url,
+            type: "POST",
+            success: function (result) {
+                console.log(result);
+                                
+                var acertadas=true;
+                for (var i = 0; i < result.Correctas.length; i++)
+                {
+                    var div=$('#dropTarget_'+i);
+                    if(result.Correctas[i])
+                    {
+                        div.addClass("text-success");
+                    }else{
+                        div.addClass("text-danger");
+                        acertadas=false;
+                    }                      
+                }               
+
+                if (acertadas) {
+                    divResultadoTexto.text("Correcto");
+                    divResultado.addClass("card-success");
+                } else {
+                    btnRepetir.show();
+                    divResultadoTexto.text("Incorrecto");
+                    divResultado.addClass("card-red");
+                }
+
+                divResultado.show();
+            },
+            data: postData,
+            dataType: "json",
+            traditional: true
+        });
+
+    }
+
+
+</script>
+}

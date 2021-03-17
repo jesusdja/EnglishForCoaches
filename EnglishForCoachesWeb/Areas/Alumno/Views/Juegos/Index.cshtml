@@ -1,0 +1,40 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.JuegosIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index", "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.SubTema.TemaId })">@Model.SubTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.SubTema.SubTemaId})">@Model.SubTema.Descripcion</a></li>
+        <li><a href="@Url.Action("Seleccion",  "Juegos", new { Area = "Alumno" ,id=Model.SubTema.SubTemaId})">Juegos</a></li>
+        <li class="active">Juegos offline</li>
+    </ol>
+
+    <h1 class="page-heading h2">Juegos offline</h1>
+    <div class="row">
+        <div class="card-columns">
+            @foreach (var item in Model.CategoriaJuegos)
+            {
+
+                <div class="card">
+                    <a> <img src="~/Content/Alumno/images/juegos/@item.Icono" alt="@item.Descripcion" style="width:100%;"> </a>
+                          <div class="card-block">
+                        <div class="media m-b-05">
+                            <div class="media-body media-middle">
+                                <h4 class="card-title m-b-0"><a href="@Url.Action("Categoria", "Juegos", new { Area = "Alumno", id = item.CategoriaJuegoId, subtemaId=Model.SubTema.SubTemaId })">@item.Descripcion</a></h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white"> <a href="@Url.Action("Categoria", "Juegos", new { Area = "Alumno", id = item.CategoriaJuegoId, subtemaId=Model.SubTema.SubTemaId })" class="btn btn-primary btn-sm"> Continuar <i class="material-icons">play_circle_outline</i></a> </div>
+                </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>

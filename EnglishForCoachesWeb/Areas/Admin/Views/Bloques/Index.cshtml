@@ -1,0 +1,544 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.BloquesIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.Subtema.TemaId })">
+                    @Model.Subtema.Tema.Descripcion
+                </a>
+                / @Model.Subtema.Descripcion
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="block">
+                <div class="block-header">
+                    <ul class="block-options">
+                        <li>
+                            <button type="button" onclick="location.href='@Url.Action("Create", "Gramaticas", new { Area = "Admin", Id=Model.Subtema.SubTemaId })';"><i class="si si-note"></i> Nueva gramática</button>
+                        </li>
+                        <li>
+                            <button type="button" onclick="location.href='@Url.Action("Create", "Bloques", new { Area = "Admin", Id=Model.Subtema.SubTemaId })';"><i class="si si-note"></i> Nuevo contenido</button>
+                        </li>
+                        <li>
+                            <button type="button" onclick="location.href='@Url.Action("Create", "Juegos", new { Area = "Admin", Id=Model.Subtema.SubTemaId })';"><i class="si si-game-controller"></i> Nuevo juego offline</button>
+                        </li>
+                        <li>
+                            <button type="button" onclick="location.href='@Url.Action("Create", "JuegoOnlines", new { Area = "Admin", Id=Model.Subtema.SubTemaId })';"><i class="si si-game-controller"></i> Nuevo juego online</button>
+                        </li>
+                        <li>
+                            <button type="button" onclick="location.href='@Url.Action("Create", "SubtemaVideos", new { Area = "Admin", Id=Model.Subtema.SubTemaId })';"><i class="si si-camcorder"></i> Nuevo video</button>
+                        </li>
+                        <li>
+                            <button type="button" onclick="location.href='@Url.Action("Create", "Extras", new { Area = "Admin", Id=Model.Subtema.SubTemaId })';"><i class="si si-star"></i> Nuevo extra</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="block">
+                    <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs">
+                        <li class="@(Model.pestanyaSeleccionada==1?"active":"")" onclick="cambiarPestanya(1);">
+                            <a href="#btabs-alt-static-home">Gramáticas</a>
+                        </li>
+                        <li class="@(Model.pestanyaSeleccionada==2?"active":"")" onclick="cambiarPestanya(2);">
+                            <a href="#btabs-alt-static-profile">Contenidos</a>
+                        </li>
+                        <li class="@(Model.pestanyaSeleccionada==3?"active":"")" onclick="cambiarPestanya(3);">
+                            <a href="#btabs-alt-static-juegos-offline">Juegos offline</a>
+                        </li>
+                        <li class="@(Model.pestanyaSeleccionada==4?"active":"")" onclick="cambiarPestanya(4);">
+                            <a href="#btabs-alt-static-juegos-online">Juegos online</a>
+                        </li>
+                        <li class="@(Model.pestanyaSeleccionada==5?"active":"")" onclick="cambiarPestanya(5);">
+                            <a href="#btabs-alt-static-videos">Videos</a>
+                        </li>
+                        <li class="@(Model.pestanyaSeleccionada==6?"active":"")" onclick="cambiarPestanya(6);">
+                            <a href="#btabs-alt-static-extras">Extras</a>
+                        </li>
+                    </ul>
+                    <div class="block-content tab-content">
+                        <div class="tab-pane @(Model.pestanyaSeleccionada==1?"active":"")" id="btabs-alt-static-home">
+                            <div class="block-content">
+                                <table class="table table-hover table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.listadoGramaticas[0].Cuerpo)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.listadoGramaticas[0].Orden)
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.listadoGramaticas)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @item.Titulo
+
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        string disabledTop = "";
+                                                        string disabledDown = "";
+                                                    }
+                                                    @if (item.Orden == Model.listadoGramaticas.First().Orden)
+                                                    {
+                                                        disabledTop = "disabled";
+                                                    }
+                                                    @if (item.Orden == Model.listadoGramaticas.Last().Orden)
+                                                    {
+                                                        disabledDown = "disabled";
+                                                    }
+                                                    <button @disabledTop value="@item.GramaticaId" posicion="top" class="arrowTopDown btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Subir posición">
+                                                        <i class="fa fa-arrow-up"></i>
+                                                    </button>
+
+                                                    <button @disabledDown value="@item.GramaticaId" posicion="down" class="arrowTopDown btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Bajar posición">
+                                                        <i class="fa fa-arrow-down"></i>
+                                                    </button>
+
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Editar gramática"
+                                                                onclick="location.href='@Url.Action("Edit", "Gramaticas", new {Area = "Admin" , id=item.GramaticaId })';">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </button>
+
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Frases"
+                                                                onclick="location.href='@Url.Action("Index", "Frases", new {Area = "Admin" , id=item.GramaticaId })';">
+                                                            <i class="fa fa-comment-o"></i>
+                                                        </button>
+
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Vocabulario"
+                                                                onclick="location.href='@Url.Action("Index", "GramaticaVocabularios", new {Area = "Admin" , id=item.GramaticaId })';">
+                                                            <i class="fa fa-align-justify"></i>
+                                                        </button>
+
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Mover gramatica"
+                                                                onclick="location.href='@Url.Action("Move", "Gramaticas", new {Area = "Admin", id= item.GramaticaId })';">
+                                                            <i class="fa fa-files-o"></i>
+                                                        </button>
+
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Copiar gramatica"
+                                                                onclick="location.href='@Url.Action("Copy", "Gramaticas", new {Area = "Admin", id= item.GramaticaId })';">
+                                                            <i class="fa fa-paste"></i>
+                                                        </button>
+
+                                                        <button onclick="if(confirm('¿Está seguro que desea borrar la gramática?')) location.href='@Url.Action("Delete", "Gramaticas", new {Area = "Admin" , id=item.GramaticaId })';" class="removeItem btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Eliminar gramática">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane @(Model.pestanyaSeleccionada==2?"active":"")" id="btabs-alt-static-profile">
+                            <div class="block-header">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(model => model.pestanyaSeleccionada, new { id = "hidPestanyaseleccionada" })
+                                    <div class="col-sm-4">
+                                        @Html.DropDownListFor(model => model.AreaBusquedaId, Model.areasSelectList, "Area", new { @class = "form-control" })
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        @Html.DropDownListFor(model => model.TipoEjercicioBusquedaId, Model.tipoEjerciciosSelectList, "Tipo de Ejercicio", new { @class = "form-control" })
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="input-group input-group-lg">
+                                            @Html.TextBoxFor(model => model.TextoBusqueda, new { @class = "form-control", placeholder = "Buscar…" })
+
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="block-content">
+                                <table class="table table-hover table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Area
+                                            </th>
+                                            <th>
+                                                Tipo ejercicio
+                                            </th>
+                                            <th>
+                                                Descripción
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.listadoBloques)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @item.Area.Descripcion
+                                                </td>
+                                                <td>
+                                                    @item.TipoEjercicio.Descripcion
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Edit", "Bloques", new { Area = "Admin", Id = @item.BloqueId })" data-toggle="tooltip" title="" data-original-title="Ver ejercicios">
+                                                        @item.Descripcion
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Editar contenido"
+                                                                onclick="location.href='@Url.Action("Create", item.TipoEjercicio.Controlador, new {Area = "Admin", id= item.BloqueId })';">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </button>
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Copiar contenido"
+                                                                onclick="location.href='@Url.Action("Copy", "Bloques", new {Area = "Admin", id= item.BloqueId })';">
+                                                            <i class="fa fa-files-o"></i>
+                                                        </button>
+
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Eliminar contenido"
+                                                                onclick="if(confirm('¿Está seguro que desea borrar el contenido?')) location.href='@Url.Action("Delete", "Bloques", new {Area = "Admin" , id=item.BloqueId })';">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="tab-pane @(Model.pestanyaSeleccionada==3?"active":"")" id="btabs-alt-static-juegos-offline">
+                            <div class="block-content">
+                                <table class="table table-hover table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Titulo
+                                            </th>
+                                            <th>
+                                                Categoría
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.listadoJuegos)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @item.Titulo
+
+                                                </td>
+                                                <td>
+                                                    @item.CategoriaJuego.Descripcion
+
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Editar juego"
+                                                                onclick="location.href='@Url.Action("Edit", "Juegos", new {Area = "Admin" , id=item.JuegoId })';">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </button>
+
+
+                                                        <button onclick="if(confirm('¿Está seguro que desea borrar el juego?')) location.href='@Url.Action("Delete", "Juegos", new {Area = "Admin" , id=item.JuegoId })';" class="removeItem btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Eliminar gramática">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane @(Model.pestanyaSeleccionada==4?"active":"")" id="btabs-alt-static-juegos-online">
+                            <div class="block-content">
+                                <table class="table table-hover table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Tipo juego
+                                            </th>
+                                            <th>
+                                                Descripción
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.listadoJuegoOnlines)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @item.TipoJuegoOnline.Descripcion
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Edit", "JuegoOnlines", new { Area = "Admin", Id = @item.JuegoOnlineId })" data-toggle="tooltip" title="" data-original-title="Ver ejercicios">
+                                                        @item.Descripcion
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Editar contenido"
+                                                                onclick="location.href='@Url.Action("Create", item.TipoJuegoOnline.Controlador, new {Area = "Admin", id= item.JuegoOnlineId })';">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </button>
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Copiar contenido"
+                                                                onclick="location.href='@Url.Action("Copy", "JuegoOnlines", new {Area = "Admin", id= item.JuegoOnlineId })';">
+                                                            <i class="fa fa-files-o"></i>
+                                                        </button>
+
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Eliminar contenido"
+                                                                onclick="if(confirm('¿Está seguro que desea borrar el contenido?')) location.href='@Url.Action("Delete", "JuegoOnlines", new {Area = "Admin" , id=item.JuegoOnlineId })';">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+
+
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="tab-pane @(Model.pestanyaSeleccionada==5?"active":"")" id="btabs-alt-static-videos">
+                            <div class="block-content">
+                                <table class="table table-hover table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Titulo
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.listadoSubTemaVideos)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @item.Titulo
+
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Editar video"
+                                                                onclick="location.href='@Url.Action("Edit", "SubTemaVideos", new {Area = "Admin" , id=item.SubTemaVideoId })';">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </button>
+
+
+                                                        <button onclick="if(confirm('¿Está seguro que desea borrar el video?')) location.href='@Url.Action("Delete", "SubTemaVideos", new {Area = "Admin" , id=item.SubTemaVideoId })';" class="removeItem btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Eliminar video">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <div class="tab-pane @(Model.pestanyaSeleccionada==6?"active":"")" id="btabs-alt-static-extras">
+                            <div class="block-content">
+                                <table class="table table-hover table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Titulo
+                                            </th>
+                                            <th>
+                                                Categoría extra
+                                            </th>
+                                            <th>
+                                                Orden
+                                            </th>
+                                            <th></th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.listadoExtras)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @item.Titulo
+
+                                                </td>
+                                                <td>
+                                                    @item.CategoriaExtra.Descripcion
+
+                                                </td>
+
+                                                <td>
+                                                    @{
+                                                        string disabledTop = "";
+                                                        string disabledDown = "";
+                                                    }
+                                                    @if (item.ExtraId == Model.listadoExtras.First().ExtraId)
+                                                    {
+                                                        disabledTop = "disabled";
+                                                    }
+                                                    @if (item.ExtraId == Model.listadoExtras.Last().ExtraId)
+                                                    {
+                                                        disabledDown = "disabled";
+                                                    }
+                                                    <button @disabledTop value="@item.ExtraId" posicion="top" class="arrowTopDownExtra btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Subir posición">
+                                                        <i class="fa fa-arrow-up"></i>
+                                                    </button>
+
+                                                    <button @disabledDown value="@item.ExtraId" posicion="down" class="arrowTopDownExtra btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Bajar posición">
+                                                        <i class="fa fa-arrow-down"></i>
+                                                    </button>
+
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Editar extra"
+                                                                onclick="location.href='@Url.Action("Edit", "Extras", new {Area = "Admin" , id=item.ExtraId })';">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </button>
+
+                                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Copiar Extra"
+                                                                onclick="location.href='@Url.Action("Copy", "Extras", new {Area = "Admin", id= item.ExtraId })';">
+                                                            <i class="fa fa-files-o"></i>
+                                                        </button>
+
+                                                        <button onclick="if(confirm('¿Está seguro que desea borrar el Extra?')) location.href='@Url.Action("Delete", "Extras", new {Area = "Admin" , id=item.ExtraId })';"
+                                                                class="removeItem btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Eliminar Extra">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- END Page Content -->
+
+@section Scripts {
+    <!-- Page JS Code -->
+    <script>
+
+        var hidPestanyaseleccionada = $('#hidPestanyaseleccionada');
+
+        function  cambiarPestanya(numero)
+        {
+            hidPestanyaseleccionada.val(numero);
+        }
+
+
+        //SUBIR/BAJAR ORDEN Gramatica
+        $('.arrowTopDown').click(function (event) {
+            console.log("lalmada");
+            var IdGramatica = $(this).attr("value");
+            var posicion = $(this).attr("posicion");
+            $.ajax({
+                url: '@Url.Action("modificarOrden", "Gramaticas", new{Area = "Admin"})?id=' + IdGramatica + "&posicion=" + posicion,
+                type: "POST",
+                success: function () {
+                    // Recargo la página
+                    var lastId = "&t=" + Math.ceil(Math.random() * 10);
+                    window.location.replace(location.href + lastId);
+                    window.location.reload(true);
+                }
+            });
+        });
+
+
+        
+        //SUBIR/BAJAR ORDEN extra
+        $('.arrowTopDownExtra').click(function (event) {
+            var id = $(this).attr("value");
+            var posicion = $(this).attr("posicion");
+            $.ajax({
+                url: '@Url.Action("modificarOrden", "Extras", new { Area = "Admin" })?id=' + id + "&posicion=" + posicion,
+                type: "POST",
+                success: function () {
+                    // Recargo la página
+                    var lastId = "&t=" + Math.ceil(Math.random() * 10);
+                    window.location.replace(location.href + lastId);
+                    window.location.reload(true);
+                }
+            });
+        });
+
+    </script>
+
+
+}

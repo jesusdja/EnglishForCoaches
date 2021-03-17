@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Web;
+
+namespace EnglishForCoachesWeb.Database.Ejercicios
+{
+    public class CategoriaJuego
+    {
+        public int CategoriaJuegoId { get; set; }
+        public string  Descripcion { get; set; }
+
+        public string Icono { get; set; }
+
+    }
+}

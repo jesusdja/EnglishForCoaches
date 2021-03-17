@@ -1,0 +1,146 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.ForoIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li class="active">Foro</li>
+    </ol>
+    <h1 class="page-heading">Foro</h1>
+
+
+    <div class="row">
+        <div class="row">
+            <div class="col-md-8">
+
+                @foreach (var categoria in Model.categorias)
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="media">
+                                <div class="media-body media-middle">
+                                    <h4 class="card-title">@categoria.Titulo </h4>
+                                    <p class="card-subtitle">@categoria.Descripcion</p>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <a data-toggle="tooltip" title="Crear hilo" href="@Url.Action("Create", "Foro", new { Area = "Alumno", id=categoria.ForoCategoriaId })" class="btn btn-white btn-sm"><i class="material-icons">add</i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-fit">
+
+                            @foreach (var hilo in Model.hilos.Where(h => h.ForoCategoriaId == categoria.ForoCategoriaId).ToList())
+                            {
+                                <li class="list-group-item forum-thread">
+                                    <div class="media o-visible">
+                                        <div class="media-left media-middle">
+                                            <div class="forum-icon-wrapper">
+                                                <a href="@Url.Action("Hilo", "Foro", new { Area = "Alumno", id=hilo.ForoHiloId })" class="forum-thread-icon">
+                                                    <i class="material-icons">description</i>
+                                                </a>
+                                                <a class="forum-thread-user">
+                                                    @{
+                                                        var avatar = "/media/upload/avatar/"+hilo.AlumnoRespuestaId + ".jpg?d=" + DateTime.Now.Millisecond;
+                                                    }
+                                                    <img src="@avatar" alt="" width="20" class="img-circle @(hilo.RespondidoPorAdmin?"avatar_admin":"")">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="media-body media-middle">
+                                            <p class="m-b-0">
+                                                <a href="@Url.Action("Hilo", "Foro", new { Area = "Alumno", id=hilo.ForoHiloId })">@hilo.Titulo</a>
+                                            </p>
+                                            @{ 
+                                                DateTime now = DateTime.Now;
+                                                TimeSpan elapsed = now.Subtract(hilo.FechaRespuesta);
+                                                string fechaMostrar = "";
+                                                if(elapsed.TotalDays>=1)
+                                                {
+                                                    fechaMostrar = "Hace " + (int)elapsed.TotalDays + " días";
+                                                }else
+                                                {
+                                                    if (elapsed.TotalHours >=1)
+                                                    {
+                                                        fechaMostrar = "Hace " + (int)elapsed.TotalHours + " hor";
+                                                    }
+                                                    else
+                                                    {
+                                                        fechaMostrar = "Hace " + (int)elapsed.TotalMinutes + " min";
+                                                    }
+                                                }
+                                            }
+                                            <small>respondido por <span class="text-info">@hilo.RespondidoPor</span></small>
+                                        </div>
+                                        <div class="media-right media-middle">
+                                            <div style="width:80px; text-align: right;">
+                                                <small class="text-muted-light">@fechaMostrar</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+
+                    </div>
+                }
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-block center">
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "searchForm" }))
+{
+    @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.TextoBusqueda, new { @class = "form-control", placeholder = "Buscar…" })<span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+                            @Html.ValidationMessageFor(model => model.TextoBusqueda, "", new { @class = "text-danger" })
+                        </div>
+                        <a id="btnBuscar" class="btn btn-primary btn-rounded">Buscar <i class="material-icons">search</i></a>
+}
+                    </div>
+
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Categorías</h4>
+                    </div>
+                    <ul class="list-group list-group-fit">
+                        <li class="list-group-item">
+                            <a href="@Url.Action("Index",  "Foro", new { Area = "Alumno" })"><span class="icon-text">Todos los hilos</span></a>
+                        </li>
+@foreach (var categoria in Model.categoriasLateral)
+{
+                        <li class="list-group-item" ui-sref-active="active">
+                            <a href="@Url.Action("Index",  "Foro", new { Area = "Alumno",categoriaId=categoria.ForoCategoriaId })"><span class="icon-text"> @categoria.Titulo</a>
+                        </li>
+}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <!-- Page JS Code -->
+    <script>
+        $(document).ready(function () {
+            var spanSubmit = $('#btnBuscar');
+
+            spanSubmit.on('click', function () {
+                $(this).closest('form').submit();
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+      
+        });
+
+        
+
+    </script>
+}

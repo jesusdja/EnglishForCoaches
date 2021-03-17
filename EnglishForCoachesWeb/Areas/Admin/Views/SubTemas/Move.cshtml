@@ -1,0 +1,52 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.SubTemasMoveViewModel
+
+@{
+    ViewBag.Title = "Copiar";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+
+               
+                Mover Subtema
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+    @using (Html.BeginForm("Move", "SubTemas", FormMethod.Post, new { @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.SubTema.SubTemaId)
+
+        <div class="block">
+            <div class="block-content block-content-full">                
+                
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        Tema
+                        @Html.DropDownListFor(model => model.TemaCopiarId, Model.TemasSelectList, new { @class = "form-control", id="ddlTemas" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <input type="submit" name="command" class="btn btn-default" value="Mover" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- END Page Content -->

@@ -1,0 +1,133 @@
+﻿@*@model EnglishForCoachesWeb.Areas.Usuario.Models.HomeIndexViewModel*@
+
+@{
+    Layout = "~/Areas/Usuario/Views/Shared/_UsuarioLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <ol class="breadcrumb">
+        <li class="active">Dashboard</li>
+    </ol>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="card-title">Temas</h4>
+                            <p class="card-subtitle">Esta es tu progresión en los diferentes temas</p>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group list-group-fit m-b-0">
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a>
+                            </div>
+                            <div class="media-right media-middle">
+                                <div class="center">
+                                    <span class="label label-pill label-primary m-b-05">25%</span>
+                                    <progress class="progress progress-primary m-b-0" value="25" max="100" style="width:100px">25%</progress>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Unidades didácticas</a>
+                            </div>
+                            <div class="media-right media-middle">
+                                <div class="center">
+                                    <span class="label label-pill label-success m-b-05">100%</span>
+                                    <progress class="progress progress-success m-b-0" value="100" max="100" style="width:100px">100%</progress>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">English for football</a>
+                            </div>
+                            <div class="media-right media-middle">
+                                <div class="center">
+                                    <span class="label label-pill label-warning m-b-05">80%</span>
+                                    <progress class="progress progress-warning m-b-0" value="80" max="100" style="width:100px">80%</progress>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-header bg-white">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="card-title">Exámenes</h4>
+                            <p class="card-subtitle">Estos son los últimos exámenes que has hecho</p>
+                        </div>
+                        <div class="media-right media-middle">
+                            <a class="btn btn-white" href="@Url.Action("Examenes",  "Home", new { Area = "Usuario" })"> Ver todos</a>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group list-group-fit m-b-0">
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <div>
+                                    <a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Título del subtema</a>
+                                </div>
+                                <small class="text-light"><span class="label label-default">12 ene 2017</span> <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></small>
+                            </div>
+                            <div class="media-right center">
+                                <h4 class=" m-b-0 text-success">30/30</h4>
+                                <small class="text-muted-light">Superado</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <div>
+                                    <a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Título del subtema</a>
+                                </div>
+                                <small class="text-light"><span class="label label-default">29 dic 2016</span> <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></small>
+                            </div>
+                            <div class="media-right center">
+                                <h4 class=" m-b-0 text-success">28/30</h4>
+                                <small class="text-muted-light">Superado</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <div>
+                                    <a href="@Url.Action("Subtema",  "Home", new { Area = "Usuario" })">Título del subtema</a>
+                                </div>
+                                <small class="text-light"><span class="label label-default">23 dic 2016</span> <a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></small>
+                            </div>
+                            <div class="media-right center">
+                                <h4 class=" m-b-0 text-danger">25/30</h4>
+                                <small class="text-muted-light">No&nbsp;superado</small>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header bg-white center">
+                    <h5 class="card-title"><span class="text-primary">564</span> puntos</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

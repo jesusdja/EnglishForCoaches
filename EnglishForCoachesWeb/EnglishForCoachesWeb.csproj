@@ -1,0 +1,2671 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{969DA8E1-CA1A-434B-910D-C0BE214801BD}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EnglishForCoachesWeb</RootNamespace>
+    <AssemblyName>EnglishForCoachesWeb</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>44369</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <Use64BitIISExpress />
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <IncludeIisSettings>false</IncludeIisSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.1.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Cors, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Cors.3.0.1\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.1.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.4.1.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Cors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_GlobalResources\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Messages.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AccesoUsuariosController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AhorcadoController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SopaLetrasController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FillTheBoxsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MemoryGamesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\JuegoOnlinesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubTemaVideosController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TemasController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BeatTheGoaliesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TESTController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VideosController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DocumentosController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CrucigramasController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ErroresExamensController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MatchThePicturesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NoticiasController.cs" />
+    <Compile Include="Areas\Admin\Controllers\JuegosController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FrasesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BloquesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ArticulosController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ComentariosController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AudioSentenceExercisesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FillTheGapsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GramaticaVocabulariosController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ExtrasController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TrueFalsesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ClientesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VocabulariosController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MatchTheWordsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SkillwisesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GramaticasController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubTemasController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TestsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsuarioController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WordByWordsController.cs" />
+    <Compile Include="Areas\Admin\Models\AccountViewModels.cs" />
+    <Compile Include="Areas\Admin\Models\AccesoUsuariosViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\AhorcadoViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\SopaLetrasViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\FillTheBoxViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\MemoryGamesViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\JuegoOnlinesViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\SubTemaVideosViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\TemasViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\BeatTheGoaliesViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\VideoViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\DocumentosViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\CrucigramasViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ErroresExamensViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\MatchThePicturesViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\NoticiasViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\JuegosViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\FrasesViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\BloquesViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\AudioSentenceExerciseViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\GramaticaVocabularioViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ExtrasViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\TrueFalsesViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModelPaginado.cs" />
+    <Compile Include="Areas\Admin\Models\ClienteViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\VocabularioViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\GramaticasViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\WordByWordViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\SkillwiseViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\FillTheGapViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\TestsViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\MatchTheWordViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\UsuarioViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ArticuloViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ComentarioViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\SubTemasViewModel.cs" />
+    <Compile Include="Areas\Alumno\AlumnoAreaRegistration.cs" />
+    <Compile Include="Areas\Alumno\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\AudioSentenceExercisesController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\AhorcadoController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\SopaLetrasController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\FillTheBoxsController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\MemoryGamesController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\JuegoOnlinesController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\ExamenController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\DocumentosController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\CrucigramasController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\CalendarioController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\MistakesController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\SubTemaVideosController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\MatchThePicturesController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\NoticiasController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\JuegosController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\FrasesController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\ExtrasController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\ForoController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\BeatTheGoaliesController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\TrueFalsesController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\UsuarioController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\VocabulariosController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\BloquesController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\FillTheGapsController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\MatchTheWordsController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\SkillwisesController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\SubTemasController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\TestsController.cs" />
+    <Compile Include="Areas\Alumno\Controllers\WordByWordsController.cs" />
+    <Compile Include="Areas\Alumno\Models\AccountViewModels.cs" />
+    <Compile Include="Areas\Alumno\Models\AudioSentenceExerciseViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\AhorcadoViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\SopaLetrasViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\FillTheBoxViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\MemoryGamesViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\JuegoOnlinesViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\ExamenesViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\DocumentosViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\CrucigramaViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\CalendarioViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\MistakesViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\SubTemaVideosViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\MatchThePictureViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\NoticiasViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\JuegosViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\FrasesViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\ExtrasViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\ForoViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\BeatThe GoaliesViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\TrueFalsesViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\UsuarioViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\VocabulariosViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\BloquesViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\FillTheGapViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\HomeViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\MatchTheWordViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\SkillwiseViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\SubTemasViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\TestsViewModel.cs" />
+    <Compile Include="Areas\Alumno\Models\WordByWordViewModel.cs" />
+    <Compile Include="Areas\Publico\Controllers\ArticulosController.cs" />
+    <Compile Include="Areas\Publico\Controllers\ErrorController.cs" />
+    <Compile Include="Areas\Publico\Models\ArticulosViewModel.cs" />
+    <Compile Include="Areas\Publico\PublicoAreaRegistration.cs" />
+    <Compile Include="Areas\Usuario\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Usuario\UsuarioAreaRegistration.cs" />
+    <Compile Include="Auth\AuthRepository.cs" />
+    <Compile Include="Controllers\MVCBaseController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="DataAccess\NoticiaDataAccess.cs" />
+    <Compile Include="DataAccess\SubTemaDataAccess.cs" />
+    <Compile Include="DataAccess\GramaticaDataAccess.cs" />
+    <Compile Include="DataAccess\SubTemaVideoDataAccess.cs" />
+    <Compile Include="DataAccess\JuegoOnlineDataAccess.cs" />
+    <Compile Include="DataAccess\JuegoDataAccess.cs" />
+    <Compile Include="DataAccess\ExtraDataAccess.cs" />
+    <Compile Include="DataAccess\BloqueDataAccess.cs" />
+    <Compile Include="DataAccess\TemaDataAccess.cs" />
+    <Compile Include="DataAccess\ForoHiloDataAccess.cs" />
+    <Compile Include="Database\AuthContext.cs" />
+    <Compile Include="Database\Clientes\ClienteExtra.cs" />
+    <Compile Include="Database\Clientes\ClienteSubTemaVideo.cs" />
+    <Compile Include="Database\Clientes\ClienteJuegoOnline.cs" />
+    <Compile Include="Database\Clientes\ClienteJuego.cs" />
+    <Compile Include="Database\Clientes\ClienteBloque.cs" />
+    <Compile Include="Database\Clientes\ClienteSubTema.cs" />
+    <Compile Include="Database\Clientes\ClienteGramatica.cs" />
+    <Compile Include="Database\Clientes\ClienteTema.cs" />
+    <Compile Include="Database\Clientes\Cliente.cs" />
+    <Compile Include="Database\Contenidos\DefinicionVocabulario.cs" />
+    <Compile Include="Database\Contenidos\FillTheBox.cs" />
+    <Compile Include="Database\Contenidos\FraseGlosario.cs" />
+    <Compile Include="Database\JuegoOnline\Ahorcado.cs" />
+    <Compile Include="Database\JuegoOnline\VocabularioSopaLetras.cs" />
+    <Compile Include="Database\JuegoOnline\ComentarioSopaLetras.cs" />
+    <Compile Include="Database\JuegoOnline\CasillaSopaLetras.cs" />
+    <Compile Include="Database\JuegoOnline\SopaLetras.cs" />
+    <Compile Include="Database\TipoUsuario.cs" />
+    <Compile Include="Database\JuegoOnline\MemoryGame.cs" />
+    <Compile Include="Database\JuegoOnline\JuegoOnlineBase.cs" />
+    <Compile Include="Database\JuegoOnline\JuegoOnline.cs" />
+    <Compile Include="Database\JuegoOnline\JuegoOnlineDesbloqueado.cs" />
+    <Compile Include="Database\JuegoOnline\JuegoOnlineRealizado.cs" />
+    <Compile Include="Database\Contenidos\CasillaCrucigrama.cs" />
+    <Compile Include="Database\Contenidos\Documento.cs" />
+    <Compile Include="Database\Contenidos\DocumentoGrupo.cs" />
+    <Compile Include="Database\Contenidos\Crucigrama.cs" />
+    <Compile Include="Database\Contenidos\BloqueDesbloqueado.cs" />
+    <Compile Include="Database\Contenidos\ExamenDesbloqueado.cs" />
+    <Compile Include="Database\Contenidos\SubTemaVideo.cs" />
+    <Compile Include="Database\Contenidos\MatchThePicture.cs" />
+    <Compile Include="Database\Contenidos\Mistake.cs" />
+    <Compile Include="Database\Contenidos\RespuestaIncorrecta.cs" />
+    <Compile Include="Database\Contenidos\SubTemaAccesoUsuario.cs" />
+    <Compile Include="Database\JuegoOnline\BeatTheGoalie.cs" />
+    <Compile Include="Database\JuegoOnline\TipoJuegoOnline.cs" />
+    <Compile Include="Database\Contenidos\TrueFalse.cs" />
+    <Compile Include="Database\Varios\AccesoUsuario.cs" />
+    <Compile Include="Database\Contenidos\CategoriaVocabulario.cs" />
+    <Compile Include="Database\Contenidos\CategoriaJuego.cs" />
+    <Compile Include="Database\Contenidos\CategoriaExtra.cs" />
+    <Compile Include="Database\Contenidos\Juego.cs" />
+    <Compile Include="Database\Contenidos\Extra.cs" />
+    <Compile Include="Database\Contenidos\ExtraDesbloqueado.cs" />
+    <Compile Include="Database\Contenidos\VocabularioGlosario.cs" />
+    <Compile Include="Database\Contenidos\Examen.cs" />
+    <Compile Include="Database\Contenidos\Frase.cs" />
+    <Compile Include="Database\Contenidos\BloqueRealizado.cs" />
+    <Compile Include="Database\Contenidos\Vocabulario.cs" />
+    <Compile Include="Database\Contenidos\Bloque.cs" />
+    <Compile Include="Database\Contenidos\AudioSentenceExercise.cs" />
+    <Compile Include="Database\Contenidos\Gramatica.cs" />
+    <Compile Include="Database\Contenidos\SubTemaDesbloqueado.cs" />
+    <Compile Include="Database\Foro\ForoHiloLeido.cs" />
+    <Compile Include="Database\Foro\ForoMensaje.cs" />
+    <Compile Include="Database\Foro\ForoHilo.cs" />
+    <Compile Include="Database\Foro\ForoCategoria.cs" />
+    <Compile Include="Database\GrupoUsuario.cs" />
+    <Compile Include="Database\Categoria.cs" />
+    <Compile Include="Database\Articulo.cs" />
+    <Compile Include="Database\Comentario.cs" />
+    <Compile Include="Database\Contenidos\TipoEjercicio.cs" />
+    <Compile Include="Database\Contenidos\Skillwise.cs" />
+    <Compile Include="Database\Contenidos\MatchTheWord.cs" />
+    <Compile Include="Database\Contenidos\FillTheGap.cs" />
+    <Compile Include="Database\Contenidos\WordByWord.cs" />
+    <Compile Include="Database\Contenidos\Test.cs" />
+    <Compile Include="Database\Contenidos\ContenidoBase.cs" />
+    <Compile Include="Database\Contenidos\SubTema.cs" />
+    <Compile Include="Database\Contenidos\Area.cs" />
+    <Compile Include="Database\Contenidos\Tema.cs" />
+    <Compile Include="Database\Tag.cs" />
+    <Compile Include="Database\Varios\Video.cs" />
+    <Compile Include="Database\Varios\NoticiaGrupo.cs" />
+    <Compile Include="Database\Varios\Noticia.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\JuegoOnlineHelper.cs" />
+    <Compile Include="Helpers\AccesoClientesHelper.cs" />
+    <Compile Include="Helpers\VimeoHelper.cs" />
+    <Compile Include="Helpers\HtmlTextHelper.cs" />
+    <Compile Include="Helpers\ContenidoHelper.cs" />
+    <Compile Include="Helpers\ExtensionHelper.cs" />
+    <Compile Include="Helpers\FileUploadHelper.cs" />
+    <Compile Include="Helpers\FriendlyURL.cs" />
+    <Compile Include="Helpers\ImportacionHelper.cs" />
+    <Compile Include="Helpers\MailHelper.cs" />
+    <Compile Include="Helpers\RandomHelper.cs" />
+    <Compile Include="Migrations\201604261409096_articulov1.cs" />
+    <Compile Include="Migrations\201604261409096_articulov1.Designer.cs">
+      <DependentUpon>201604261409096_articulov1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605020639434_articuloV2.cs" />
+    <Compile Include="Migrations\201605020639434_articuloV2.Designer.cs">
+      <DependentUpon>201605020639434_articuloV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605030750251_articulov3.cs" />
+    <Compile Include="Migrations\201605030750251_articulov3.Designer.cs">
+      <DependentUpon>201605030750251_articulov3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605030919531_articulov4.cs" />
+    <Compile Include="Migrations\201605030919531_articulov4.Designer.cs">
+      <DependentUpon>201605030919531_articulov4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605041151070_articulov41.cs" />
+    <Compile Include="Migrations\201605041151070_articulov41.Designer.cs">
+      <DependentUpon>201605041151070_articulov41.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605050908016_SeoV1.cs" />
+    <Compile Include="Migrations\201605050908016_SeoV1.Designer.cs">
+      <DependentUpon>201605050908016_SeoV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605101213380_noImagenes.cs" />
+    <Compile Include="Migrations\201605101213380_noImagenes.Designer.cs">
+      <DependentUpon>201605101213380_noImagenes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605161225363_comentariosV1.cs" />
+    <Compile Include="Migrations\201605161225363_comentariosV1.Designer.cs">
+      <DependentUpon>201605161225363_comentariosV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610111014144_EjerciciosV1.cs" />
+    <Compile Include="Migrations\201610111014144_EjerciciosV1.Designer.cs">
+      <DependentUpon>201610111014144_EjerciciosV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610191417130_EjerciciosV2.cs" />
+    <Compile Include="Migrations\201610191417130_EjerciciosV2.Designer.cs">
+      <DependentUpon>201610191417130_EjerciciosV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610201257578_UsuariosV1.cs" />
+    <Compile Include="Migrations\201610201257578_UsuariosV1.Designer.cs">
+      <DependentUpon>201610201257578_UsuariosV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610211140029_EjerciciosV3.cs" />
+    <Compile Include="Migrations\201610211140029_EjerciciosV3.Designer.cs">
+      <DependentUpon>201610211140029_EjerciciosV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610241105149_EjerciciosV4.cs" />
+    <Compile Include="Migrations\201610241105149_EjerciciosV4.Designer.cs">
+      <DependentUpon>201610241105149_EjerciciosV4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610241333449_ejerciciosV5.cs" />
+    <Compile Include="Migrations\201610241333449_ejerciciosV5.Designer.cs">
+      <DependentUpon>201610241333449_ejerciciosV5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610250820131_ejerciciosV6.cs" />
+    <Compile Include="Migrations\201610250820131_ejerciciosV6.Designer.cs">
+      <DependentUpon>201610250820131_ejerciciosV6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610270629297_ejerciciosV7.cs" />
+    <Compile Include="Migrations\201610270629297_ejerciciosV7.Designer.cs">
+      <DependentUpon>201610270629297_ejerciciosV7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701040950062_BloqueV1.cs" />
+    <Compile Include="Migrations\201701040950062_BloqueV1.Designer.cs">
+      <DependentUpon>201701040950062_BloqueV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701101202095_GramaticaV1.cs" />
+    <Compile Include="Migrations\201701101202095_GramaticaV1.Designer.cs">
+      <DependentUpon>201701101202095_GramaticaV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701101301111_GramaticaV2.cs" />
+    <Compile Include="Migrations\201701101301111_GramaticaV2.Designer.cs">
+      <DependentUpon>201701101301111_GramaticaV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701101306312_GramaticaV3.cs" />
+    <Compile Include="Migrations\201701101306312_GramaticaV3.Designer.cs">
+      <DependentUpon>201701101306312_GramaticaV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701110903402_UsuarioPuntosV1.cs" />
+    <Compile Include="Migrations\201701110903402_UsuarioPuntosV1.Designer.cs">
+      <DependentUpon>201701110903402_UsuarioPuntosV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701110954403_SubtemaDesbloqueadoV1.cs" />
+    <Compile Include="Migrations\201701110954403_SubtemaDesbloqueadoV1.Designer.cs">
+      <DependentUpon>201701110954403_SubtemaDesbloqueadoV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701121122012_SubtemaDesbloqueadoV2.cs" />
+    <Compile Include="Migrations\201701121122012_SubtemaDesbloqueadoV2.Designer.cs">
+      <DependentUpon>201701121122012_SubtemaDesbloqueadoV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701121212330_SubtemaDesbloqueadoV3.cs" />
+    <Compile Include="Migrations\201701121212330_SubtemaDesbloqueadoV3.Designer.cs">
+      <DependentUpon>201701121212330_SubtemaDesbloqueadoV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701161132481_SubtemaDesbloqueadoV4.cs" />
+    <Compile Include="Migrations\201701161132481_SubtemaDesbloqueadoV4.Designer.cs">
+      <DependentUpon>201701161132481_SubtemaDesbloqueadoV4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701161243380_VocabularioYAudioSentenceV1.cs" />
+    <Compile Include="Migrations\201701161243380_VocabularioYAudioSentenceV1.Designer.cs">
+      <DependentUpon>201701161243380_VocabularioYAudioSentenceV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701171217166_VocabularioV1.cs" />
+    <Compile Include="Migrations\201701171217166_VocabularioV1.Designer.cs">
+      <DependentUpon>201701171217166_VocabularioV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701171419178_AccesoUsuariov1.cs" />
+    <Compile Include="Migrations\201701171419178_AccesoUsuariov1.Designer.cs">
+      <DependentUpon>201701171419178_AccesoUsuariov1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701180757327_FrasesV1.cs" />
+    <Compile Include="Migrations\201701180757327_FrasesV1.Designer.cs">
+      <DependentUpon>201701180757327_FrasesV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701181259137_IconoTema.cs" />
+    <Compile Include="Migrations\201701181259137_IconoTema.Designer.cs">
+      <DependentUpon>201701181259137_IconoTema.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701190847216_gramaticaVocabularioV1.cs" />
+    <Compile Include="Migrations\201701190847216_gramaticaVocabularioV1.Designer.cs">
+      <DependentUpon>201701190847216_gramaticaVocabularioV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701231158178_AreaAlumnov1.cs" />
+    <Compile Include="Migrations\201701231158178_AreaAlumnov1.Designer.cs">
+      <DependentUpon>201701231158178_AreaAlumnov1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701231200381_AreaAlumnov2.cs" />
+    <Compile Include="Migrations\201701231200381_AreaAlumnov2.Designer.cs">
+      <DependentUpon>201701231200381_AreaAlumnov2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701231225244_TipoEjercicioAlumnoV1.cs" />
+    <Compile Include="Migrations\201701231225244_TipoEjercicioAlumnoV1.Designer.cs">
+      <DependentUpon>201701231225244_TipoEjercicioAlumnoV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701241212376_ExplicacionBloqueV1.cs" />
+    <Compile Include="Migrations\201701241212376_ExplicacionBloqueV1.Designer.cs">
+      <DependentUpon>201701241212376_ExplicacionBloqueV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701300812134_FillTheGapV1.cs" />
+    <Compile Include="Migrations\201701300812134_FillTheGapV1.Designer.cs">
+      <DependentUpon>201701300812134_FillTheGapV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701300844154_matchthewordUnaPreguntaV1.cs" />
+    <Compile Include="Migrations\201701300844154_matchthewordUnaPreguntaV1.Designer.cs">
+      <DependentUpon>201701300844154_matchthewordUnaPreguntaV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701300856004_matchthewordUnaPreguntaV2.cs" />
+    <Compile Include="Migrations\201701300856004_matchthewordUnaPreguntaV2.Designer.cs">
+      <DependentUpon>201701300856004_matchthewordUnaPreguntaV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701310750538_TemaIntroduccionV1.cs" />
+    <Compile Include="Migrations\201701310750538_TemaIntroduccionV1.Designer.cs">
+      <DependentUpon>201701310750538_TemaIntroduccionV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701311432315_ExamenesV1.cs" />
+    <Compile Include="Migrations\201701311432315_ExamenesV1.Designer.cs">
+      <DependentUpon>201701311432315_ExamenesV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702031108150_BloqueRealizadosv1.cs" />
+    <Compile Include="Migrations\201702031108150_BloqueRealizadosv1.Designer.cs">
+      <DependentUpon>201702031108150_BloqueRealizadosv1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702061214441_vocabularioGlosarioV1.cs" />
+    <Compile Include="Migrations\201702061214441_vocabularioGlosarioV1.Designer.cs">
+      <DependentUpon>201702061214441_vocabularioGlosarioV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702070732508_ExtrasV1.cs" />
+    <Compile Include="Migrations\201702070732508_ExtrasV1.Designer.cs">
+      <DependentUpon>201702070732508_ExtrasV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702070835184_ExtrasV2.cs" />
+    <Compile Include="Migrations\201702070835184_ExtrasV2.Designer.cs">
+      <DependentUpon>201702070835184_ExtrasV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702080818321_ExtraDesbloqueadoV1.cs" />
+    <Compile Include="Migrations\201702080818321_ExtraDesbloqueadoV1.Designer.cs">
+      <DependentUpon>201702080818321_ExtraDesbloqueadoV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702090857414_Forov1.cs" />
+    <Compile Include="Migrations\201702090857414_Forov1.Designer.cs">
+      <DependentUpon>201702090857414_Forov1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702090920414_Forov2.cs" />
+    <Compile Include="Migrations\201702090920414_Forov2.Designer.cs">
+      <DependentUpon>201702090920414_Forov2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702091203353_ForoV3.cs" />
+    <Compile Include="Migrations\201702091203353_ForoV3.Designer.cs">
+      <DependentUpon>201702091203353_ForoV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702100917587_Forov4.cs" />
+    <Compile Include="Migrations\201702100917587_Forov4.Designer.cs">
+      <DependentUpon>201702100917587_Forov4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702100934535_Forov5.cs" />
+    <Compile Include="Migrations\201702100934535_Forov5.Designer.cs">
+      <DependentUpon>201702100934535_Forov5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702100945192_Forov6.cs" />
+    <Compile Include="Migrations\201702100945192_Forov6.Designer.cs">
+      <DependentUpon>201702100945192_Forov6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702101027288_Forov7.cs" />
+    <Compile Include="Migrations\201702101027288_Forov7.Designer.cs">
+      <DependentUpon>201702101027288_Forov7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702131201463_juegov1.cs" />
+    <Compile Include="Migrations\201702131201463_juegov1.Designer.cs">
+      <DependentUpon>201702131201463_juegov1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702141435350_foroHiloleidov1.cs" />
+    <Compile Include="Migrations\201702141435350_foroHiloleidov1.Designer.cs">
+      <DependentUpon>201702141435350_foroHiloleidov1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702161108324_noticiasV1.cs" />
+    <Compile Include="Migrations\201702161108324_noticiasV1.Designer.cs">
+      <DependentUpon>201702161108324_noticiasV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702161216361_noticiasV11.cs" />
+    <Compile Include="Migrations\201702161216361_noticiasV11.Designer.cs">
+      <DependentUpon>201702161216361_noticiasV11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702161436046_noticiasV2.cs" />
+    <Compile Include="Migrations\201702161436046_noticiasV2.Designer.cs">
+      <DependentUpon>201702161436046_noticiasV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702171203565_ExtrasV3.cs" />
+    <Compile Include="Migrations\201702171203565_ExtrasV3.Designer.cs">
+      <DependentUpon>201702171203565_ExtrasV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702200757582_CategoriaVocabularioV1.cs" />
+    <Compile Include="Migrations\201702200757582_CategoriaVocabularioV1.Designer.cs">
+      <DependentUpon>201702200757582_CategoriaVocabularioV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702200808470_CategoriaVocabularioV2.cs" />
+    <Compile Include="Migrations\201702200808470_CategoriaVocabularioV2.Designer.cs">
+      <DependentUpon>201702200808470_CategoriaVocabularioV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702200927457_NoticiaV2.cs" />
+    <Compile Include="Migrations\201702200927457_NoticiaV2.Designer.cs">
+      <DependentUpon>201702200927457_NoticiaV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702201048435_NoticiaV3.cs" />
+    <Compile Include="Migrations\201702201048435_NoticiaV3.Designer.cs">
+      <DependentUpon>201702201048435_NoticiaV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702201145266_NoticiaV4.cs" />
+    <Compile Include="Migrations\201702201145266_NoticiaV4.Designer.cs">
+      <DependentUpon>201702201145266_NoticiaV4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702210755438_DocumentoV1.cs" />
+    <Compile Include="Migrations\201702210755438_DocumentoV1.Designer.cs">
+      <DependentUpon>201702210755438_DocumentoV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702210915575_DocumentoV2.cs" />
+    <Compile Include="Migrations\201702210915575_DocumentoV2.Designer.cs">
+      <DependentUpon>201702210915575_DocumentoV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702210959081_DocumentoV3.cs" />
+    <Compile Include="Migrations\201702210959081_DocumentoV3.Designer.cs">
+      <DependentUpon>201702210959081_DocumentoV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702230744286_categoriaVocabularioV3.cs" />
+    <Compile Include="Migrations\201702230744286_categoriaVocabularioV3.Designer.cs">
+      <DependentUpon>201702230744286_categoriaVocabularioV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702231005435_ForoAdminv1.cs" />
+    <Compile Include="Migrations\201702231005435_ForoAdminv1.Designer.cs">
+      <DependentUpon>201702231005435_ForoAdminv1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702231010524_ForoAdminv2.cs" />
+    <Compile Include="Migrations\201702231010524_ForoAdminv2.Designer.cs">
+      <DependentUpon>201702231010524_ForoAdminv2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702231032454_ForoAdminv3.cs" />
+    <Compile Include="Migrations\201702231032454_ForoAdminv3.Designer.cs">
+      <DependentUpon>201702231032454_ForoAdminv3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702231100584_ForoAdminv4.cs" />
+    <Compile Include="Migrations\201702231100584_ForoAdminv4.Designer.cs">
+      <DependentUpon>201702231100584_ForoAdminv4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702231129350_NoticiaResumenv1.cs" />
+    <Compile Include="Migrations\201702231129350_NoticiaResumenv1.Designer.cs">
+      <DependentUpon>201702231129350_NoticiaResumenv1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702240939057_crucigramav1.cs" />
+    <Compile Include="Migrations\201702240939057_crucigramav1.Designer.cs">
+      <DependentUpon>201702240939057_crucigramav1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702241014223_crucigramav2.cs" />
+    <Compile Include="Migrations\201702241014223_crucigramav2.Designer.cs">
+      <DependentUpon>201702241014223_crucigramav2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702270733509_crucigramaV3.cs" />
+    <Compile Include="Migrations\201702270733509_crucigramaV3.Designer.cs">
+      <DependentUpon>201702270733509_crucigramaV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702270746465_crucigramaV4.cs" />
+    <Compile Include="Migrations\201702270746465_crucigramaV4.Designer.cs">
+      <DependentUpon>201702270746465_crucigramaV4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702281009247_bloqueDesbloqueadoV1.cs" />
+    <Compile Include="Migrations\201702281009247_bloqueDesbloqueadoV1.Designer.cs">
+      <DependentUpon>201702281009247_bloqueDesbloqueadoV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703010810119_RespuestasExamenV1.cs" />
+    <Compile Include="Migrations\201703010810119_RespuestasExamenV1.Designer.cs">
+      <DependentUpon>201703010810119_RespuestasExamenV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703010904146_RespuestasExamenV2.cs" />
+    <Compile Include="Migrations\201703010904146_RespuestasExamenV2.Designer.cs">
+      <DependentUpon>201703010904146_RespuestasExamenV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703011145400_RespuestasExamenV3.cs" />
+    <Compile Include="Migrations\201703011145400_RespuestasExamenV3.Designer.cs">
+      <DependentUpon>201703011145400_RespuestasExamenV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704180907557_mistakesv1.cs" />
+    <Compile Include="Migrations\201704180907557_mistakesv1.Designer.cs">
+      <DependentUpon>201704180907557_mistakesv1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705021050381_ExamenDesbloqueadoV1.cs" />
+    <Compile Include="Migrations\201705021050381_ExamenDesbloqueadoV1.Designer.cs">
+      <DependentUpon>201705021050381_ExamenDesbloqueadoV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705040935473_ExtrasOrdenV1.cs" />
+    <Compile Include="Migrations\201705040935473_ExtrasOrdenV1.Designer.cs">
+      <DependentUpon>201705040935473_ExtrasOrdenV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705050753178_MatchThePictureV1.cs" />
+    <Compile Include="Migrations\201705050753178_MatchThePictureV1.Designer.cs">
+      <DependentUpon>201705050753178_MatchThePictureV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705051016002_MathThePictureV2.cs" />
+    <Compile Include="Migrations\201705051016002_MathThePictureV2.Designer.cs">
+      <DependentUpon>201705051016002_MathThePictureV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705080631141_AccesoUsuarioSubteV1.cs" />
+    <Compile Include="Migrations\201705080631141_AccesoUsuarioSubteV1.Designer.cs">
+      <DependentUpon>201705080631141_AccesoUsuarioSubteV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705080724337_AccesoUsuarioSubteV2.cs" />
+    <Compile Include="Migrations\201705080724337_AccesoUsuarioSubteV2.Designer.cs">
+      <DependentUpon>201705080724337_AccesoUsuarioSubteV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705091310494_TrueFalseV1.cs" />
+    <Compile Include="Migrations\201705091310494_TrueFalseV1.Designer.cs">
+      <DependentUpon>201705091310494_TrueFalseV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705181124443_TestImagenV1.cs" />
+    <Compile Include="Migrations\201705181124443_TestImagenV1.Designer.cs">
+      <DependentUpon>201705181124443_TestImagenV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705260857496_trueFalseAudioV1.cs" />
+    <Compile Include="Migrations\201705260857496_trueFalseAudioV1.Designer.cs">
+      <DependentUpon>201705260857496_trueFalseAudioV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705300836448_VideoV1.cs" />
+    <Compile Include="Migrations\201705300836448_VideoV1.Designer.cs">
+      <DependentUpon>201705300836448_VideoV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705300912035_VideoV2.cs" />
+    <Compile Include="Migrations\201705300912035_VideoV2.Designer.cs">
+      <DependentUpon>201705300912035_VideoV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705301333058_VideoV3.cs" />
+    <Compile Include="Migrations\201705301333058_VideoV3.Designer.cs">
+      <DependentUpon>201705301333058_VideoV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706020808006_TemaVideo.cs" />
+    <Compile Include="Migrations\201706020808006_TemaVideo.Designer.cs">
+      <DependentUpon>201706020808006_TemaVideo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706020856588_SubTemaVideoV1.cs" />
+    <Compile Include="Migrations\201706020856588_SubTemaVideoV1.Designer.cs">
+      <DependentUpon>201706020856588_SubTemaVideoV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706051133371_beatthegoalieV1.cs" />
+    <Compile Include="Migrations\201706051133371_beatthegoalieV1.Designer.cs">
+      <DependentUpon>201706051133371_beatthegoalieV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706060708194_JuegosOnlineV1.cs" />
+    <Compile Include="Migrations\201706060708194_JuegosOnlineV1.Designer.cs">
+      <DependentUpon>201706060708194_JuegosOnlineV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706060756284_JuegosOnlineV2.cs" />
+    <Compile Include="Migrations\201706060756284_JuegosOnlineV2.Designer.cs">
+      <DependentUpon>201706060756284_JuegosOnlineV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706070832472_BeattheGoalieEnunciadoV1.cs" />
+    <Compile Include="Migrations\201706070832472_BeattheGoalieEnunciadoV1.Designer.cs">
+      <DependentUpon>201706070832472_BeattheGoalieEnunciadoV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706130708199_memoryGameV1.cs" />
+    <Compile Include="Migrations\201706130708199_memoryGameV1.Designer.cs">
+      <DependentUpon>201706130708199_memoryGameV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706160702594_TipoUsuarioV1.cs" />
+    <Compile Include="Migrations\201706160702594_TipoUsuarioV1.Designer.cs">
+      <DependentUpon>201706160702594_TipoUsuarioV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706160848265_MemoryGameV3.cs" />
+    <Compile Include="Migrations\201706160848265_MemoryGameV3.Designer.cs">
+      <DependentUpon>201706160848265_MemoryGameV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706161129496_TipoUsuarioV2.cs" />
+    <Compile Include="Migrations\201706161129496_TipoUsuarioV2.Designer.cs">
+      <DependentUpon>201706161129496_TipoUsuarioV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706161133087_TipoUsuarioV3.cs" />
+    <Compile Include="Migrations\201706161133087_TipoUsuarioV3.Designer.cs">
+      <DependentUpon>201706161133087_TipoUsuarioV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706291020074_usuarioNoticiaV1.cs" />
+    <Compile Include="Migrations\201706291020074_usuarioNoticiaV1.Designer.cs">
+      <DependentUpon>201706291020074_usuarioNoticiaV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809171121429_FillTheBoxV1.cs" />
+    <Compile Include="Migrations\201809171121429_FillTheBoxV1.Designer.cs">
+      <DependentUpon>201809171121429_FillTheBoxV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809171303579_FillTheBoxV2.cs" />
+    <Compile Include="Migrations\201809171303579_FillTheBoxV2.Designer.cs">
+      <DependentUpon>201809171303579_FillTheBoxV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809240836231_ExtrasSubtemasV1.cs" />
+    <Compile Include="Migrations\201809240836231_ExtrasSubtemasV1.Designer.cs">
+      <DependentUpon>201809240836231_ExtrasSubtemasV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810170802549_definicionVocabulariov1.cs" />
+    <Compile Include="Migrations\201810170802549_definicionVocabulariov1.Designer.cs">
+      <DependentUpon>201810170802549_definicionVocabulariov1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810291446083_FraseVocabularioV1.cs" />
+    <Compile Include="Migrations\201810291446083_FraseVocabularioV1.Designer.cs">
+      <DependentUpon>201810291446083_FraseVocabularioV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811151234073_FraseGlosarioV1.cs" />
+    <Compile Include="Migrations\201811151234073_FraseGlosarioV1.Designer.cs">
+      <DependentUpon>201811151234073_FraseGlosarioV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811160800471_fraseGlosarioV2.cs" />
+    <Compile Include="Migrations\201811160800471_fraseGlosarioV2.Designer.cs">
+      <DependentUpon>201811160800471_fraseGlosarioV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811221000057_FraseVocabularioV2.cs" />
+    <Compile Include="Migrations\201811221000057_FraseVocabularioV2.Designer.cs">
+      <DependentUpon>201811221000057_FraseVocabularioV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811230900382_filltheboxIncorrectoV1.cs" />
+    <Compile Include="Migrations\201811230900382_filltheboxIncorrectoV1.Designer.cs">
+      <DependentUpon>201811230900382_filltheboxIncorrectoV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903260859122_ClientesV1.cs" />
+    <Compile Include="Migrations\201903260859122_ClientesV1.Designer.cs">
+      <DependentUpon>201903260859122_ClientesV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903261113573_ClientesV2.cs" />
+    <Compile Include="Migrations\201903261113573_ClientesV2.Designer.cs">
+      <DependentUpon>201903261113573_ClientesV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903271522596_ClienteV3.cs" />
+    <Compile Include="Migrations\201903271522596_ClienteV3.Designer.cs">
+      <DependentUpon>201903271522596_ClienteV3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903280739438_clienteV4.cs" />
+    <Compile Include="Migrations\201903280739438_clienteV4.Designer.cs">
+      <DependentUpon>201903280739438_clienteV4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903291131542_ClienteV5.cs" />
+    <Compile Include="Migrations\201903291131542_ClienteV5.Designer.cs">
+      <DependentUpon>201903291131542_ClienteV5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905310855135_fillthegapExplicacionV1.cs" />
+    <Compile Include="Migrations\201905310855135_fillthegapExplicacionV1.Designer.cs">
+      <DependentUpon>201905310855135_fillthegapExplicacionV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906031325185_sopaLetrasV1.cs" />
+    <Compile Include="Migrations\201906031325185_sopaLetrasV1.Designer.cs">
+      <DependentUpon>201906031325185_sopaLetrasV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906131424546_sopaLetrasV2.cs" />
+    <Compile Include="Migrations\201906131424546_sopaLetrasV2.Designer.cs">
+      <DependentUpon>201906131424546_sopaLetrasV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906241453444_vocabularioSopaLetrasV1.cs" />
+    <Compile Include="Migrations\201906241453444_vocabularioSopaLetrasV1.Designer.cs">
+      <DependentUpon>201906241453444_vocabularioSopaLetrasV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907101421055_ExamenesV2.cs" />
+    <Compile Include="Migrations\201907101421055_ExamenesV2.Designer.cs">
+      <DependentUpon>201907101421055_ExamenesV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907160750503_examenv4.cs" />
+    <Compile Include="Migrations\201907160750503_examenv4.Designer.cs">
+      <DependentUpon>201907160750503_examenv4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907240744300_PreguntaExamenV1.cs" />
+    <Compile Include="Migrations\201907240744300_PreguntaExamenV1.Designer.cs">
+      <DependentUpon>201907240744300_PreguntaExamenV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907301020338_AhorcadoV1.cs" />
+    <Compile Include="Migrations\201907301020338_AhorcadoV1.Designer.cs">
+      <DependentUpon>201907301020338_AhorcadoV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907301035241_AhorcadoV2.cs" />
+    <Compile Include="Migrations\201907301035241_AhorcadoV2.Designer.cs">
+      <DependentUpon>201907301035241_AhorcadoV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908021213257_SepararHtmlV1.cs" />
+    <Compile Include="Migrations\201908021213257_SepararHtmlV1.Designer.cs">
+      <DependentUpon>201908021213257_SepararHtmlV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908050719011_SepararHtmlV2.cs" />
+    <Compile Include="Migrations\201908050719011_SepararHtmlV2.Designer.cs">
+      <DependentUpon>201908050719011_SepararHtmlV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909130627569_ahorcadov4.cs" />
+    <Compile Include="Migrations\201909130627569_ahorcadov4.Designer.cs">
+      <DependentUpon>201909130627569_ahorcadov4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003270700296_ErroresExamenV1.cs" />
+    <Compile Include="Migrations\202003270700296_ErroresExamenV1.Designer.cs">
+      <DependentUpon>202003270700296_ErroresExamenV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Validation\RespuestasFillTheGap.cs" />
+    <Compile Include="Validation\MaxFileSizeAttribute.cs" />
+    <Compile Include="Validation\CamposConectadosAttribute.cs" />
+    <Compile Include="Validation\MaxImageWidthAttribute.cs" />
+    <Compile Include="Validation\RequiredLocalizedAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Alumno\audio\acierto.mp3" />
+    <Content Include="Content\Alumno\audio\fallo.mp3" />
+    <Content Include="Content\Alumno\BeatTheGoalie\a.png" />
+    <Content Include="Content\Alumno\BeatTheGoalie\b.png" />
+    <Content Include="Content\Alumno\BeatTheGoalie\balon.png" />
+    <Content Include="Content\Alumno\BeatTheGoalie\c.png" />
+    <Content Include="Content\Alumno\BeatTheGoalie\d.png" />
+    <Content Include="Content\Alumno\BeatTheGoalie\fondo.png" />
+    <Content Include="Content\Alumno\BeatTheGoalie\gol.png" />
+    <Content Include="Content\Alumno\BeatTheGoalie\parada.png" />
+    <Content Include="Content\Alumno\BeatTheGoalie\portero.png" />
+    <Content Include="Content\Alumno\BeatTheGoalie\portero_parada.png" />
+    <Content Include="Content\Alumno\css\datatables.css" />
+    <Content Include="Content\Alumno\css\datatables.min.css" />
+    <Content Include="Content\Alumno\css\fullcalendar.css" />
+    <Content Include="Content\Alumno\css\fullcalendar.min.css" />
+    <Content Include="Content\Alumno\css\summernote.css" />
+    <Content Include="Content\Alumno\css\summernote.min.css" />
+    <Content Include="Content\Alumno\images\ahorcado\0.png" />
+    <Content Include="Content\Alumno\images\ahorcado\1.png" />
+    <Content Include="Content\Alumno\images\ahorcado\10.png" />
+    <Content Include="Content\Alumno\images\ahorcado\2.png" />
+    <Content Include="Content\Alumno\images\ahorcado\3.png" />
+    <Content Include="Content\Alumno\images\ahorcado\4.png" />
+    <Content Include="Content\Alumno\images\ahorcado\5.png" />
+    <Content Include="Content\Alumno\images\ahorcado\6.png" />
+    <Content Include="Content\Alumno\images\ahorcado\7.png" />
+    <Content Include="Content\Alumno\images\ahorcado\8.png" />
+    <Content Include="Content\Alumno\images\ahorcado\9.png" />
+    <Content Include="Content\Alumno\images\juegos\criptograma.jpg" />
+    <Content Include="Content\Alumno\images\juegos\crucigrama.jpg" />
+    <Content Include="Content\Alumno\images\extras\iconos_extras_1.png" />
+    <Content Include="Content\Alumno\images\extras\iconos_extras_10.png" />
+    <Content Include="Content\Alumno\images\extras\iconos_extras_2.png" />
+    <Content Include="Content\Alumno\images\extras\iconos_extras_3.png" />
+    <Content Include="Content\Alumno\images\extras\iconos_extras_4.png" />
+    <Content Include="Content\Alumno\images\extras\iconos_extras_5.png" />
+    <Content Include="Content\Alumno\images\extras\iconos_extras_6.png" />
+    <Content Include="Content\Alumno\images\extras\iconos_extras_7.png" />
+    <Content Include="Content\Alumno\images\extras\iconos_extras_8.png" />
+    <Content Include="Content\Alumno\images\extras\iconos_extras_9.png" />
+    <Content Include="Content\Alumno\images\img_defecto.jpg" />
+    <Content Include="Content\Alumno\images\juegos\offline.jpg" />
+    <Content Include="Content\Alumno\images\juegos\online.jpg" />
+    <Content Include="Content\Alumno\images\juegos\scramble.jpg" />
+    <Content Include="Content\Alumno\images\juegos\sopa.jpg" />
+    <Content Include="Content\Alumno\images\logo-login.png" />
+    <Content Include="Content\Alumno\images\MemoryGame\bg_carta.png" />
+    <Content Include="Content\Alumno\images\MemoryGame\carta.jpg" />
+    <Content Include="Content\Alumno\images\MemoryGame\fondo_texto.jpg" />
+    <Content Include="Content\Alumno\vendor\fancytree.css" />
+    <Content Include="Content\Alumno\vendor\fancytree.min.css" />
+    <Content Include="Content\Alumno\vendor\fullcalendar\es.js" />
+    <Content Include="Content\Alumno\vendor\jquery-ui.js" />
+    <Content Include="Content\Alumno\vendor\locale\es.js" />
+    <Content Include="Content\Alumno\vendor\locale\eu.js" />
+    <Content Include="Content\Alumno\vendor\sweetalert.css" />
+    <Content Include="Content\Alumno\vendor\sweetalert.min.css" />
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Intranet\assets\css\oneui.css" />
+    <Content Include="Content\Intranet\assets\css\styles.css" />
+    <Content Include="Content\Intranet\assets\css\themes\amethyst.min.css" />
+    <Content Include="Content\Intranet\assets\css\themes\city.min.css" />
+    <Content Include="Content\Intranet\assets\css\themes\flat.min.css" />
+    <Content Include="Content\Intranet\assets\css\themes\modern.min.css" />
+    <Content Include="Content\Intranet\assets\css\themes\smooth.min.css" />
+    <Content Include="Content\Intranet\assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Intranet\assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Intranet\assets\fonts\Simple-Line-Icons.svg" />
+    <Content Include="Content\Intranet\assets\img\avatar.png" />
+    <Content Include="Content\Intranet\assets\img\favicon.png" />
+    <Content Include="Content\Intranet\assets\img\grupocampus.png" />
+    <Content Include="Content\Intranet\assets\img\logo_admin.png" />
+    <Content Include="Content\Intranet\assets\js\app.js" />
+    <Content Include="Content\Intranet\assets\js\core\bootstrap.min.js" />
+    <Content Include="Content\Intranet\assets\js\core\jquery.appear.min.js" />
+    <Content Include="Content\Intranet\assets\js\core\jquery.countTo.min.js" />
+    <Content Include="Content\Intranet\assets\js\core\jquery.min.js" />
+    <Content Include="Content\Intranet\assets\js\core\jquery.placeholder.min.js" />
+    <Content Include="Content\Intranet\assets\js\core\jquery.scrollLock.min.js" />
+    <Content Include="Content\Intranet\assets\js\core\jquery.slimscroll.min.js" />
+    <Content Include="Content\Intranet\assets\js\core\js.cookie.min.js" />
+    <Content Include="Content\Intranet\assets\js\jQueryFixes.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_comp_animations.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_comp_calendar.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_comp_charts.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_comp_maps.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_forms_validation.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_forms_wizard.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_pages_coming_soon.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_pages_dashboard.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_pages_lock.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_pages_login.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_pages_register.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_pages_reminder.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_tables_datatables.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_ui_activity.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_ui_icons.js" />
+    <Content Include="Content\Intranet\assets\js\pages\base_ui_widgets.js" />
+    <Content Include="Content\Intranet\assets\js\pages\frontend_contact.js" />
+    <Content Include="Content\Intranet\assets\js\pages\frontend_features.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\bootstrap-colorpicker\bootstrap-colorpicker.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha-horizontal.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\hue-horizontal.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\hue.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\saturation.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\bootstrap-datepicker\bootstrap-datepicker.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\bootstrap-datepicker\bootstrap-datepicker3.min.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\bootstrap-notify\bootstrap-notify.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\bootstrap-wizard\jquery.bootstrap.wizard.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\chartjs\Chart.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\adapters\jquery.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\build-config.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\ckeditor.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\config.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\contents.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\lang\en.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\af.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\bg.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ca.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\da.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\de.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\el.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\en-gb.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\en.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\eo.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\et.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\fi.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\fr-ca.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\fr.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\gl.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\gu.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\he.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\hi.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\hr.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\hu.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\id.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\it.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ko.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ku.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\lt.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\lv.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\mk.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\mn.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\nb.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\nl.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\no.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\pl.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\pt-br.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\pt.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ro.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ru.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\si.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sk.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sl.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sq.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sr-latn.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sr.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sv.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\th.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\tr.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\tt.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ug.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\uk.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\vi.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\zh.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\about\dialogs\about.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\colordialog\dialogs\colordialog.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\dialog\dialogDefinition.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\div\dialogs\div.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\find\dialogs\find.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\flash\dialogs\flash.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\flash\images\placeholder.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\forms\dialogs\button.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\forms\dialogs\checkbox.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\forms\dialogs\form.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\forms\dialogs\hiddenfield.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\forms\dialogs\radio.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\forms\dialogs\select.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\forms\dialogs\textarea.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\forms\dialogs\textfield.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\forms\images\hiddenfield.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\icons.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\icons_hidpi.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\iframe\dialogs\iframe.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\iframe\images\placeholder.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\image\dialogs\image.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\image\images\noimage.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\link\dialogs\anchor.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\link\dialogs\link.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\link\images\anchor.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\liststyle\dialogs\liststyle.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\magicline\images\hidpi\icon-rtl.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\magicline\images\hidpi\icon.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\magicline\images\icon-rtl.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\magicline\images\icon.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\pagebreak\images\pagebreak.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\pastefromword\filter\default.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\preview\preview.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\scayt\dialogs\options.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\showblocks\images\block_address.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\showblocks\images\block_blockquote.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\showblocks\images\block_div.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\showblocks\images\block_h1.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\showblocks\images\block_h2.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\showblocks\images\block_h3.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\showblocks\images\block_h4.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\showblocks\images\block_h5.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\showblocks\images\block_h6.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\showblocks\images\block_p.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\showblocks\images\block_pre.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\dialogs\smiley.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\angel_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\angel_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\angry_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\angry_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\broken_heart.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\broken_heart.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\confused_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\confused_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\cry_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\cry_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\devil_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\devil_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\embaressed_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\embarrassed_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\embarrassed_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\envelope.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\envelope.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\heart.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\heart.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\kiss.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\kiss.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\lightbulb.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\lightbulb.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\omg_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\omg_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\regular_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\regular_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\sad_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\sad_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\shades_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\shades_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\teeth_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\teeth_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\thumbs_down.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\thumbs_down.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\thumbs_up.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\thumbs_up.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\tongue_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\tongue_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\tounge_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\wink_smile.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\smiley\images\wink_smile.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\af.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\ar.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\bg.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\ca.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\da.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\de.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\el.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\en-gb.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\en.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\eo.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\es.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\et.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\fa.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\fi.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\fr-ca.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\fr.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\gl.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\he.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\hr.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\hu.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\id.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\it.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\ja.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\km.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\ku.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\lt.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\lv.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\nb.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\nl.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\no.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\pl.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\pt-br.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\pt.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\ru.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\si.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\sk.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\sl.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\sq.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\sv.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\th.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\tr.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\tt.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\ug.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\uk.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\vi.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\zh.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\specialchar\dialogs\specialchar.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\table\dialogs\table.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\templates\dialogs\templates.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\templates\dialogs\templates.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\templates\templates\default.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\templates\templates\images\template1.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\templates\templates\images\template2.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\templates\templates\images\template3.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\wsc\dialogs\ciframe.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\wsc\dialogs\tmpFrameset.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\wsc\dialogs\wsc.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\wsc\dialogs\wsc.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\wsc\dialogs\wsc_ie.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\ajax.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\api.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\appendto.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\assets\inlineall\logo.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\assets\outputxhtml\outputxhtml.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\assets\sample.jpg" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\assets\uilanguages\languages.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\datafiltering.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\divreplace.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\index.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\inlineall.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\inlinebycode.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\inlinetextarea.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\jquery.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\plugins\dialog\assets\my_dialog.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\plugins\dialog\dialog.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\plugins\enterkey\enterkey.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.swf" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\swfobject.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\plugins\htmlwriter\outputforflash.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\plugins\htmlwriter\outputhtml.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\plugins\magicline\magicline.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\plugins\toolbar\toolbar.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\plugins\wysiwygarea\fullpage.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\readonly.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\replacebyclass.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\replacebycode.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\sample.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\sample.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\tabindex.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\uicolor.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\uilanguages.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\xhtmlstyle.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\.temp\css\dialog.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\.temp\css\dialog_ie.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\.temp\css\dialog_ie7.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\.temp\css\dialog_ie8.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\.temp\css\dialog_iequirks.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\.temp\css\dialog_opera.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\.temp\css\editor.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\.temp\css\editor_gecko.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\.temp\css\editor_ie.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\.temp\css\editor_ie7.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\.temp\css\editor_ie8.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\.temp\css\editor_iequirks.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\dialog.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\dialog_ie.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\dialog_ie7.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\dialog_ie8.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\dialog_iequirks.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\dialog_opera.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\editor.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\editor_gecko.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\editor_ie.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\editor_ie7.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\editor_ie8.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\editor_iequirks.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\icons.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\icons_hidpi.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\images\arrow.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\images\close.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\images\hidpi\close.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\images\hidpi\lock-open.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\images\hidpi\lock.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\images\hidpi\refresh.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\images\lock-open.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\images\lock.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\images\refresh.png" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\sample\bootstrapck-sample.html" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\sample\css\bootstrapck-sample.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\sample\js\analytics.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\sample\js\jquery-1.11.0.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\styles.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\datatables\jquery.dataTables.min.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\datatables\jquery.dataTables.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\dropzonejs\dropzone.min.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\dropzonejs\dropzone.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\easy-pie-chart\jquery.easypiechart.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\flot\jquery.flot.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\flot\jquery.flot.pie.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\flot\jquery.flot.resize.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\flot\jquery.flot.stack.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\fullcalendar\fullcalendar.min.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\fullcalendar\gcal.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\fullcalendar\moment.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\gmapsjs\gmaps.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\highlightjs\github-gist.min.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\highlightjs\highlight.pack.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\jquery-countdown\jquery.countdown.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\jquery-tags-input\jquery.tagsinput.min.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\jquery-tags-input\jquery.tagsinput.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\jquery-validation\jquery.validate.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\magnific-popup\magnific-popup.min.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\magnific-popup\magnific-popup.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\masked-inputs\jquery.maskedinput.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\select2\select2-bootstrap.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\select2\select2.full.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\select2\select2.min.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\slick\ajax-loader.gif" />
+    <Content Include="Content\Intranet\assets\js\plugins\slick\fonts\slick.svg" />
+    <Content Include="Content\Intranet\assets\js\plugins\slick\slick-theme.min.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\slick\slick.min.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\slick\slick.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\sparkline\jquery.sparkline.min.js" />
+    <Content Include="Content\Intranet\assets\js\plugins\summernote\summernote-bs3.min.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\summernote\summernote.min.css" />
+    <Content Include="Content\Intranet\assets\js\plugins\summernote\summernote.min.js" />
+    <Content Include="Content\Intranet\bootstrap-datetimepicker.css" />
+    <Content Include="Content\Intranet\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\Intranet\bootstrap-theme.css" />
+    <Content Include="Content\Intranet\bootstrap-theme.min.css" />
+    <Content Include="Content\Intranet\bootstrap.css" />
+    <Content Include="Content\Intranet\bootstrap.min.css" />
+    <Content Include="Content\Intranet\cookies_eu.css" />
+    <Content Include="Content\Intranet\Custom.css" />
+    <Content Include="Content\Intranet\PagedList.css" />
+    <Content Include="Content\Publico\css\animate.css" />
+    <Content Include="Content\Publico\css\bootstrap-tagsinput.css" />
+    <Content Include="Content\Publico\css\bootstrap.css" />
+    <Content Include="Content\Publico\css\bootstrap.min.css" />
+    <Content Include="Content\Publico\css\custom.css" />
+    <Content Include="Content\Publico\css\effect2.css" />
+    <Content Include="Content\Publico\css\jasny-bootstrap.min.css" />
+    <Content Include="Content\Publico\css\jquery.rs.selectbox.css" />
+    <Content Include="Content\Publico\css\owl.carousel.css" />
+    <Content Include="Content\Publico\css\owl.theme.css" />
+    <Content Include="Content\Publico\css\owl.transitions.css" />
+    <Content Include="Content\Publico\css\responsive.css" />
+    <Content Include="Content\Publico\css\rs-wp-v1.2.css" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\css\font-awesome.css" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\css\font-awesome.min.css" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Publico\fonts\HelveticaNeueCyrRoman.svg" />
+    <Content Include="Content\Publico\fonts\stylesheet.css" />
+    <Content Include="Content\Publico\images\cracks.jpg" />
+    <Content Include="Content\Publico\images\header-logo.png" />
+    <Content Include="Content\Publico\images\icon\account-icon.jpg" />
+    <Content Include="Content\Publico\images\icon\addmedia.png" />
+    <Content Include="Content\Publico\images\icon\blockquote.png" />
+    <Content Include="Content\Publico\images\icon\checkbox.png" />
+    <Content Include="Content\Publico\images\icon\expand.png" />
+    <Content Include="Content\Publico\images\icon\list-icon.png" />
+    <Content Include="Content\Publico\images\icon\list-point.png" />
+    <Content Include="Content\Publico\images\icon\login-form-arr.png" />
+    <Content Include="Content\Publico\images\icon\tile-icon.png" />
+    <Content Include="Content\Publico\images\quotes.jpg" />
+    <Content Include="Content\Publico\images\rfef.png" />
+    <Content Include="Content\Publico\images\sabias.jpg" />
+    <Content Include="Content\Publico\images\tomato.jpg" />
+    <Content Include="Content\Publico\images\truco.jpg" />
+    <Content Include="Content\Publico\img\apple-touch-icon-114x114.png" />
+    <Content Include="Content\Publico\img\apple-touch-icon-72x72.png" />
+    <Content Include="Content\Publico\img\apple-touch-icon.png" />
+    <Content Include="Content\Publico\img\favicon.ico" />
+    <Content Include="Content\Publico\js\bootstrap-tagsinput.js" />
+    <Content Include="Content\Publico\js\bootstrap.js" />
+    <Content Include="Content\Publico\js\bootstrap.min.js" />
+    <Content Include="Content\Publico\js\custom-form-elements.js" />
+    <Content Include="Content\Publico\js\fancybox\blank.gif" />
+    <Content Include="Content\Publico\js\fancybox\fancybox_loading%402x.gif" />
+    <Content Include="Content\Publico\js\fancybox\fancybox_loading.gif" />
+    <Content Include="Content\Publico\js\fancybox\fancybox_overlay.png" />
+    <Content Include="Content\Publico\js\fancybox\fancybox_sprite%402x.png" />
+    <Content Include="Content\Publico\js\fancybox\fancybox_sprite.png" />
+    <Content Include="Content\Publico\js\fancybox\helpers\fancybox_buttons.png" />
+    <Content Include="Content\Publico\js\fancybox\helpers\jquery.fancybox-buttons.css" />
+    <Content Include="Content\Publico\js\fancybox\helpers\jquery.fancybox-buttons.js" />
+    <Content Include="Content\Publico\js\fancybox\helpers\jquery.fancybox-media.js" />
+    <Content Include="Content\Publico\js\fancybox\helpers\jquery.fancybox-thumbs.css" />
+    <Content Include="Content\Publico\js\fancybox\helpers\jquery.fancybox-thumbs.js" />
+    <Content Include="Content\Publico\js\fancybox\jquery.fancybox.css" />
+    <Content Include="Content\Publico\js\fancybox\jquery.fancybox.js" />
+    <Content Include="Content\Publico\js\fancybox\jquery.fancybox.pack.js" />
+    <Content Include="Content\Publico\js\jqBootstrapValidation.js" />
+    <Content Include="Content\Publico\js\jquery.1.11.1.js" />
+    <Content Include="Content\Publico\js\jquery.rs.selectbox.js" />
+    <Content Include="Content\Publico\js\jquery.simpleWeather.js" />
+    <Content Include="Content\Publico\js\jquery.sticky-kit.js" />
+    <Content Include="Content\Publico\js\main.js" />
+    <Content Include="Content\Publico\js\owl.carousel.js" />
+    <Content Include="Content\Publico\js\uiProgressButton.js" />
+    <Content Include="Content\Publico\js\wow.min.js" />
+    <Content Include="Content\Publico\style.css" />
+    <Content Include="Content\Alumno\css\custom.css" />
+    <Content Include="Content\Alumno\css\style.css" />
+    <Content Include="Content\Alumno\css\style.min.css" />
+    <Content Include="Content\Alumno\images\apple-touch-icon-114x114.png" />
+    <Content Include="Content\Alumno\images\apple-touch-icon-72x72.png" />
+    <Content Include="Content\Alumno\images\apple-touch-icon.png" />
+    <Content Include="Content\Alumno\images\avatar.jpg" />
+    <Content Include="Content\Alumno\images\en.png" />
+    <Content Include="Content\Alumno\images\en_desactivado.png" />
+    <Content Include="Content\Alumno\images\es.png" />
+    <Content Include="Content\Alumno\images\es_desactivado.png" />
+    <Content Include="Content\Alumno\images\favicon.ico" />
+    <Content Include="Content\Alumno\images\logo_alumno.png" />
+    <Content Include="Content\Alumno\images\logo_alumno_entero.png" />
+    <Content Include="Content\Alumno\images\logo_alumno_mini.png" />
+    <Content Include="Content\Alumno\images\logo_RFEF.png" />
+    <Content Include="Content\Alumno\images\logo_RFEF_mini.png" />
+    <Content Include="Content\Alumno\js\colors.js" />
+    <Content Include="Content\Alumno\js\colors.min.js" />
+    <Content Include="Content\Alumno\js\main.js" />
+    <Content Include="Content\Alumno\js\main.min.js" />
+    <Content Include="Content\Alumno\vendor\adminplus.js" />
+    <Content Include="Content\Alumno\vendor\bootstrap-datepicker.min.js" />
+    <Content Include="Content\Alumno\vendor\bootstrap-timepicker.js" />
+    <Content Include="Content\Alumno\vendor\bootstrap.min.js" />
+    <Content Include="Content\Alumno\vendor\datatables-bootstrap3.min.js" />
+    <Content Include="Content\Alumno\vendor\dropzone.min.css" />
+    <Content Include="Content\Alumno\vendor\dropzone.min.js" />
+    <Content Include="Content\Alumno\vendor\fullcalendar.min.js" />
+    <Content Include="Content\Alumno\vendor\jquery-jvectormap.css" />
+    <Content Include="Content\Alumno\vendor\jquery.bootstrap-touchspin.js" />
+    <Content Include="Content\Alumno\vendor\jquery.countdown.min.js" />
+    <Content Include="Content\Alumno\vendor\jquery.dataTables.min.js" />
+    <Content Include="Content\Alumno\vendor\jquery.fancytree-all.min.js" />
+    <Content Include="Content\Alumno\vendor\jquery.jvectormap.min.js" />
+    <Content Include="Content\Alumno\vendor\jquery.min.js" />
+    <Content Include="Content\Alumno\vendor\jquery.nestable.js" />
+    <Content Include="Content\Alumno\vendor\moment.min.js" />
+    <Content Include="Content\Alumno\vendor\morris.min.js" />
+    <Content Include="Content\Alumno\vendor\nouislider.min.css" />
+    <Content Include="Content\Alumno\vendor\nouislider.min.js" />
+    <Content Include="Content\Alumno\vendor\raphael-min.js" />
+    <Content Include="Content\Alumno\vendor\summernote.min.js" />
+    <Content Include="Content\Alumno\vendor\sweetalert.min.js" />
+    <Content Include="Content\Alumno\vendor\tether.min.js" />
+    <Content Include="Content\Usuario\css\custom.css" />
+    <Content Include="Content\Usuario\css\style.css" />
+    <Content Include="Content\Usuario\css\style.min.css" />
+    <Content Include="Content\Usuario\images\apple-touch-icon-114x114.png" />
+    <Content Include="Content\Usuario\images\apple-touch-icon-72x72.png" />
+    <Content Include="Content\Usuario\images\apple-touch-icon.png" />
+    <Content Include="Content\Usuario\images\avatar.jpg" />
+    <Content Include="Content\Usuario\images\en.png" />
+    <Content Include="Content\Usuario\images\en_desactivado.png" />
+    <Content Include="Content\Usuario\images\es.png" />
+    <Content Include="Content\Usuario\images\es_desactivado.png" />
+    <Content Include="Content\Usuario\images\favicon.ico" />
+    <Content Include="Content\Usuario\images\logo_alumno.png" />
+    <Content Include="Content\Usuario\images\logo_alumno_entero.png" />
+    <Content Include="Content\Usuario\images\logo_alumno_mini.png" />
+    <Content Include="Content\Usuario\images\logo_RFEF.png" />
+    <Content Include="Content\Usuario\images\logo_RFEF_mini.png" />
+    <Content Include="Content\Usuario\js\colors.js" />
+    <Content Include="Content\Usuario\js\colors.min.js" />
+    <Content Include="Content\Usuario\js\main.js" />
+    <Content Include="Content\Usuario\js\main.min.js" />
+    <Content Include="Content\Usuario\vendor\adminplus.js" />
+    <Content Include="Content\Usuario\vendor\bootstrap-datepicker.min.js" />
+    <Content Include="Content\Usuario\vendor\bootstrap-timepicker.js" />
+    <Content Include="Content\Usuario\vendor\bootstrap.min.js" />
+    <Content Include="Content\Usuario\vendor\datatables-bootstrap3.min.js" />
+    <Content Include="Content\Usuario\vendor\dropzone.min.css" />
+    <Content Include="Content\Usuario\vendor\dropzone.min.js" />
+    <Content Include="Content\Usuario\vendor\fullcalendar.min.js" />
+    <Content Include="Content\Usuario\vendor\jquery-jvectormap.css" />
+    <Content Include="Content\Usuario\vendor\jquery.bootstrap-touchspin.js" />
+    <Content Include="Content\Usuario\vendor\jquery.countdown.min.js" />
+    <Content Include="Content\Usuario\vendor\jquery.dataTables.min.js" />
+    <Content Include="Content\Usuario\vendor\jquery.fancytree-all.min.js" />
+    <Content Include="Content\Usuario\vendor\jquery.jvectormap.min.js" />
+    <Content Include="Content\Usuario\vendor\jquery.min.js" />
+    <Content Include="Content\Usuario\vendor\jquery.nestable.js" />
+    <Content Include="Content\Usuario\vendor\moment.min.js" />
+    <Content Include="Content\Usuario\vendor\morris.min.js" />
+    <Content Include="Content\Usuario\vendor\nouislider.min.css" />
+    <Content Include="Content\Usuario\vendor\nouislider.min.js" />
+    <Content Include="Content\Usuario\vendor\raphael-min.js" />
+    <Content Include="Content\Usuario\vendor\summernote.min.js" />
+    <Content Include="Content\Usuario\vendor\sweetalert.min.js" />
+    <Content Include="Content\Usuario\vendor\tether.min.js" />
+    <Content Include="Global.asax" />
+    <Content Include="img\bootstrap-colorpicker\alpha-horizontal.png" />
+    <Content Include="img\bootstrap-colorpicker\alpha.png" />
+    <Content Include="img\bootstrap-colorpicker\hue-horizontal.png" />
+    <Content Include="img\bootstrap-colorpicker\hue.png" />
+    <Content Include="img\bootstrap-colorpicker\saturation.png" />
+    <Content Include="media\upload\avatar\sin-avatar.jpg" />
+    <Content Include="Scripts\bootstrap-colorpicker\bootstrap-colorpicker.min.js" />
+    <Content Include="Scripts\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
+    <Content Include="Scripts\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha-horizontal.png" />
+    <Content Include="Scripts\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha.png" />
+    <Content Include="Scripts\bootstrap-colorpicker\img\bootstrap-colorpicker\hue-horizontal.png" />
+    <Content Include="Scripts\bootstrap-colorpicker\img\bootstrap-colorpicker\hue.png" />
+    <Content Include="Scripts\bootstrap-colorpicker\img\bootstrap-colorpicker\saturation.png" />
+    <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.min.js" />
+    <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker3.min.css" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Manage.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\_RemoveAccountPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Error.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_DatosUsuario.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Footer.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Scripts\cldr\event.js" />
+    <Content Include="Scripts\cldr\supplemental.js" />
+    <Content Include="Scripts\cldr\unresolved.js" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\fixedsortable.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <Content Include="Content\Intranet\assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Intranet\assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Intranet\assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Intranet\assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Intranet\assets\fonts\FontAwesome.otf" />
+    <Content Include="Content\Intranet\assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Intranet\assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\Intranet\assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Intranet\assets\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\Intranet\assets\fonts\Simple-Line-Icons.eot" />
+    <Content Include="Content\Intranet\assets\fonts\Simple-Line-Icons.ttf" />
+    <Content Include="Content\Intranet\assets\fonts\Simple-Line-Icons.woff" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\CHANGES.md" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\LICENSE.md" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\scayt\LICENSE.md" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\scayt\README.md" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\wsc\LICENSE.md" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\plugins\wsc\README.md" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\README.md" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\assets\posteddata.php" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\samples\sample_posteddata.php" />
+    <Content Include="Content\Intranet\assets\js\plugins\ckeditor\skins\bootstrapck\readme.md" />
+    <Content Include="Content\Intranet\assets\js\plugins\slick\fonts\slick.eot" />
+    <Content Include="Content\Intranet\assets\js\plugins\slick\fonts\slick.ttf" />
+    <Content Include="Content\Intranet\assets\js\plugins\slick\fonts\slick.woff" />
+    <Content Include="Areas\Admin\Views\Articulos\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Articulos\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Articulos\Create.cshtml" />
+    <Content Include="Content\Intranet\bootstrap.css.map" />
+    <Content Include="Content\Intranet\bootstrap-theme.css.map" />
+    <Content Include="Areas\Publico\Views\web.config" />
+    <Content Include="Areas\Publico\Views\Articulos\Index.cshtml" />
+    <Content Include="Areas\Publico\Views\Shared\_PublicoLayout.cshtml" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\css\desktop.ini" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\desktop.ini" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\fonts\desktop.ini" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\bordered-pulled.less" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\core.less" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\desktop.ini" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\fixed-width.less" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\font-awesome.less" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\icons.less" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\larger.less" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\list.less" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\mixins.less" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\path.less" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\rotated-flipped.less" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\spinning.less" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\stacked.less" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\less\variables.less" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\desktop.ini" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\font-awesome.scss" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\_core.scss" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\_fixed-width.scss" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\_icons.scss" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\_larger.scss" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\_list.scss" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\_mixins.scss" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\_path.scss" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\_spinning.scss" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\_stacked.scss" />
+    <Content Include="Content\Publico\fonts\font-awesome-4.2.0\scss\_variables.scss" />
+    <Content Include="Content\Publico\fonts\HelveticaNeueCyrRoman.eot" />
+    <Content Include="Content\Publico\fonts\HelveticaNeueCyrRoman.ttf" />
+    <Content Include="Content\Publico\fonts\HelveticaNeueCyrRoman.woff" />
+    <Content Include="Content\Publico\fonts\HelveticaNeueCyrRoman.woff2" />
+    <Content Include="Areas\Publico\Views\Articulos\Categoria.cshtml" />
+    <Content Include="Areas\Publico\Views\Shared\_ListaArticulos.cshtml" />
+    <Content Include="Areas\Publico\Views\Shared\_ListaArticulosRecientes.cshtml" />
+    <Content Include="Areas\Publico\Views\Articulos\Tag.cshtml" />
+    <Content Include="Areas\Publico\Views\Articulos\Buscar.cshtml" />
+    <Content Include="Areas\Publico\Views\Articulos\Articulo.cshtml" />
+    <Content Include="Areas\Publico\Views\Error\NotFound.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ResetPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Areas\Publico\Views\Shared\_Categorias.cshtml" />
+    <Content Include="Areas\Publico\Views\Shared\_NubeTags.cshtml" />
+    <Content Include="Areas\Publico\Views\Articulos\About.cshtml" />
+    <Content Include="Areas\Admin\Views\Comentarios\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Usuario\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Usuario\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Usuario\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SubTemas\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\SubTemas\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\SubTemas\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_ListarTemas.cshtml" />
+    <Content Include="Areas\Admin\Views\Tests\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Tests\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MatchTheWords\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MatchTheWords\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Skillwises\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Skillwises\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\FillTheGaps\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\FillTheGaps\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\WordByWords\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\WordByWords\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Copy.cshtml" />
+    <Content Include="Areas\Alumno\Views\web.config" />
+    <Content Include="Areas\Alumno\Views\Shared\_ListarTemasAlumno.cshtml" />
+    <Content Include="Areas\Alumno\Views\SubTemas\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Bloques\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\WordByWords\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Tests\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Skillwises\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\MatchTheWords\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\FillTheGaps\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Bloques\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Bloques\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Gramaticas\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Gramaticas\Edit.cshtml" />
+    <Content Include="Areas\Usuario\Views\web.config" />
+    <Content Include="Areas\Usuario\Views\Shared\_UsuarioLayout.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\Index.cshtml" />
+    <Content Include="Content\Usuario\css\style.min.css.map" />
+    <Content Include="Content\Usuario\js\colors.min.js.map" />
+    <Content Include="Content\Usuario\js\main.min.js.map" />
+    <Content Include="Areas\Usuario\Views\Home\Tema.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\Subtema.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\Perfil.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\Area.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\Test.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\Examenes.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\Vocabulario.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\VocabularioSubtema.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\Skillwise.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\Fillthegap.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\Audio.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\Wordbyword.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\Examen.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\Matchtheword.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\AudioSubtema.cshtml" />
+    <Content Include="Areas\Admin\Views\AudioSentenceExercises\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AudioSentenceExercises\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Vocabularios\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Vocabularios\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Vocabularios\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AccesoUsuarios\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Frases\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Frases\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Frases\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\GramaticaVocabularios\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\GramaticaVocabularios\Create.cshtml" />
+    <Content Include="Areas\Alumno\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Shared\_AlumnoLayout.cshtml" />
+    <Content Include="Content\Alumno\css\style.min.css.map" />
+    <Content Include="Content\Alumno\js\colors.min.js.map" />
+    <Content Include="Content\Alumno\js\main.min.js.map" />
+    <Content Include="Areas\Alumno\Views\SubTemas\View.cshtml" />
+    <Content Include="Areas\Alumno\Views\Vocabularios\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Vocabularios\Gramatica.cshtml" />
+    <Content Include="Areas\Admin\Views\Bloques\Edit.cshtml" />
+    <Content Include="Areas\Alumno\Views\Frases\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Usuario\Edit.cshtml" />
+    <Content Include="Areas\Usuario\Views\Home\SinAcceso.cshtml" />
+    <Content Include="Areas\Alumno\Views\AudioSentenceExercises\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Examen\ExamenTest.cshtml" />
+    <Content Include="Areas\Alumno\Views\Examen\ExamenFillTheGap.cshtml" />
+    <Content Include="Areas\Alumno\Views\Home\SinAcceso.cshtml" />
+    <Content Include="Content\Alumno\vendor\jquery.ui.touch-punch.min.js" />
+    <Content Include="Areas\Admin\Views\SubTemas\Move.cshtml" />
+    <Content Include="Areas\Admin\Views\Gramaticas\Move.cshtml" />
+    <Content Include="Areas\Admin\Views\Frases\Copy.cshtml" />
+    <Content Include="Areas\Alumno\Views\Examen\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Vocabularios\Glosario.cshtml" />
+    <Content Include="Areas\Alumno\Views\Extras\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Extras\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Extras\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Extras\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Extras\Categoria.cshtml" />
+    <Content Include="Areas\Alumno\Views\Extras\View.cshtml" />
+    <Content Include="Areas\Alumno\Views\Foro\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Foro\Hilo.cshtml" />
+    <Content Include="Areas\Alumno\Views\Foro\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Juegos\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Juegos\Edit.cshtml" />
+    <Content Include="Areas\Alumno\Views\Juegos\Categoria.cshtml" />
+    <Content Include="Areas\Alumno\Views\Juegos\View.cshtml" />
+    <Content Include="Content\Alumno\vendor\sweetalert.min.css.map" />
+    <Content Include="Areas\Admin\Views\Noticias\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Noticias\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Noticias\Index.cshtml" />
+    <Content Include="Content\Alumno\css\summernote.min.css.map" />
+    <Content Include="Areas\Alumno\Views\Noticias\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Noticias\View.cshtml" />
+    <Content Include="Areas\Admin\Views\Documentos\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Documentos\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Documentos\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Documentos\Index.cshtml" />
+    <Content Include="Content\Alumno\vendor\fancytree.min.css.map" />
+    <Content Include="Areas\Admin\Views\Crucigramas\Create.cshtml" />
+    <Content Include="Areas\Alumno\Views\Crucigramas\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ErroresExamens\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ErroresExamens\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Calendario\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Juegos\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MatchThePictures\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\TrueFalses\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\TrueFalses\Edit.cshtml" />
+    <Content Include="Areas\Alumno\Views\TrueFalses\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\MatchThePictures\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Videos\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Videos\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Temas\Video.cshtml" />
+    <Content Include="Areas\Admin\Views\SubTemaVideos\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\SubTemaVideos\Edit.cshtml" />
+    <Content Include="Areas\Alumno\Views\SubTemaVideos\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\BeatTheGoalies\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\BeatTheGoalies\Edit.cshtml" />
+    <Content Include="Areas\Alumno\Views\BeatTheGoalies\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\JuegoOnlines\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\JuegoOnlines\Edit.cshtml" />
+    <Content Include="Areas\Alumno\Views\Juegos\Seleccion.cshtml" />
+    <Content Include="Areas\Alumno\Views\JuegoOnlines\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MemoryGames\Create.cshtml" />
+    <Content Include="Areas\Alumno\Views\MemoryGames\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Areas\Alumno\Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Areas\Alumno\Views\Account\_RemoveAccountPartial.cshtml" />
+    <Content Include="Areas\Alumno\Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Areas\Alumno\Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Areas\Alumno\Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Areas\Alumno\Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Areas\Alumno\Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Areas\Alumno\Views\Account\Login.cshtml" />
+    <Content Include="Areas\Alumno\Views\Account\Manage.cshtml" />
+    <Content Include="Areas\Alumno\Views\Account\ResetPassword.cshtml" />
+    <Content Include="Areas\Alumno\Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Areas\Alumno\Views\Shared\_AlumnoLoginLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\Usuario\Grupos.cshtml" />
+    <Content Include="Areas\Admin\Views\Usuario\EditGrupo.cshtml" />
+    <Content Include="Areas\Admin\Views\Usuario\CreateGrupo.cshtml" />
+    <Content Include="Areas\Admin\Views\JuegoOnlines\Copy.cshtml" />
+    <Content Include="Areas\Admin\Views\FillTheBoxs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\FillTheBoxs\Edit.cshtml" />
+    <Content Include="Areas\Alumno\Views\FillTheBoxs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Extras\Copy.cshtml" />
+    <Content Include="Areas\Admin\Views\Frases\Gestor.cshtml" />
+    <Content Include="Areas\Alumno\Views\Frases\Glosario.cshtml" />
+    <Content Include="Areas\Admin\Views\Clientes\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Clientes\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Clientes\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Home\CssCliente.cshtml" />
+    <Content Include="Areas\Admin\Views\Temas\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Temas\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Temas\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Shared\_Logo.cshtml" />
+    <Content Include="Areas\Alumno\Views\Shared\_LogoLogin.cshtml" />
+    <Content Include="Areas\Admin\Views\Gramaticas\Copy.cshtml" />
+    <Content Include="Areas\Alumno\Views\Mistakes\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SopaLetras\Create.cshtml" />
+    <Content Include="Areas\Alumno\Views\SopaLetras\Index.cshtml" />
+    <Content Include="Areas\Alumno\Views\Shared\_Test.cshtml" />
+    <Content Include="Areas\Alumno\Views\Shared\_FillTheGap.cshtml" />
+    <Content Include="Areas\Alumno\Views\Shared\_AudioSentence.cshtml" />
+    <Content Include="Areas\Alumno\Views\Shared\_TrueFalse.cshtml" />
+    <Content Include="Areas\Alumno\Views\Examen\Examen.cshtml" />
+    <Content Include="Areas\Alumno\Views\SopaLetras\Completado.cshtml" />
+    <Content Include="Areas\Admin\Views\Ahorcado\Edit.cshtml" />
+    <Content Include="Areas\Alumno\Views\Ahorcado\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Ahorcado\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\TEST\Index.cshtml" />
+    <Content Include="Areas\Publico\Views\Error\Error500.cshtml" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <None Include="Properties\PublishProfiles\englishforcoaches.pubxml" />
+    <Content Include="Scripts\cldr\main\es\ca-generic.json" />
+    <Content Include="Scripts\cldr\main\es\ca-gregorian.json" />
+    <Content Include="Scripts\cldr\main\es\currencies.json" />
+    <Content Include="Scripts\cldr\main\es\dateFields.json" />
+    <Content Include="Scripts\cldr\main\es\numbers.json" />
+    <Content Include="Scripts\cldr\main\es\timeZoneNames.json" />
+    <Content Include="Scripts\cldr\supplemental\aliases.json" />
+    <Content Include="Scripts\cldr\supplemental\calendarData.json" />
+    <Content Include="Scripts\cldr\supplemental\calendarPreferenceData.json" />
+    <Content Include="Scripts\cldr\supplemental\characterFallbacks.json" />
+    <Content Include="Scripts\cldr\supplemental\codeMappings.json" />
+    <Content Include="Scripts\cldr\supplemental\currencyData.json" />
+    <Content Include="Scripts\cldr\supplemental\gender.json" />
+    <Content Include="Scripts\cldr\supplemental\languageData.json" />
+    <Content Include="Scripts\cldr\supplemental\languageMatching.json" />
+    <Content Include="Scripts\cldr\supplemental\likelySubtags.json" />
+    <Content Include="Scripts\cldr\supplemental\measurementData.json" />
+    <Content Include="Scripts\cldr\supplemental\metaZones.json" />
+    <Content Include="Scripts\cldr\supplemental\numberingSystems.json" />
+    <Content Include="Scripts\cldr\supplemental\ordinals.json" />
+    <Content Include="Scripts\cldr\supplemental\parentLocales.json" />
+    <Content Include="Scripts\cldr\supplemental\plurals.json" />
+    <Content Include="Scripts\cldr\supplemental\postalCodeData.json" />
+    <Content Include="Scripts\cldr\supplemental\primaryZones.json" />
+    <Content Include="Scripts\cldr\supplemental\references.json" />
+    <Content Include="Scripts\cldr\supplemental\telephoneCodeData.json" />
+    <Content Include="Scripts\cldr\supplemental\territoryContainment.json" />
+    <Content Include="Scripts\cldr\supplemental\territoryInfo.json" />
+    <Content Include="Scripts\cldr\supplemental\timeData.json" />
+    <Content Include="Scripts\cldr\supplemental\weekData.json" />
+    <Content Include="Scripts\cldr\supplemental\windowsZones.json" />
+    <Content Include="Scripts\index.js.flow" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
+    <Content Include="Scripts\jquery-3.0.0.js" />
+    <Content Include="Scripts\jquery-3.0.0.min.js" />
+    <Content Include="Scripts\jquery-3.0.0.slim.js" />
+    <Content Include="Scripts\jquery-3.0.0.slim.min.js" />
+    <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.0.0.min.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\cldr.js" />
+    <Content Include="Scripts\cookies_eu.js" />
+    <Content Include="Scripts\globalize.js" />
+    <Content Include="Scripts\globalize\currency.js" />
+    <Content Include="Scripts\globalize\date.js" />
+    <Content Include="Scripts\globalize\message.js" />
+    <Content Include="Scripts\globalize\number.js" />
+    <Content Include="Scripts\globalize\plural.js" />
+    <Content Include="Scripts\globalize\relative-time.js" />
+    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery-tags-input\jquery.tagsinput.min.css" />
+    <Content Include="Scripts\jquery-tags-input\jquery.tagsinput.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\localization\messages_ar.js" />
+    <Content Include="Scripts\localization\messages_bg.js" />
+    <Content Include="Scripts\localization\messages_ca.js" />
+    <Content Include="Scripts\localization\messages_cs.js" />
+    <Content Include="Scripts\localization\messages_da.js" />
+    <Content Include="Scripts\localization\messages_de.js" />
+    <Content Include="Scripts\localization\messages_el.js" />
+    <Content Include="Scripts\localization\messages_es.js" />
+    <Content Include="Scripts\localization\messages_et.js" />
+    <Content Include="Scripts\localization\messages_eu.js" />
+    <Content Include="Scripts\localization\messages_fa.js" />
+    <Content Include="Scripts\localization\messages_fi.js" />
+    <Content Include="Scripts\localization\messages_fr.js" />
+    <Content Include="Scripts\localization\messages_he.js" />
+    <Content Include="Scripts\localization\messages_hr.js" />
+    <Content Include="Scripts\localization\messages_hu.js" />
+    <Content Include="Scripts\localization\messages_it.js" />
+    <Content Include="Scripts\localization\messages_ja.js" />
+    <Content Include="Scripts\localization\messages_ka.js" />
+    <Content Include="Scripts\localization\messages_kk.js" />
+    <Content Include="Scripts\localization\messages_lt.js" />
+    <Content Include="Scripts\localization\messages_lv.js" />
+    <Content Include="Scripts\localization\messages_my.js" />
+    <Content Include="Scripts\localization\messages_nl.js" />
+    <Content Include="Scripts\localization\messages_no.js" />
+    <Content Include="Scripts\localization\messages_pl.js" />
+    <Content Include="Scripts\localization\messages_pt_BR.js" />
+    <Content Include="Scripts\localization\messages_pt_PT.js" />
+    <Content Include="Scripts\localization\messages_ro.js" />
+    <Content Include="Scripts\localization\messages_ru.js" />
+    <Content Include="Scripts\localization\messages_si.js" />
+    <Content Include="Scripts\localization\messages_sk.js" />
+    <Content Include="Scripts\localization\messages_sl.js" />
+    <Content Include="Scripts\localization\messages_sr.js" />
+    <Content Include="Scripts\localization\messages_sv.js" />
+    <Content Include="Scripts\localization\messages_th.js" />
+    <Content Include="Scripts\localization\messages_tr.js" />
+    <Content Include="Scripts\localization\messages_uk.js" />
+    <Content Include="Scripts\localization\messages_vi.js" />
+    <Content Include="Scripts\localization\messages_zh.js" />
+    <Content Include="Scripts\localization\messages_zh_TW.js" />
+    <Content Include="Scripts\localization\methods_de.js" />
+    <Content Include="Scripts\localization\methods_nl.js" />
+    <Content Include="Scripts\localization\methods_pt.js" />
+    <Content Include="Scripts\masked-inputs\jquery.maskedinput.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment\moment-with-locales.js" />
+    <Content Include="Scripts\moment\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment\moment.js" />
+    <Content Include="Scripts\moment\moment.min.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\select2\select2-bootstrap.css" />
+    <Content Include="Scripts\select2\select2.full.min.js" />
+    <Content Include="Scripts\select2\select2.min.css" />
+    <Content Include="Scripts\Shared\bodyScrollLock.js" />
+    <Content Include="Scripts\Shared\FileSizeValidator.js" />
+    <Content Include="Scripts\src\index.js" />
+    <Content Include="Scripts\src\methods\defaults.js" />
+    <Content Include="Scripts\src\methods\destroy.js" />
+    <Content Include="Scripts\src\methods\disableEventListeners.js" />
+    <Content Include="Scripts\src\methods\enableEventListeners.js" />
+    <Content Include="Scripts\src\methods\placements.js" />
+    <Content Include="Scripts\src\methods\update.js" />
+    <Content Include="Scripts\src\modifiers\applyStyle.js" />
+    <Content Include="Scripts\src\modifiers\arrow.js" />
+    <Content Include="Scripts\src\modifiers\computeStyle.js" />
+    <Content Include="Scripts\src\modifiers\flip.js" />
+    <Content Include="Scripts\src\modifiers\hide.js" />
+    <Content Include="Scripts\src\modifiers\index.js" />
+    <Content Include="Scripts\src\modifiers\inner.js" />
+    <Content Include="Scripts\src\modifiers\keepTogether.js" />
+    <Content Include="Scripts\src\modifiers\offset.js" />
+    <Content Include="Scripts\src\modifiers\preventOverflow.js" />
+    <Content Include="Scripts\src\modifiers\shift.js" />
+    <Content Include="Scripts\src\utils\clockwise.js" />
+    <Content Include="Scripts\src\utils\computeAutoPlacement.js" />
+    <Content Include="Scripts\src\utils\debounce.js" />
+    <Content Include="Scripts\src\utils\find.js" />
+    <Content Include="Scripts\src\utils\findCommonOffsetParent.js" />
+    <Content Include="Scripts\src\utils\findIndex.js" />
+    <Content Include="Scripts\src\utils\getBordersSize.js" />
+    <Content Include="Scripts\src\utils\getBoundaries.js" />
+    <Content Include="Scripts\src\utils\getBoundingClientRect.js" />
+    <Content Include="Scripts\src\utils\getClientRect.js" />
+    <Content Include="Scripts\src\utils\getFixedPositionOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetRect.js" />
+    <Content Include="Scripts\src\utils\getOffsetRectRelativeToArbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getOppositePlacement.js" />
+    <Content Include="Scripts\src\utils\getOppositeVariation.js" />
+    <Content Include="Scripts\src\utils\getOuterSizes.js" />
+    <Content Include="Scripts\src\utils\getParentNode.js" />
+    <Content Include="Scripts\src\utils\getPopperOffsets.js" />
+    <Content Include="Scripts\src\utils\getReferenceNode.js" />
+    <Content Include="Scripts\src\utils\getReferenceOffsets.js" />
+    <Content Include="Scripts\src\utils\getRoot.js" />
+    <Content Include="Scripts\src\utils\getRoundedOffsets.js" />
+    <Content Include="Scripts\src\utils\getScroll.js" />
+    <Content Include="Scripts\src\utils\getScrollParent.js" />
+    <Content Include="Scripts\src\utils\getStyleComputedProperty.js" />
+    <Content Include="Scripts\src\utils\getSupportedPropertyName.js" />
+    <Content Include="Scripts\src\utils\getViewportOffsetRectRelativeToArtbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getWindow.js" />
+    <Content Include="Scripts\src\utils\getWindowSizes.js" />
+    <Content Include="Scripts\src\utils\includeScroll.js" />
+    <Content Include="Scripts\src\utils\index.js" />
+    <Content Include="Scripts\src\utils\isBrowser.js" />
+    <Content Include="Scripts\src\utils\isFixed.js" />
+    <Content Include="Scripts\src\utils\isFunction.js" />
+    <Content Include="Scripts\src\utils\isIE.js" />
+    <Content Include="Scripts\src\utils\isModifierEnabled.js" />
+    <Content Include="Scripts\src\utils\isModifierRequired.js" />
+    <Content Include="Scripts\src\utils\isNumeric.js" />
+    <Content Include="Scripts\src\utils\isOffsetContainer.js" />
+    <Content Include="Scripts\src\utils\removeEventListeners.js" />
+    <Content Include="Scripts\src\utils\runModifiers.js" />
+    <Content Include="Scripts\src\utils\setAttributes.js" />
+    <Content Include="Scripts\src\utils\setStyles.js" />
+    <Content Include="Scripts\src\utils\setupEventListeners.js" />
+    <Content Include="Scripts\summernote\summernote-bs3.min.css" />
+    <Content Include="Scripts\summernote\summernote.min.css" />
+    <Content Include="Scripts\summernote\summernote.min.js" />
+    <Content Include="Scripts\umd\popper-utils.js" />
+    <Content Include="Scripts\umd\popper-utils.min.js" />
+    <Content Include="Scripts\umd\popper.js" />
+    <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\wordfind.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Test\AudioTest.html" />
+    <Content Include="VimeoAPI.dll" />
+    <Content Include="VimeoPHP\old\changelog.txt" />
+    <Content Include="VimeoPHP\old\test.php" />
+    <Content Include="VimeoPHP\init.php" />
+    <Content Include="VimeoPHP\upload_test.php" />
+    <Content Include="VimeoPHP\upload.php" />
+    <Content Include="VimeoPHP\videoThumbNail.php" />
+    <Content Include="VimeoPHP\Vimeo\Exceptions\ExceptionInterface.php" />
+    <Content Include="VimeoPHP\Vimeo\Exceptions\VimeoRequestException.php" />
+    <Content Include="VimeoPHP\Vimeo\Exceptions\VimeoUploadException.php" />
+    <Content Include="VimeoPHP\Vimeo\Vimeo.php" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="VimeoPHP\old\delete.php" />
+    <Content Include="VimeoPHP\old\index.php" />
+    <Content Include="VimeoPHP\old\readme.textile" />
+    <Content Include="VimeoPHP\old\upload.php" />
+    <Content Include="VimeoPHP\old\videoThumbNail.php" />
+    <Content Include="VimeoPHP\old\vimeo.php" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper.js.flow" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\Base\" />
+    <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="Areas\Usuario\Models\" />
+    <Folder Include="Imagenes\" />
+    <Folder Include="media\Gramatica\" />
+    <Folder Include="media\upload\Ahorcado\Audios\" />
+    <Folder Include="media\upload\audio\" />
+    <Folder Include="media\upload\audio_ejercicio\" />
+    <Folder Include="media\upload\audio_fillthebox\" />
+    <Folder Include="media\upload\BeatTheGoalie\" />
+    <Folder Include="media\upload\Cliente\" />
+    <Folder Include="media\upload\documentos\" />
+    <Folder Include="media\upload\extras_audios\" />
+    <Folder Include="media\upload\extras_imagenes\" />
+    <Folder Include="media\upload\frases_mp3\" />
+    <Folder Include="media\upload\imagen_fillthebox\" />
+    <Folder Include="media\upload\juegos\" />
+    <Folder Include="media\upload\MatchThePicture\" />
+    <Folder Include="media\upload\MemoryGame\" />
+    <Folder Include="media\upload\Noticias_adjuntos\" />
+    <Folder Include="media\upload\Noticias_imagenes\" />
+    <Folder Include="media\upload\Test\" />
+    <Folder Include="media\upload\TrueFalse\Audios\" />
+    <Folder Include="media\upload\VideosTemp\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Messages.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Messages.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Messages.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Messages.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604261409096_articulov1.resx">
+      <DependentUpon>201604261409096_articulov1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605020639434_articuloV2.resx">
+      <DependentUpon>201605020639434_articuloV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605030750251_articulov3.resx">
+      <DependentUpon>201605030750251_articulov3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605030919531_articulov4.resx">
+      <DependentUpon>201605030919531_articulov4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605041151070_articulov41.resx">
+      <DependentUpon>201605041151070_articulov41.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605050908016_SeoV1.resx">
+      <DependentUpon>201605050908016_SeoV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605101213380_noImagenes.resx">
+      <DependentUpon>201605101213380_noImagenes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605161225363_comentariosV1.resx">
+      <DependentUpon>201605161225363_comentariosV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610111014144_EjerciciosV1.resx">
+      <DependentUpon>201610111014144_EjerciciosV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610191417130_EjerciciosV2.resx">
+      <DependentUpon>201610191417130_EjerciciosV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610201257578_UsuariosV1.resx">
+      <DependentUpon>201610201257578_UsuariosV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610211140029_EjerciciosV3.resx">
+      <DependentUpon>201610211140029_EjerciciosV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610241105149_EjerciciosV4.resx">
+      <DependentUpon>201610241105149_EjerciciosV4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610241333449_ejerciciosV5.resx">
+      <DependentUpon>201610241333449_ejerciciosV5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610250820131_ejerciciosV6.resx">
+      <DependentUpon>201610250820131_ejerciciosV6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610270629297_ejerciciosV7.resx">
+      <DependentUpon>201610270629297_ejerciciosV7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701040950062_BloqueV1.resx">
+      <DependentUpon>201701040950062_BloqueV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701101202095_GramaticaV1.resx">
+      <DependentUpon>201701101202095_GramaticaV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701101301111_GramaticaV2.resx">
+      <DependentUpon>201701101301111_GramaticaV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701101306312_GramaticaV3.resx">
+      <DependentUpon>201701101306312_GramaticaV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701110903402_UsuarioPuntosV1.resx">
+      <DependentUpon>201701110903402_UsuarioPuntosV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701110954403_SubtemaDesbloqueadoV1.resx">
+      <DependentUpon>201701110954403_SubtemaDesbloqueadoV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701121122012_SubtemaDesbloqueadoV2.resx">
+      <DependentUpon>201701121122012_SubtemaDesbloqueadoV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701121212330_SubtemaDesbloqueadoV3.resx">
+      <DependentUpon>201701121212330_SubtemaDesbloqueadoV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701161132481_SubtemaDesbloqueadoV4.resx">
+      <DependentUpon>201701161132481_SubtemaDesbloqueadoV4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701161243380_VocabularioYAudioSentenceV1.resx">
+      <DependentUpon>201701161243380_VocabularioYAudioSentenceV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701171217166_VocabularioV1.resx">
+      <DependentUpon>201701171217166_VocabularioV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701171419178_AccesoUsuariov1.resx">
+      <DependentUpon>201701171419178_AccesoUsuariov1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701180757327_FrasesV1.resx">
+      <DependentUpon>201701180757327_FrasesV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701181259137_IconoTema.resx">
+      <DependentUpon>201701181259137_IconoTema.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701190847216_gramaticaVocabularioV1.resx">
+      <DependentUpon>201701190847216_gramaticaVocabularioV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701231158178_AreaAlumnov1.resx">
+      <DependentUpon>201701231158178_AreaAlumnov1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701231200381_AreaAlumnov2.resx">
+      <DependentUpon>201701231200381_AreaAlumnov2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701231225244_TipoEjercicioAlumnoV1.resx">
+      <DependentUpon>201701231225244_TipoEjercicioAlumnoV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701241212376_ExplicacionBloqueV1.resx">
+      <DependentUpon>201701241212376_ExplicacionBloqueV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701300812134_FillTheGapV1.resx">
+      <DependentUpon>201701300812134_FillTheGapV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701300844154_matchthewordUnaPreguntaV1.resx">
+      <DependentUpon>201701300844154_matchthewordUnaPreguntaV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701300856004_matchthewordUnaPreguntaV2.resx">
+      <DependentUpon>201701300856004_matchthewordUnaPreguntaV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701310750538_TemaIntroduccionV1.resx">
+      <DependentUpon>201701310750538_TemaIntroduccionV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701311432315_ExamenesV1.resx">
+      <DependentUpon>201701311432315_ExamenesV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702031108150_BloqueRealizadosv1.resx">
+      <DependentUpon>201702031108150_BloqueRealizadosv1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702061214441_vocabularioGlosarioV1.resx">
+      <DependentUpon>201702061214441_vocabularioGlosarioV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702070732508_ExtrasV1.resx">
+      <DependentUpon>201702070732508_ExtrasV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702070835184_ExtrasV2.resx">
+      <DependentUpon>201702070835184_ExtrasV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702080818321_ExtraDesbloqueadoV1.resx">
+      <DependentUpon>201702080818321_ExtraDesbloqueadoV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702090857414_Forov1.resx">
+      <DependentUpon>201702090857414_Forov1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702090920414_Forov2.resx">
+      <DependentUpon>201702090920414_Forov2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702091203353_ForoV3.resx">
+      <DependentUpon>201702091203353_ForoV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702100917587_Forov4.resx">
+      <DependentUpon>201702100917587_Forov4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702100934535_Forov5.resx">
+      <DependentUpon>201702100934535_Forov5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702100945192_Forov6.resx">
+      <DependentUpon>201702100945192_Forov6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702101027288_Forov7.resx">
+      <DependentUpon>201702101027288_Forov7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702131201463_juegov1.resx">
+      <DependentUpon>201702131201463_juegov1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702141435350_foroHiloleidov1.resx">
+      <DependentUpon>201702141435350_foroHiloleidov1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702161108324_noticiasV1.resx">
+      <DependentUpon>201702161108324_noticiasV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702161216361_noticiasV11.resx">
+      <DependentUpon>201702161216361_noticiasV11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702161436046_noticiasV2.resx">
+      <DependentUpon>201702161436046_noticiasV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702171203565_ExtrasV3.resx">
+      <DependentUpon>201702171203565_ExtrasV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702200757582_CategoriaVocabularioV1.resx">
+      <DependentUpon>201702200757582_CategoriaVocabularioV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702200808470_CategoriaVocabularioV2.resx">
+      <DependentUpon>201702200808470_CategoriaVocabularioV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702200927457_NoticiaV2.resx">
+      <DependentUpon>201702200927457_NoticiaV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702201048435_NoticiaV3.resx">
+      <DependentUpon>201702201048435_NoticiaV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702201145266_NoticiaV4.resx">
+      <DependentUpon>201702201145266_NoticiaV4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702210755438_DocumentoV1.resx">
+      <DependentUpon>201702210755438_DocumentoV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702210915575_DocumentoV2.resx">
+      <DependentUpon>201702210915575_DocumentoV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702210959081_DocumentoV3.resx">
+      <DependentUpon>201702210959081_DocumentoV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702230744286_categoriaVocabularioV3.resx">
+      <DependentUpon>201702230744286_categoriaVocabularioV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702231005435_ForoAdminv1.resx">
+      <DependentUpon>201702231005435_ForoAdminv1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702231010524_ForoAdminv2.resx">
+      <DependentUpon>201702231010524_ForoAdminv2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702231032454_ForoAdminv3.resx">
+      <DependentUpon>201702231032454_ForoAdminv3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702231100584_ForoAdminv4.resx">
+      <DependentUpon>201702231100584_ForoAdminv4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702231129350_NoticiaResumenv1.resx">
+      <DependentUpon>201702231129350_NoticiaResumenv1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702240939057_crucigramav1.resx">
+      <DependentUpon>201702240939057_crucigramav1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702241014223_crucigramav2.resx">
+      <DependentUpon>201702241014223_crucigramav2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702270733509_crucigramaV3.resx">
+      <DependentUpon>201702270733509_crucigramaV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702270746465_crucigramaV4.resx">
+      <DependentUpon>201702270746465_crucigramaV4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702281009247_bloqueDesbloqueadoV1.resx">
+      <DependentUpon>201702281009247_bloqueDesbloqueadoV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703010810119_RespuestasExamenV1.resx">
+      <DependentUpon>201703010810119_RespuestasExamenV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703010904146_RespuestasExamenV2.resx">
+      <DependentUpon>201703010904146_RespuestasExamenV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703011145400_RespuestasExamenV3.resx">
+      <DependentUpon>201703011145400_RespuestasExamenV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704180907557_mistakesv1.resx">
+      <DependentUpon>201704180907557_mistakesv1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705021050381_ExamenDesbloqueadoV1.resx">
+      <DependentUpon>201705021050381_ExamenDesbloqueadoV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040935473_ExtrasOrdenV1.resx">
+      <DependentUpon>201705040935473_ExtrasOrdenV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705050753178_MatchThePictureV1.resx">
+      <DependentUpon>201705050753178_MatchThePictureV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705051016002_MathThePictureV2.resx">
+      <DependentUpon>201705051016002_MathThePictureV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705080631141_AccesoUsuarioSubteV1.resx">
+      <DependentUpon>201705080631141_AccesoUsuarioSubteV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705080724337_AccesoUsuarioSubteV2.resx">
+      <DependentUpon>201705080724337_AccesoUsuarioSubteV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705091310494_TrueFalseV1.resx">
+      <DependentUpon>201705091310494_TrueFalseV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705181124443_TestImagenV1.resx">
+      <DependentUpon>201705181124443_TestImagenV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705260857496_trueFalseAudioV1.resx">
+      <DependentUpon>201705260857496_trueFalseAudioV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705300836448_VideoV1.resx">
+      <DependentUpon>201705300836448_VideoV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705300912035_VideoV2.resx">
+      <DependentUpon>201705300912035_VideoV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705301333058_VideoV3.resx">
+      <DependentUpon>201705301333058_VideoV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706020808006_TemaVideo.resx">
+      <DependentUpon>201706020808006_TemaVideo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706020856588_SubTemaVideoV1.resx">
+      <DependentUpon>201706020856588_SubTemaVideoV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706051133371_beatthegoalieV1.resx">
+      <DependentUpon>201706051133371_beatthegoalieV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706060708194_JuegosOnlineV1.resx">
+      <DependentUpon>201706060708194_JuegosOnlineV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706060756284_JuegosOnlineV2.resx">
+      <DependentUpon>201706060756284_JuegosOnlineV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706070832472_BeattheGoalieEnunciadoV1.resx">
+      <DependentUpon>201706070832472_BeattheGoalieEnunciadoV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706130708199_memoryGameV1.resx">
+      <DependentUpon>201706130708199_memoryGameV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706160702594_TipoUsuarioV1.resx">
+      <DependentUpon>201706160702594_TipoUsuarioV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706160848265_MemoryGameV3.resx">
+      <DependentUpon>201706160848265_MemoryGameV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706161129496_TipoUsuarioV2.resx">
+      <DependentUpon>201706161129496_TipoUsuarioV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706161133087_TipoUsuarioV3.resx">
+      <DependentUpon>201706161133087_TipoUsuarioV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706291020074_usuarioNoticiaV1.resx">
+      <DependentUpon>201706291020074_usuarioNoticiaV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809171121429_FillTheBoxV1.resx">
+      <DependentUpon>201809171121429_FillTheBoxV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809171303579_FillTheBoxV2.resx">
+      <DependentUpon>201809171303579_FillTheBoxV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809240836231_ExtrasSubtemasV1.resx">
+      <DependentUpon>201809240836231_ExtrasSubtemasV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810170802549_definicionVocabulariov1.resx">
+      <DependentUpon>201810170802549_definicionVocabulariov1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810291446083_FraseVocabularioV1.resx">
+      <DependentUpon>201810291446083_FraseVocabularioV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811151234073_FraseGlosarioV1.resx">
+      <DependentUpon>201811151234073_FraseGlosarioV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811160800471_fraseGlosarioV2.resx">
+      <DependentUpon>201811160800471_fraseGlosarioV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811221000057_FraseVocabularioV2.resx">
+      <DependentUpon>201811221000057_FraseVocabularioV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811230900382_filltheboxIncorrectoV1.resx">
+      <DependentUpon>201811230900382_filltheboxIncorrectoV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903260859122_ClientesV1.resx">
+      <DependentUpon>201903260859122_ClientesV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903261113573_ClientesV2.resx">
+      <DependentUpon>201903261113573_ClientesV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903271522596_ClienteV3.resx">
+      <DependentUpon>201903271522596_ClienteV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903280739438_clienteV4.resx">
+      <DependentUpon>201903280739438_clienteV4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903291131542_ClienteV5.resx">
+      <DependentUpon>201903291131542_ClienteV5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905310855135_fillthegapExplicacionV1.resx">
+      <DependentUpon>201905310855135_fillthegapExplicacionV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906031325185_sopaLetrasV1.resx">
+      <DependentUpon>201906031325185_sopaLetrasV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906131424546_sopaLetrasV2.resx">
+      <DependentUpon>201906131424546_sopaLetrasV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906241453444_vocabularioSopaLetrasV1.resx">
+      <DependentUpon>201906241453444_vocabularioSopaLetrasV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907101421055_ExamenesV2.resx">
+      <DependentUpon>201907101421055_ExamenesV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907160750503_examenv4.resx">
+      <DependentUpon>201907160750503_examenv4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907240744300_PreguntaExamenV1.resx">
+      <DependentUpon>201907240744300_PreguntaExamenV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907301020338_AhorcadoV1.resx">
+      <DependentUpon>201907301020338_AhorcadoV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907301035241_AhorcadoV2.resx">
+      <DependentUpon>201907301035241_AhorcadoV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908021213257_SepararHtmlV1.resx">
+      <DependentUpon>201908021213257_SepararHtmlV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908050719011_SepararHtmlV2.resx">
+      <DependentUpon>201908050719011_SepararHtmlV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909130627569_ahorcadov4.resx">
+      <DependentUpon>201909130627569_ahorcadov4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003270700296_ErroresExamenV1.resx">
+      <DependentUpon>202003270700296_ErroresExamenV1.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>54252</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:54252/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

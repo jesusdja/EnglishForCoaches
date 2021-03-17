@@ -1,0 +1,156 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.ExtrasCategoriaViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.Subtema.TemaId })">@Model.Subtema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.Subtema.SubTemaId})">@Model.Subtema.Descripcion</a></li>
+        <li><a href="@Url.Action("Index",  "Extras", new { Area = "Alumno",id=Model.Subtema.SubTemaId})">Extras</a></li>
+        <li class="active">@Model.CategoriaExtra.Descripcion</li>
+    </ol>
+
+    <div class="row">
+        <div class="media m-y-1">
+            <div class="media-left media-middle"> <i class="material-icons md-48">@Model.CategoriaExtra.Icono</i> </div>
+            <div class="media-body media-middle">
+                <h4 class="card-title m-b-0"><a href="#">@Model.CategoriaExtra.Descripcion</a></h4>
+                <small class="text-muted">Extras: @Model.ExtraDesbloqueadoEstadistica.NDesbloqueados de @Model.ExtraDesbloqueadoEstadistica.NExtras</small>
+            </div>
+        </div>
+    </div>
+    <progress class="m-b-1 progress progress-@Model.ColorEstilo(Model.ExtraDesbloqueadoEstadistica.Porcentaje) progress-striped m-b-0" value="@Model.ExtraDesbloqueadoEstadistica.Porcentaje" max="100">@Model.ExtraDesbloqueadoEstadistica.Porcentaje%</progress>
+
+    <div class="row_cards">
+
+        @foreach (var item in Model.extras)
+        {
+            @*<div class="col-md-4">*@
+            <div class="item">
+                @{
+                    string url = Url.Action("View", "Extras", new { Area = "Alumno", id = item.ExtraId });
+                    if (!Model.extrasDesbloqueados.Contains(item.ExtraId))
+                    {
+                        if (Model.siguienteId == item.ExtraId)
+                        {
+                            url = "javascript:Comprar(" + item.ExtraId + ")";
+                        }
+                        else
+                        {
+                            url = "javascript:DesbloquearAnterior()";
+                        }
+                    }
+                }
+                <a class="card link" id="a_@item.ExtraId" href="@url">
+                    <div class="card-block">
+                        <p class="card-text">
+                            @item.Orden @item.Titulo
+                            @if (!Model.extrasDesbloqueados.Contains(item.ExtraId))
+                            {
+                                if (Model.siguienteId == item.ExtraId)
+                                {
+                                    <i id="i_@item.ExtraId" class="material-icons text-muted md-18 orange" style="float:right;">lock</i>
+                                }
+                                else
+                                {
+                                    <i class="material-icons text-muted md-18 red" style="float:right;">lock</i>
+
+                                }
+                            }
+                            else
+                            {
+                                <i class="material-icons text-muted md-18 green" style="float:right;">lock_open</i>
+                            }
+                        </p>
+                    </div>
+
+                </a>
+            </div>
+
+
+        }
+
+    </div>
+
+</div>
+
+
+
+
+@section Scripts {
+    <script src="~/Content/Alumno/vendor/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        
+        function DesbloquearAnterior() {
+            swal({
+                title: "No se ha podido desbloquear",
+                text: "Debes desbloquear los extras en el orden indicado",
+                type: "error",
+                confirmButtonColor: "#039BE5"
+            });
+        }
+
+        function Comprar(id) {
+            swal({
+                title: "Desbloquear extra",
+                text: "¿Estás seguro de que desas desbloquear este extra?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#039BE5",
+                confirmButtonText: "Desbloquear",
+                closeOnConfirm: false
+            }, function () {
+
+
+                var url = '@Url.Action("Desbloquear", "Extras", new { Area = "Alumno" })';
+                url = url + '/' + id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function (result) {
+                        if (result == "NoPuntos") {
+                            swal({
+                                title: "No se ha podido desbloquear",
+                                text: "No tienes puntos suficientes",
+                                type: "error",
+                                confirmButtonColor: "#039BE5"
+                            });
+                        }
+                        else {
+
+                            var url = '@Url.Action("View", "Extras", new { Area = "Alumno"})/'+id;
+                            $('#a_' + id).attr("href", url);
+                            $('#i_' + id).text("lock_open");
+                            swal({
+                                title: "Desbloqueado",
+                                text: "El extra ha sido desbloqueado",
+                                type: "success",
+                                confirmButtonColor: "#039BE5"
+                            });
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+               
+                        swal({
+                            title: "No se ha podido desbloquear",
+                            text: "Error: "+xhr.responseText,
+                            type: "error",
+                            confirmButtonColor: "#039BE5"
+                        });                        
+                    }
+                });
+            });
+        }
+
+
+$(document).ready(function(){
+
+	
+
+});
+    </script>
+}

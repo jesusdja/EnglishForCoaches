@@ -1,0 +1,246 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.ExamenesFillTheGapIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.bloque.SubTema.TemaId })">@Model.bloque.SubTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.bloque.SubTema.SubTemaId})">@Model.bloque.SubTema.Descripcion</a></li>
+        <li class="active">@Model.bloque.Descripcion</li>
+    </ol>
+
+    <div class="card-group" id="panel_numeros">
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="m-b-0">
+                    <strong>@Model.fillTheGaps.Count</strong>
+                </h4>
+                <small class="text-muted-light">TOTAL</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-primary m-b-0">
+                    <strong id="mostrarRestantes">@Model.fillTheGaps.Count</strong>
+                </h4>
+                <small class="text-muted-light">RESTANTES</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="panel_preguntas">
+        <div class="card-header bg-white p-a-1">
+            <div class="media">
+                <div class="media-left media-middle">
+                    <h4 class="m-b-0">
+                        <strong id="mostrarNPregunta"></strong>
+                    </h4>
+                </div>
+                <div class="media-body  media-middle">
+                    <h4 class="card-title" id="hEnunciado"></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron" id="aprobado" hidden>
+        <h4><i class="material-icons text-success md-36">done</i> ¡Enhorabuena! Has superado el examen.</h4>
+        <p class="lead" id="leccion_desbloqueada" hidden>Has desbloqueado una nueva lección: <i class="material-icons text-success">lock_open</i> <a href="" id="enlace_leccion"></a></p>
+        <p class="lead" id="leccion_final" hidden>Has superado todos los exámenes de: <i class="material-icons text-success">star </i> <a href="/Alumno/SubTemas/Index/@Model.bloque.SubTema.TemaId">@Model.bloque.SubTema.Tema.Descripcion</a></p>
+        <hr>
+        <div class="media">
+            <div class="media-left">
+                <h4 class="m-b-0"><span class="text-success" id="aciertos_aprobado">0</span>/@Model.fillTheGaps.Count</h4>
+            </div>
+            <div class="media-body media-middle">
+                <progress class="progress progress-striped progress-success" id="porcentaje_aprobado" value="0" max="100">0%</progress>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron" id="suspendido" hidden>
+        <h4><i class="material-icons text-danger md-36">not_interested</i> Lo sentimos, no has superado el examen.</h4>
+        <hr>
+        <div class="media">
+            <div class="media-left">
+                <h4 class="m-b-0"><span class="text-danger" id="aciertos_suspendido">0</span>/@Model.fillTheGaps.Count</h4>
+            </div>
+            <div class="media-body media-middle">
+                <progress class="progress progress-striped progress-danger" id="porcentaje_suspendido" value="0" max="100">0%</progress>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section sidebar {
+
+
+}
+
+@section Scripts {
+    <!-- Page JS Code -->
+    <script>
+        var arrayPreguntas = [];
+
+    @foreach (var d in Model.fillTheGaps)
+    {
+        @:arrayPreguntas.push("@d.Id");
+    }
+
+        var current = 0;
+        var acertadas = 0;
+        var falladas = 0;
+        var divExplicacion = $('#divExplicacion');
+
+        var hEnunciado = $('#hEnunciado');
+
+        var mostrarRestantes = $('#mostrarRestantes');
+        var mostrarNPregunta = $('#mostrarNPregunta');
+
+        $(document).ready(function () {
+            CargarPregunta();
+        });
+
+        function CargarPregunta() {
+            mostrarNPregunta.text('#'+ (current+1));
+            var url = '@Url.Action("GetFillTheGap", "Examen", new { Area = "Alumno" })';
+            url = url + '/' + arrayPreguntas[current];
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (result) {
+                    var _countGaps = (result.Enunciado.match(/#/g) || []).length;
+                    var _arrayEnunciado = result.Enunciado.split("#");
+                    var _enunciadoFinal = "";
+                    var _indiceGap = 0;
+
+                    //SI EL ENUNCIADO EMPIEZA CON UN HUECO
+                    if (result.Enunciado.substring(0, 1) == "#") {
+                        _enunciadoFinal += "<input type='text' id='gap_" + _indiceGap + "' class='form-control gap' value=''>";
+                        _indiceGap++;
+                    }
+
+                    for (var i = 0; i < _arrayEnunciado.length; i++)
+                    {
+                        if (_arrayEnunciado[i] != "") {
+                            _enunciadoFinal += _arrayEnunciado[i];
+
+                            //SI EL ENUNCIADO TERMINA CON UN HUECO
+                            if (i + 1 == _arrayEnunciado.length) {
+                                if (_indiceGap < _countGaps) {
+                                    _enunciadoFinal += "<input type='text' id='gap_" + _indiceGap + "' class='form-control gap' value=''>";
+                                }
+                            } else {
+                                _enunciadoFinal += "<input type='text' id='gap_" + _indiceGap + "' class='form-control gap' value=''>";
+                                _indiceGap++;
+                            }
+                        }
+                    }
+                    _enunciadoFinal += "<a id='btnResolver' href='javascript:Resolver();' class='btn btn-white' style='margin-left:10px;'><i class='material-icons'>done</i><span class='icon-text'> Resolver</span></a>";
+                    
+                    hEnunciado.html(_enunciadoFinal);
+                }
+            });
+        }
+
+        var respuestasIncorrectas = [];
+        function Resolver() {
+            var _pregunta = arrayPreguntas[current];
+            var _respuestas = $('.gap');
+            var _cadenarespuestas = "";
+            $("#btnResolver").hide();
+            for (i = 0; i < _respuestas.length; i++) {
+                _cadenarespuestas += _respuestas[i].value.trim();
+                if (i + 1 < _respuestas.length)
+                    _cadenarespuestas += ",";
+            }
+            var url = '@Url.Action("ContestarFillTheGap", "Examen", new { Area = "Alumno" })';
+            url = url + '/' + arrayPreguntas[current] + "?respuesta=" + _cadenarespuestas;
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (result) {
+                    var acierto = result.Correcto;
+                    if (acierto) {
+                        acertadas++;
+                    }
+                    else {
+                        falladas++;
+                        respuestasIncorrectas.push({
+                            id: result.id,
+                            respuesta: result.respuesta
+                        });
+                    }
+
+                    mostrarRestantes.text(arrayPreguntas.length - (acertadas + falladas));
+
+                    if ((arrayPreguntas.length - (acertadas + falladas)) > 0)
+                        SiguientePregunta();
+                    else
+                        FinExamen();
+                }
+            });
+        }
+
+        function SiguientePregunta() {
+            current++;
+
+            CargarPregunta();
+        }
+
+        function FinExamen() {
+            var url = '@Url.Action("FinExamenFillTheGap", "Examen", new { Area = "Alumno" })';
+            url = url + '/' + arrayPreguntas[current - 1] + "?aciertos=" + acertadas + "&errores=" + falladas + "&totales=" + arrayPreguntas.length;
+            var postData = { respuestasIncorrectas: respuestasIncorrectas };
+            $.ajax({
+                url: url,
+                type: "POST",
+                contentType: "application/json; charset=UTF-8",
+                data: JSON.stringify(postData),
+                dataType: "json",
+                success: function (result) {
+                    var aprobado = result.Aprobado;
+                    if (aprobado) {
+                        $("#aciertos_aprobado").text(result.Correctas);
+                        $("#porcentaje_aprobado").attr("value", result.Porcentaje);
+                        $("#porcentaje_aprobado").text(result.Porcentaje + "%");
+
+                        if (result.UltimoExamen) 
+                        {
+                            $("#leccion_final").show();
+                            $("#leccion_final").removeAttr('hidden');
+                        } 
+                        else 
+                        {
+                            if (result.IdSiguienteLeccion > 0) {
+                                $("#leccion_desbloqueada").show();
+                                $("#leccion_desbloqueada").removeAttr('hidden');
+                                $("#enlace_leccion").text(result.SiguienteLeccion);
+                                $("#enlace_leccion").attr("href", "/Alumno/Subtemas/View/" + result.IdSiguienteLeccion);
+                            }
+                        }
+
+                        $("#aprobado").show();
+                        $("#aprobado").removeAttr('hidden');
+                    }
+                    else {
+                        $("#aciertos_suspendido").text(result.Correctas);
+                        $("#porcentaje_suspendido").attr("value", result.Porcentaje);
+                        $("#porcentaje_suspendido").text(result.Porcentaje + "%");
+
+                        $("#suspendido").show();
+                        $("#suspendido").removeAttr('hidden');
+                    }
+
+                    $("#panel_numeros").hide();
+                    $("#panel_preguntas").hide();
+                }
+            });
+        }
+    </script>
+}

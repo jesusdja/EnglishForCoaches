@@ -1,0 +1,126 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.ClienteCreateViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                Nuevo cliente
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+
+    @using (Html.BeginForm("Create", "Clientes", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="block">
+            <div class="block-content block-content-full">
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Cliente.Descripcion, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Cliente.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Descripcion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Cliente.Abreviatura, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Cliente.Abreviatura, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Abreviatura, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Cliente.NombreUrl, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Cliente.NombreUrl, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.NombreUrl, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <div class="form-material">
+                            @Html.TextBoxFor(model => model.ImageFileBlanco, new { type = "file", accept = ".jpg,.png" })
+                            @Html.ValidationMessageFor(model => model.ImageFileBlanco)
+                            @Html.LabelFor(model => model.ImageFileBlanco, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-material">
+                            @Html.TextBoxFor(model => model.ImageFileNegro, new { type = "file", accept = ".jpg,.png" })
+                            @Html.ValidationMessageFor(model => model.ImageFileNegro)
+                            @Html.LabelFor(model => model.ImageFileNegro, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Cliente.EstiloColor, htmlAttributes: new { @class = "", @for = "colorPicker" })
+                            @Html.EditorFor(model => model.Cliente.EstiloColor, new { htmlAttributes = new { @class = "js-colorpicker form-control", id = "colorPicker", name = "colorPicker" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.EstiloColor, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    @* El value afecta a la acción *@
+                    <input type="submit" value="Guardar cliente" name="command" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<!-- END Page Content -->
+@section Scripts {
+    <script src="~/Content/Intranet/assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js"></script>
+
+    <!-- Page JS Code -->
+    <script>
+        $(function () {
+            console.log("init");
+            // Get each colorpicker element (with .js-colorpicker class)
+            jQuery('.js-colorpicker').each(function () {
+                var $colorpicker = jQuery(this);
+
+                console.log($colorpicker);
+                // Get each colorpicker's init data
+                var $colorpickerMode = 'hex';
+                var $colorpickerinline = false;
+
+                // Init colorpicker
+                $colorpicker.colorpicker({
+                    'format': $colorpickerMode,
+                    'inline': $colorpickerinline
+                });
+            });
+        });
+
+    </script>
+}

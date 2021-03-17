@@ -1,0 +1,170 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.AhorcadoCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.juegoOnline.SubTema.TemaId })">
+                    @Model.juegoOnline.SubTema.Tema.Descripcion
+                </a>
+                / <a href="@Url.Action("Index", "Bloques", new {id = @Model.juegoOnline.SubTema.SubTemaId })">
+                    @Model.juegoOnline.SubTema.Descripcion
+                </a> /  @Model.juegoOnline.Descripcion
+            </h1>
+            <h3>
+                Nuevo ejercicio
+            </h3>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+
+    @using (Html.BeginForm("Create", "Ahorcado", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        @Html.HiddenFor(model => model.Ahorcado.TipoJuegoOnlineId)
+        @Html.HiddenFor(model => model.Ahorcado.SubTemaId)
+        @Html.HiddenFor(model => model.Ahorcado.JuegoOnlineId)
+        
+        <div class="block">
+            <div class="block-content block-content-full">
+
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Ahorcado.Texto, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Ahorcado.Texto, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Ahorcado.Texto, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <div class="form-material">
+                            @Html.TextBoxFor(model => model.ImageFile, new { type = "file", accept = ".jpg" })
+                            @Html.ValidationMessageFor(model => model.ImageFile)
+                            @Html.LabelFor(model => model.ImageFile, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-material">
+                            @Html.TextBoxFor(model => model.AudioFile, new { type = "file", accept = ".mp3" })
+                            @Html.ValidationMessageFor(model => model.AudioFile)
+                            @Html.LabelFor(model => model.AudioFile, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Ahorcado.Respuesta, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Ahorcado.Respuesta, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Ahorcado.Respuesta, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Ahorcado.Explicacion, htmlAttributes: new { @class = "" })
+                            @Html.TextAreaFor(model => model.Ahorcado.Explicacion, new { @class = "form-control", @rows = "3" })
+                            @Html.ValidationMessageFor(model => model.Ahorcado.Explicacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <input type="submit" name="command" value="Guardar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <h3>
+        Listado ejercicios
+    </h3>
+
+    <div class="block">
+        <div class="block-content">
+            <table class="table table-hover table-borderless">
+                <thead>
+                    <tr>
+                        <th>Audio</th>
+                        <th>
+                            Descripción
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.juegoOnline.Ahorcado)
+                    {
+                        <tr>
+                            <td>
+                                <button onclick="document.getElementById('audio_@item.Id').play();"
+                                        class="btn btn-rounded @(string.IsNullOrEmpty(item.Audio) ? "btn-danger":"btn-default")"
+                                        type="button" @(string.IsNullOrEmpty(item.Audio) ? "disabled" : "")>
+                                    <i class="fa fa-volume-up"></i>
+                                </button>
+                                @if (!string.IsNullOrEmpty(item.Audio))
+                                {
+                                    <audio id="audio_@item.Id">
+                                        <source src="~/media/upload/Ahorcado/Audios/@item.Audio" type="audio/mpeg" />
+                                    </audio>
+                                }
+                            </td>
+                            <td>
+                                @item.Descripcion
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Editar contenido"
+                                            onclick="location.href='@Url.Action("Edit", Model.juegoOnline.TipoJuegoOnline.Controlador, new {Area = "Admin", id= item.Id })';">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+
+
+                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Eliminar contenido"
+                                            onclick="if(confirm('¿Está seguro que desea borrar el contenido?')) location.href='@Url.Action("Delete", Model.juegoOnline.TipoJuegoOnline.Controlador, new {Area = "Admin" , id=item.Id })';">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+
+
+                                </div>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+    </div>
+
+    <!-- END Page Content -->

@@ -1,0 +1,129 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.JuegoOnlinesIndexViewModel
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.Subtema.TemaId })">@Model.Subtema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.Subtema.SubTemaId})">@Model.Subtema.Descripcion</a></li>  
+        <li><a href="@Url.Action("Seleccion",  "Juegos", new { Area = "Alumno" ,id=Model.Subtema.SubTemaId})">Juegos</a></li>
+    </ol>
+
+    <h1 class="page-heading h2">@Model.Subtema.Descripcion</h1>
+
+
+    <div class="row_cards">
+
+        @foreach (var item in Model.listadoJuegoOnlines)
+        {
+            @*<div class="col-md-4">*@
+            <div class="item">
+                @{
+                    string url = Url.Action("Index", item.TipoJuegoOnline.Controlador, new { Area = "Alumno", id = item.JuegoOnlineId });
+                    string urlMistakes = "";
+                    //if (Model.conMistakes.Contains(item.JuegoOnlineId))
+                    //{
+                    //    urlMistakes = Url.Action("Index", item.TipoJuegoOnline.Controlador, new { Area = "Alumno", id = item.JuegoOnlineId, mistakes = true });
+                    //}
+
+                    if (!Model.juegoOnlinesDesbloqueados.Contains(item.JuegoOnlineId))
+                    {
+                        url = "javascript:Comprar(" + item.JuegoOnlineId + ",'"+Url.Action("Index", item.TipoJuegoOnline.Controlador, new { Area = "Alumno",id= item.JuegoOnlineId })+"')";
+                    }
+
+                }
+                <div class="card link" >
+                    <div class="card-block">
+                        <p class="card-text">@item.Descripcion</p>
+                    </div>
+                    <div class="card-block right">     
+
+                        
+                        
+                          
+                        <a class="btn btn-default btn-sm" id="a_@item.JuegoOnlineId" href="@url"><i class="fa fa-pencil"></i> Resolver</a>
+                        @*@if (urlMistakes != "")
+                        {
+                            <a class="btn btn-default btn-sm" href="@urlMistakes"><i class="fa fa-remove"></i> Mistakes</a>
+                        }*@
+                    </div>
+                    <div class="card-footer text-muted">
+                        <span class="label label-@item.TipoJuegoOnline.EstiloColor">@item.TipoJuegoOnline.Descripcion</span> 
+                        @if (Model.realizados.Contains(item.JuegoOnlineId))
+                        {
+                             <i class="material-icons text-muted md-18" style="float:right;">done</i>
+                        }
+                     
+                            @if (!Model.juegoOnlinesDesbloqueados.Contains(item.JuegoOnlineId))
+                            {
+                            <i id="i_@item.JuegoOnlineId" class="material-icons text-muted md-18 red" style="float:right;">lock</i>
+                            }
+                        
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    <script src="~/Content/Alumno/vendor/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        function Comprar(id,urlJuego) {
+            swal({
+                title: "Desbloquear juego",
+                text: "¿Estás seguro de que desas desbloquear este juego?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#039BE5",
+                confirmButtonText: "Desbloquear",
+                closeOnConfirm: false
+            }, function () {
+
+
+                var url = '@Url.Action("Desbloquear", "JuegoOnlines", new { Area = "Alumno" })';
+                url = url + '/' + id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function (result) {
+                        if (result == "NoPuntos") {
+                            swal({
+                                title: "No se ha podido desbloquear",
+                                text: "No tienes puntos suficientes",
+                                type: "error",
+                                confirmButtonColor: "#039BE5"
+                            });
+                        }
+                        else {
+
+                            //var url = '@Url.Action("Index", "BeatTheGoalies", new { Area = "Alumno"})/'+id;
+                            $('#a_' + id).attr("href", urlJuego);
+                            $('#i_' + id).text("lock_open");
+                            swal({
+                                title: "Desbloqueado",
+                                text: "El juego ha sido desbloqueado",
+                                type: "success",
+                                confirmButtonColor: "#039BE5"
+                            });
+                        }
+                    }
+                });
+            });
+        }
+
+
+$(document).ready(function(){
+
+
+
+});
+    </script>
+}

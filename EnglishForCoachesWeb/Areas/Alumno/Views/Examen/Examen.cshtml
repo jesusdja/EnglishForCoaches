@@ -1,0 +1,775 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.ExamenIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.subTema.TemaId })">@Model.subTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.subTema.SubTemaId})">@Model.subTema.Descripcion</a></li>
+        <li class="active">@Model.subTema.Descripcion</li>
+    </ol>
+
+    <div class="card-group" id="panel_numeros">
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="m-b-0">
+                    <strong>@Model.contenidos.Count</strong>
+                </h4>
+                <small class="text-muted-light">TOTAL</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-primary m-b-0">
+                    <strong id="mostrarRestantes">@Model.contenidos.Count</strong>
+                </h4>
+                <small class="text-muted-light">SIN RESPONDER</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+
+                    <button type="button" class="btn btn-danger col-md-12" id="btnFinalizar">
+                        FINALIZAR EL EXAMEN
+                    </button>
+           
+            </div>
+        </div>
+    </div>
+
+    <div id="panel_preguntas">
+        <div class="card card-stats-primary">
+            <div class="card-block">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <i class="material-icons text-muted-light">info_outline</i>
+                    </div>
+                    <div class="media-body media-middle" id="divExplicacionTexto">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="panel_test">
+            @Html.Partial("_Test")
+        </div>
+        <div id="panel_trueFalse">
+            @Html.Partial("_TrueFalse")
+        </div>
+        <div id="panel_FillTheGap">
+            @Html.Partial("_FillTheGap")
+        </div>
+        <div id="panel_audioSentence">
+            @Html.Partial("_AudioSentence")
+        </div>
+
+
+        <div class="row">
+        </div>
+        <div class="card-group" id="panel_numeros">
+            <div class="card">
+                <div class="card-block center">
+                    <button type="button" class="btn col-md-12  " id="btnAnterior">
+                        <i class="material-icons md-48">arrow_back</i> Anterior
+                    </button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-block center">
+                    <h4 class="m-b-0">
+                        <strong id="divReloj">@Model.contenidos.Count</strong>
+                    </h4>
+                    <small class="">Tiempo restante para contestar la pregunta</small>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-block center">
+
+                    <button type="button" class="btn col-md-12" id="btnSiguiente">
+                        <i class="material-icons md-48">arrow_forward</i> Siguiente
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="jumbotron" id="aprobado" hidden>
+            <h4><i class="material-icons text-success md-36">done</i> ¡Enhorabuena! Has superado el examen.</h4>
+            <p class="lead" id="leccion_desbloqueada" hidden>Has desbloqueado una nueva lección: <i class="material-icons text-success">lock_open</i> <a href="" id="enlace_leccion"></a></p>
+            <p class="lead" id="leccion_final" hidden>Has superado todos los exámenes de: <i class="material-icons text-success">star </i> <a href="/Alumno/SubTemas/Index/@Model.subTema.TemaId">@Model.subTema.Tema.Descripcion</a></p>
+            <hr>
+            <div class="media">
+                <div class="media-left">
+                    <h4 class="m-b-0"><span class="text-success" id="aciertos_aprobado">0</span>/@Model.contenidos.Count</h4>
+                </div>
+                <div class="media-body media-middle">
+                    <progress class="progress progress-striped progress-success" id="porcentaje_aprobado" value="0" max="100">0%</progress>
+                </div>
+            </div>
+        </div>
+
+        <div class="jumbotron" id="suspendido" hidden>
+            <h4><i class="material-icons text-danger md-36">not_interested</i> Lo sentimos, no has superado el examen.</h4>
+            <hr>
+            <div class="media">
+                <div class="media-left">
+                    <h4 class="m-b-0"><span class="text-danger" id="aciertos_suspendido">0</span>/@Model.contenidos.Count</h4>
+                </div>
+                <div class="media-body media-middle">
+                    <progress class="progress progress-striped progress-danger" id="porcentaje_suspendido" value="0" max="100">0%</progress>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section sidebar {
+
+
+}
+
+@section Scripts {
+    <!-- Page JS Code -->
+    <script>
+        var arrayPreguntas = [];
+
+    @foreach (var d in Model.contenidos)
+    {
+        @:arrayPreguntas.push({ id: "@d.id", tipo: "@d.tipo", tiempoRestante: 60000, contestada: false, respuesta:"" });
+    }
+
+        var current = 0;
+        var acertadas = 0;
+        var falladas = 0;
+        var divExplicacion = $('#divExplicacion');
+        var mostrarRestantes = $('#mostrarRestantes');
+        var divReloj = $('#divReloj');
+        var panel_preguntas = $("#panel_preguntas");
+
+        
+        var divExplicacionTexto = $('#divExplicacionTexto');
+
+        var panel_test = $('#panel_test');
+        var panel_trueFalse = $('#panel_trueFalse');
+        var panel_FillTheGap = $('#panel_FillTheGap');
+        var panel_audioSentence = $('#panel_audioSentence');
+        var btnAnterior = $('#btnAnterior');
+        var btnSiguiente = $('#btnSiguiente');
+        var btnFinalizar = $('#btnFinalizar');
+        
+        var tiempoActual = 0;
+        var relojPregunta;
+
+        
+        $(document).ready(function () {
+
+            btnAnterior.on('click', AnteriorPregunta);
+            btnSiguiente.on('click', SiguientePregunta);
+            btnFinalizar.on('click', FinalizarExamen);
+
+            CargarPregunta();
+        });
+
+
+        function relojExamen() {
+            arrayPreguntas[current].tiempoRestante = arrayPreguntas[current].tiempoRestante - 1000;
+            tiempoActual = Math.round(arrayPreguntas[current].tiempoRestante / 1000);
+            divReloj.html(tiempoActual);
+            if (arrayPreguntas[current].tiempoRestante <= 0) {
+                pararReloj();
+       
+                if (arrayPreguntas[current].tipo == "Tests") {
+                    DesactivarChecks();
+                    }
+                if (arrayPreguntas[current].tipo == "FillTheGaps") {
+                    DesactivarFillTheGap();
+                    }
+                if (arrayPreguntas[current].tipo == "TrueFalses") {
+                    DesactivarTrueFalse();
+                    }
+                if (arrayPreguntas[current].tipo == "AudioSentenceExercises") {
+                    DesactivarAudioSentence();
+                }
+
+            }
+        }
+
+        function iniciarReloj() {
+            tiempoActual = Math.round(arrayPreguntas[current].tiempoRestante / 1000);
+            divReloj.html(tiempoActual);
+            relojPregunta=setInterval(relojExamen, 1000);
+        }
+        function pararReloj() {
+            clearInterval(relojPregunta);
+        }
+
+        function CargarPregunta() {
+            panel_test.hide();
+            panel_trueFalse.hide();
+            panel_FillTheGap.hide();
+            panel_audioSentence.hide();
+            panel_preguntas.hide();
+            test_mostrarNPregunta.text('#' + (current + 1));
+
+
+
+            var nContestadas = getContestadas();
+            mostrarRestantes.text(30-nContestadas);
+
+            if (arrayPreguntas[current].tiempoRestante > 0) {
+                iniciarReloj();
+            }
+
+            if (arrayPreguntas[current].tipo == "Tests") {
+                CargarPreguntaTest();
+                panel_test.show();
+            }
+            if (arrayPreguntas[current].tipo == "FillTheGaps") {
+                CargarPreguntaFillTheGap();
+                panel_FillTheGap.show();
+            }
+            if (arrayPreguntas[current].tipo == "TrueFalses") {
+                CargarPreguntaTrueFalse();
+                panel_trueFalse.show();
+            }
+            if (arrayPreguntas[current].tipo == "AudioSentenceExercises") {
+                CargarPreguntaAudioSentence();
+                panel_audioSentence.show();
+            }
+        }
+        
+
+        function AnteriorPregunta() {
+            if (arrayPreguntas[current].tipo == "FillTheGaps") {
+                GuardarRespuestaFillTheGap();
+            }
+            console.log(arrayPreguntas[current].tipo);
+            if (arrayPreguntas[current].tipo == "AudioSentenceExercises") {
+                GuardarRespuestaAudioSentence();
+            }
+            if (current > 0) {
+                pararReloj();
+                current--;
+
+                CargarPregunta();
+            }
+        }
+
+        function SiguientePregunta()
+        {
+            if (arrayPreguntas[current].tipo == "FillTheGaps") {
+                GuardarRespuestaFillTheGap();
+            }
+            console.log(arrayPreguntas[current].tipo );
+            if (arrayPreguntas[current].tipo == "AudioSentenceExercises") {
+                GuardarRespuestaAudioSentence();
+            }
+
+            if (current < 29) {
+                pararReloj();
+                current++;
+                CargarPregunta();
+            }
+        }
+
+        function getContestadas() {
+            var nContestadas = 0;
+            for (var pregunta of arrayPreguntas) {
+                if (pregunta.contestada) {
+                    nContestadas++;
+                }
+            }
+            return nContestadas;
+        }
+
+        function FinalizarExamen() {
+            var nContestadas=getContestadas();
+            var finalizar = confirm("¿Estás seguro de que deseas finalizar el examen?");
+            if (finalizar == true) {
+                FinExamen();
+            } 
+        }
+        function FinExamen()
+        {
+
+            if (arrayPreguntas[current].tipo == "FillTheGaps") {
+                GuardarRespuestaFillTheGap();
+            }
+            console.log(arrayPreguntas[current].tipo);
+            if (arrayPreguntas[current].tipo == "AudioSentenceExercises") {
+                GuardarRespuestaAudioSentence();
+            }
+
+                pararReloj();
+            
+
+            var url = '@Url.Action("FinExamen", "Examen", new { Area = "Alumno" })';
+            url = url + '/@Model.examenId' ;
+            var postData = { respuestas: arrayPreguntas };
+            $.ajax({
+                url: url,
+                type: "POST",
+                contentType: "application/json; charset=UTF-8",
+                data: JSON.stringify(postData),
+                dataType: "json",
+                success: function (result) {
+                    var aprobado = result.Aprobado;
+                    if (aprobado) {
+                        $("#aciertos_aprobado").text(result.Correctas);
+                        $("#porcentaje_aprobado").attr("value", result.Porcentaje);
+                        $("#porcentaje_aprobado").text(result.Porcentaje + "%");
+                        
+                        if (result.UltimoExamen) {
+                            $("#leccion_final").show();
+                            $("#leccion_final").removeAttr('hidden');
+                        }
+                        else {
+
+                            if (result.IdSiguienteLeccion > 0) {
+                                $("#leccion_desbloqueada").show();
+                                $("#leccion_desbloqueada").removeAttr('hidden');
+                                $("#enlace_leccion").text(result.SiguienteLeccion);
+                                $("#enlace_leccion").attr("href", "/Alumno/Subtemas/View/" + result.IdSiguienteLeccion);
+                            }
+                        }
+
+                        $("#aprobado").show();
+                        $("#aprobado").removeAttr('hidden');
+                    }
+                    else {
+                        $("#aciertos_suspendido").text(result.Correctas);
+                        $("#porcentaje_suspendido").attr("value", result.Porcentaje);
+                        $("#porcentaje_suspendido").text(result.Porcentaje + "%");
+
+                        $("#suspendido").show();
+                        $("#suspendido").removeAttr('hidden');
+                    }
+
+                    $("#panel_numeros").hide();
+                    panel_preguntas.hide();
+                }
+            });
+        }
+
+
+        //TEST
+        var test_imgEnunciado = $('#test_imgEnunciado');
+        var test_hEnunciado = $('#test_hEnunciado');
+        var test_chkRespuesta1 = $('#test_chkRespuesta1');
+        var test_chkRespuesta2 = $('#test_chkRespuesta2');
+        var test_chkRespuesta3 = $('#test_chkRespuesta3');
+        var test_chkRespuesta4 = $('#test_chkRespuesta4');
+        var test_mostrarNPregunta = $('#test_mostrarNPregunta');
+
+        function DesactivarTest() {
+            $(test_chkRespuesta1.find('input')[0]).attr("disabled", true);
+            $(test_chkRespuesta2.find('input')[0]).attr("disabled", true);
+            $(test_chkRespuesta3.find('input')[0]).attr("disabled", true);
+            $(test_chkRespuesta4.find('input')[0]).attr("disabled", true);
+        }
+
+
+        function CargarPreguntaTest(){
+            var url = '@Url.Action("GetTest", "Tests", new { Area = "Alumno" })';
+            url = url + '/' + arrayPreguntas[current].id;
+
+            desmarcarChecks();
+            if (arrayPreguntas[current].tiempoRestante <= 0) {
+                DesactivarChecks();
+            }
+            else {
+                ActivarChecks();
+            }
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (result) {
+                    if (result.UrlImagen) {
+                        test_imgEnunciado.attr("src", "/media/upload/Test/" + result.UrlImagen);
+                        test_imgEnunciado.attr("alt", result.Enunciado);
+                        test_imgEnunciado.show();
+                    } else {
+                        test_imgEnunciado.attr("src", "");
+                        test_imgEnunciado.attr("alt", "");
+                        test_imgEnunciado.hide();
+                    }
+
+                    divExplicacionTexto.text(result.Explicacion);
+
+                    test_hEnunciado.text(result.Enunciado);
+                    test_chkRespuesta1.contents().last().replaceWith(' ' + result.Respuesta1);
+                    test_chkRespuesta2.contents().last().replaceWith(' ' + result.Respuesta2);
+                    if (result.Respuesta3) {
+                        test_chkRespuesta3.contents().last().replaceWith(' ' + result.Respuesta3);
+                        test_chkRespuesta3.show();
+                    } else {
+                        test_chkRespuesta3.hide();
+                    }
+                    if (result.Respuesta4) {
+                        test_chkRespuesta4.contents().last().replaceWith(' ' + result.Respuesta4);
+                        test_chkRespuesta4.show();
+                    } else {
+                        test_chkRespuesta4.hide();
+                    }
+                    if (arrayPreguntas[current].contestada) {
+                        console.log("test_chkRespuesta" + arrayPreguntas[current].respuesta);
+                        $("#test_chkRespuesta" + arrayPreguntas[current].respuesta).find('input')[0].checked = true;
+                        console.log($("#test_chkRespuesta" + arrayPreguntas[current].respuesta).find('input')[0]);
+                  
+                    }
+                    panel_preguntas.show();
+                }
+            });
+        }
+        function desmarcarChecks(){
+
+            test_chkRespuesta1.find('input')[0].checked = false;
+            test_chkRespuesta2.find('input')[0].checked = false;
+            test_chkRespuesta3.find('input')[0].checked = false;
+            test_chkRespuesta4.find('input')[0].checked = false;
+        }
+
+        function ActivarCheckEvent(numero) {
+            return function () {
+                desmarcarChecks();
+
+                var input = $(this).find('input')[0];
+                input.checked = true;
+
+                arrayPreguntas[current].contestada = true;
+                arrayPreguntas[current].respuesta = numero;
+                console.log(arrayPreguntas[current]);
+                return false;
+            };
+        }
+
+        function ActivarCheck(check, numero) {
+            check.off('click');
+            var input = check.find('input')[0];
+            input.checked = false;
+            check.on('click', ActivarCheckEvent(numero));
+        }
+
+        function ActivarChecks() {
+            ActivarCheck(test_chkRespuesta1,1);
+            ActivarCheck(test_chkRespuesta2,2);
+            ActivarCheck(test_chkRespuesta3,3);
+            ActivarCheck(test_chkRespuesta4,4);
+        }
+
+        function DesactivarCheck(check) {
+            check.off('click');
+            check.on('click', function () {
+                return false;
+            });
+        }
+
+        function DesactivarChecks() {
+            DesactivarCheck(test_chkRespuesta1);
+            DesactivarCheck(test_chkRespuesta2);
+            DesactivarCheck(test_chkRespuesta3);
+            DesactivarCheck(test_chkRespuesta4);
+        }
+
+        //FILL THE GAP
+        var fillTheGap_hEnunciado = $('#fillTheGap_hEnunciado');
+        var fillTheGap_mostrarNPregunta = $('#fillTheGap_mostrarNPregunta');
+
+        function GuardarRespuestaFillTheGap() {
+            var _respuestas = $('.gap');
+            var _cadenarespuestas = "";
+            $("#btnResolver").hide();
+            for (i = 0; i < _respuestas.length; i++) {
+                _cadenarespuestas += _respuestas[i].value.trim();
+                if (i + 1 < _respuestas.length)
+                    _cadenarespuestas += ",";
+            }
+            arrayPreguntas[current].respuesta = _cadenarespuestas;
+            if (_cadenarespuestas != "") {
+                arrayPreguntas[current].contestada = true;
+            }
+        }
+
+        function DesactivarFillTheGap() {
+            $('.gap').prop("disabled", true);
+        }
+
+        function CargarPreguntaFillTheGap() {
+            fillTheGap_mostrarNPregunta.text('#'+ (current+1));
+            var url = '@Url.Action("GetFillTheGap", "FillTheGaps", new { Area = "Alumno" })';
+            url = url + '/' + arrayPreguntas[current].id;
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (result) {
+                    
+
+                    var _countGaps = (result.Enunciado.match(/#/g) || []).length;
+                    var _arrayEnunciado = result.Enunciado.split("#");
+                    var _enunciadoFinal = "";
+                    var _indiceGap = 0;
+
+                    //SI EL ENUNCIADO EMPIEZA CON UN HUECO
+                    if (result.Enunciado.substring(0, 1) == "#") {
+                        _enunciadoFinal += "<input type='text' id='gap_" + _indiceGap + "' class='form-control gap' value=''>";
+
+                        _indiceGap++;
+                    }
+
+                    for (var i = 0; i < _arrayEnunciado.length; i++)
+                    {
+                        if (_arrayEnunciado[i] != "") {
+                            _enunciadoFinal += _arrayEnunciado[i];
+
+                            //SI EL ENUNCIADO TERMINA CON UN HUECO
+                            if (i + 1 == _arrayEnunciado.length) {
+                                if (_indiceGap < _countGaps) {
+                                    _enunciadoFinal += "<input type='text' id='gap_" + _indiceGap + "' class='form-control gap' value=''>";
+                                }
+                            } else {
+                                _enunciadoFinal += "<input type='text' id='gap_" + _indiceGap + "' class='form-control gap' value=''>";
+                                _indiceGap++;
+                            }
+                        }
+                    }
+
+                    divExplicacionTexto.text(result.Explicacion);
+                    fillTheGap_hEnunciado.html(_enunciadoFinal);
+                    if (arrayPreguntas[current].tiempoRestante <= 0) {
+                        DesactivarFillTheGap();
+                    }
+                    if (arrayPreguntas[current].contestada) {
+                        var arrRespuestas = [];
+                        arrRespuestas = arrayPreguntas[current].respuesta.split(',');
+                        for (var i = 0; i < arrRespuestas.length; i++) {
+
+                            $('#gap_' + i).prop("value", arrRespuestas[i]);
+                        }
+                    }
+
+                    panel_preguntas.show();
+                }
+            });
+        }
+
+        // TRUE FALSE
+        var trueFalse_imgEnunciado = $('#trueFalse_imgEnunciado');
+        var trueFalse_hEnunciado = $('#trueFalse_hEnunciado');
+        var trueFalse_btnTrue = $('#trueFalse_btnTrue');
+        var trueFalse_btnFalse = $('#trueFalse_btnFalse');
+        var trueFalse_mostrarNPregunta = $('#trueFalse_mostrarNPregunta');
+
+        var trueFalse_btn_audio = $('#trueFalse_btn_audio');
+        var audio_TrueFalse = $('#audio_TrueFalse');
+        var source_TrueFalse = $('#source_TrueFalse');
+        var trueFalse_divAudio = $('#trueFalse_divAudio');
+
+        function GenerarEventoEnded(trueFalse_btn_audio, audio) {
+            return function () {
+                trueFalse_btn_audio.removeClass("flash");
+                audio.off('ended')
+            };
+        }
+        function Reproducir() {
+            trueFalse_btn_audio.addClass('flash');
+            audio_TrueFalse.on('ended', GenerarEventoEnded(trueFalse_btn_audio, audio_TrueFalse));
+
+            var audio = document.getElementById('audio_TrueFalse');
+            audio.pause();
+            audio.load();//suspends and restores all audio element
+
+            audio.oncanplaythrough = audio.play();
+
+        }
+        function ActivarButtonEvent(respuesta) {
+            return function () {
+                arrayPreguntas[current].contestada = true;
+                arrayPreguntas[current].respuesta = respuesta;
+                TrueFalse_cargarColorBotones();
+                return false;
+            };
+        }
+
+        function ActivarButton(Button, respuesta) {
+            Button.prop('disabled', false);
+            Button.off('click');
+            Button.on('click', ActivarButtonEvent(respuesta));
+        }
+
+        function ActivarTrueFalse() {
+
+            ActivarButton(trueFalse_btnTrue, true);
+            ActivarButton(trueFalse_btnFalse, false);
+        }
+
+        function DesactivarButton(Button) {
+            Button.prop('disabled', true);
+            Button.off('click');
+            Button.on('click', function () {
+                return false;
+            });
+        }
+
+        function DesactivarTrueFalse() {
+            DesactivarButton(trueFalse_btnTrue);
+            DesactivarButton(trueFalse_btnFalse);
+            TrueFalse_cargarColorBotones();
+        }
+               
+        function TrueFalse_cargarColorBotones() {
+            trueFalse_btnFalse.removeClass("btn-danger");
+            trueFalse_btnTrue.removeClass("btn-success");
+            trueFalse_btnFalse.removeClass("btn-danger-light");
+            trueFalse_btnTrue.removeClass("btn-success-light");
+            if (arrayPreguntas[current].contestada) {
+                if (arrayPreguntas[current].respuesta) {
+                    trueFalse_btnTrue.addClass("btn-success");
+                    trueFalse_btnFalse.addClass("btn-danger-light");
+                    if (arrayPreguntas[current].tiempoRestante <= 0) {
+                        trueFalse_btnTrue.addClass("btn-success-selected");                        
+                    }
+
+                } else {
+                    trueFalse_btnTrue.addClass("btn-success-light");
+                    trueFalse_btnFalse.addClass("btn-danger");
+                    if (arrayPreguntas[current].tiempoRestante <= 0) {
+                        trueFalse_btnFalse.addClass("btn-danger-selected");
+                    }
+                }
+            } else {
+                trueFalse_btnTrue.addClass("btn-success-light");
+                trueFalse_btnFalse.addClass("btn-danger-light");
+            }
+        }
+
+        function CargarPreguntaTrueFalse() {
+            trueFalse_mostrarNPregunta.text('#'+ (current+1));
+            var url = '@Url.Action("GetTrueFalse", "TrueFalses", new { Area = "Alumno" })';
+            url = url + '/' + arrayPreguntas[current].id;
+            
+            if (arrayPreguntas[current].tiempoRestante <= 0) {
+                DesactivarTrueFalse();
+            } else {
+                ActivarTrueFalse();
+            }
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (result) {
+                    if (result.UrlImagen) {
+                        trueFalse_imgEnunciado.attr("src", "/media/upload/TrueFalse/" + result.UrlImagen);
+                        trueFalse_imgEnunciado.attr("alt", result.Enunciado);
+                        trueFalse_imgEnunciado.show();
+                    } else {
+                        trueFalse_imgEnunciado.hide();
+                    }
+                    divExplicacionTexto.text(result.Explicacion);
+                   // console.log(result.Audio);
+                    if (result.Audio) {
+                        console.log("/media/upload/TrueFalse/Audios/" + result.Audio);
+                        source_TrueFalse.attr("src", "/media/upload/TrueFalse/Audios/" + result.Audio);
+                        trueFalse_divAudio.show();
+                    } else {
+                        trueFalse_divAudio.hide();
+                    }
+
+                    TrueFalse_cargarColorBotones();
+
+                    trueFalse_hEnunciado.text(result.Enunciado);
+                    panel_preguntas.show();             
+                }
+            });
+        }
+
+        // AUDIO SENTENCE
+        var audioSentence_hEnunciado = $('#audioSentence_hEnunciado');
+        var audioSentence_mostrarNPregunta = $('#audioSentence_mostrarNPregunta');
+
+
+
+        function GuardarRespuestaAudioSentence() {
+            var _respuestas = $('.audioSentence');
+            var _cadenarespuestas = "";
+            $("#btnResolver").hide();
+            for (i = 0; i < _respuestas.length; i++) {
+                _cadenarespuestas += _respuestas[i].value.trim();
+                if (i + 1 < _respuestas.length)
+                    _cadenarespuestas += ",";
+            }
+            arrayPreguntas[current].respuesta = _cadenarespuestas;
+            if (_cadenarespuestas != "") {
+                arrayPreguntas[current].contestada = true;
+            }
+        }
+
+        function DesactivarAudioSentence() {
+            $('.audioSentence').prop("disabled", true);
+        }
+
+        function CargarPreguntaAudioSentence() {
+            audioSentence_mostrarNPregunta.text('#'+ (current+1));
+            var url = '@Url.Action("GetAusioSentence", "AudioSentenceExercises", new { Area = "Alumno" })';
+            url = url + '/' + arrayPreguntas[current].id;
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (result) {
+               
+                    var _countGaps = (result.Enunciado.match(/#/g) || []).length;
+                    var _arrayEnunciado = result.Enunciado.split("#");
+                    var _enunciadoFinal = "";
+                    var _indiceGap = 0;
+
+                    //SI EL ENUNCIADO EMPIEZA CON UN HUECO
+                    if (result.Enunciado.substring(0, 1) == "#") {
+                        _enunciadoFinal += "<input type='text' id='audioSentence_" + _indiceGap + "' class='form-control audioSentence' value=''>";
+                        _indiceGap++;
+                    }
+                    divExplicacionTexto.text(result.Explicacion);
+
+                    for (var i = 0; i < _arrayEnunciado.length; i++)
+                    {
+                        if (_arrayEnunciado[i] != "") {
+                            _enunciadoFinal += _arrayEnunciado[i];
+
+                            //SI EL ENUNCIADO TERMINA CON UN HUECO
+                            if (i + 1 == _arrayEnunciado.length) {
+                                if (_indiceGap < _countGaps) {
+                                    _enunciadoFinal += "<input type='text' id='audioSentence_" + _indiceGap + "' class='form-control audioSentence' value=''>";
+                                }
+                            } else {
+                                _enunciadoFinal += "<input type='text' id='audioSentence_" + _indiceGap + "' class='form-control audioSentence' value=''>";
+                                _indiceGap++;
+                            }
+                        }
+                    }
+                
+                    document.getElementById("audioSentence_audio_source").src = "/media/upload/audio_ejercicio/" + result.Audio;
+                    document.getElementById("audio_sentence").load();
+
+
+                    audioSentence_hEnunciado.html(_enunciadoFinal);
+                    if (arrayPreguntas[current].tiempoRestante <= 0) {
+                        DesactivarAudioSentence();
+                    }
+                    if (arrayPreguntas[current].contestada) {
+                        var arrRespuestas = [];
+                        arrRespuestas = arrayPreguntas[current].respuesta.split(',');
+                        for (var i = 0; i < arrRespuestas.length; i++) {
+
+                            $('#audioSentence_' + i).prop("value", arrRespuestas[i]);
+                        }
+                    }
+                    panel_preguntas.show();
+                }
+            });
+        }
+
+    </script>
+}

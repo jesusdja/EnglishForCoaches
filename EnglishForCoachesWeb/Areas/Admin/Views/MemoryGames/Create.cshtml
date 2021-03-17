@@ -1,0 +1,112 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.MemoryGameCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.juegoOnline.SubTema.TemaId })">
+                    @Model.juegoOnline.SubTema.Tema.Descripcion
+                </a>
+                / <a href="@Url.Action("Index", "Bloques", new {id = @Model.juegoOnline.SubTema.SubTemaId })">
+                    @Model.juegoOnline.SubTema.Descripcion
+                </a> /  @Model.juegoOnline.Descripcion
+            </h1>
+            <h3>
+                Nuevo ejercicio
+            </h3>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+
+    @using (Html.BeginForm("Create", "MemoryGames", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        @Html.HiddenFor(model => model.MemoryGame.TipoJuegoOnlineId)
+        @Html.HiddenFor(model => model.MemoryGame.SubTemaId)
+        @Html.HiddenFor(model => model.MemoryGame.JuegoOnlineId)
+        
+        <div class="block">
+            <div class="block-content block-content-full">
+
+
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <div class="form-material">
+                            @Html.TextBoxFor(model => model.ImageFile, new { type = "file", accept = ".jpg" })
+                            @Html.ValidationMessageFor(model => model.ImageFile)
+                            @Html.LabelFor(model => model.ImageFile, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.MemoryGame.PalabraImagen, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.MemoryGame.PalabraImagen, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.MemoryGame.PalabraImagen, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+            <div class="block-content block-content-full">
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <input type="submit" name="command" value="Guardar" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+    }
+
+    <h3>
+        Listado ejercicios
+    </h3>
+
+    <div class="row">
+
+        @foreach (var item in Model.juegoOnline.MemoryGames)
+        {
+
+            <div class="col-sm-4">
+                <!-- Bootstrap Lock -->
+                <div class="block block-themed">                   
+                    <div class="block-content">
+                        <div class="text-center push-10-t push-30">
+                            <img class="img-avatar img-avatar96" src="~/media/upload/MemoryGame/@(item.UrlImagen)?d=@DateTime.Now.Millisecond" alt="">
+                        </div>
+                        <form class="form-horizontal">
+                            <div class="form-group text-center">
+                                <label class="col-xs-12" for="lock1-password">@item.Descripcion</label>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 center text-center">
+                                    <a onclick="if(confirm('¿Está seguro que desea borrar el juego?')) location.href='@Url.Action("Delete", Model.juegoOnline.TipoJuegoOnline.Controlador, new { Area = "Admin", id = item.Id })';"
+                                       class="btn btn-xs btn-danger">
+
+                                        <i class="fa fa-times push-5-r"></i> Eliminar
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- END Bootstrap Lock -->
+            </div>
+        }
+
+    </div>
+</div>
+
+    <!-- END Page Content -->

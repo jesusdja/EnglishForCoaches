@@ -1,0 +1,258 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.CrucigramaIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.bloque.SubTema.TemaId })">@Model.bloque.SubTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.bloque.SubTema.SubTemaId})">@Model.bloque.SubTema.Descripcion</a></li>
+        <li><a href="@Url.Action("Index",  "Bloques", new { Area = "Alumno" ,id=Model.bloque.SubTemaId,areaId=Model.bloque.Area.AreaId})">@Model.bloque.Area.Descripcion</a></li>
+        <li class="active">@Model.bloque.Descripcion</li>
+    </ol>
+
+
+
+    @if (!string.IsNullOrWhiteSpace(Model.bloque.Explicacion))
+    {
+        <div class="card card-stats-primary">
+            <div class="card-block">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <i class="material-icons text-muted-light">info_outline</i>
+                    </div>
+                    <div class="media-body media-middle">
+                        @Model.bloque.Explicacion
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <!-- CRUCIGRAMA -->
+    <div class="row">
+        <div class="col-sm-6">
+            <div id="crucigrama">
+
+                @for (int j = 0; j < 12; j++)
+                {
+                    <div class="col-xs-1">
+                        <div class="form-material">
+
+                            <input class="form-control input-sm" disabled="disabled" maxlength="1" type="text" value="@(j+1)">
+
+                        </div>
+                    </div>
+                }
+                @for (int i = 0; i < 12; i++)
+                {
+
+                    for (int j = 0; j < 12; j++)
+                    {
+                        <div class="col-xs-1">
+                            <div class="form-material">
+                                @{
+                                    var htmlAttributes = new Dictionary<string, object>
+                                                                        {
+                                                                        { "class" , "form-control input-sm"},
+                                                                        { "maxlength", "1" },
+                                                                        { "id", "inp_"+i+"_"+j }
+                                                                        };
+                                    if (Model.Letras[i][j] == "")
+                                    {
+                                        htmlAttributes.Add("disabled", "disabled");
+                                    }
+                                    
+                                    if (j == 0) //VERTICAL
+                                    {
+
+                                        htmlAttributes.Add("placeholder", i + 1);
+                                    }
+
+                                    @Html.TextBoxFor(x => Model.LetrasRespuesta[i][j], htmlAttributes);
+                                }
+                            </div>
+                        </div>
+                                        }
+                                    }
+
+            </div>
+            <div id="btnResolver">
+                <div class="card text-xs-left">
+                    <div class="card-block">
+
+                        <button type="button" class="btn btn-white">
+                            <i class="material-icons">done</i>
+                            <span class="icon-text">Resolver</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="divResultado">
+                <div class="card-block">
+                    <div class="media">
+                        <div class="media-body media-middle" id="divResultadoTexto">
+                            Resultado
+                        </div>
+                        <div class="media-right" id="btnRepetir">
+                            <a href="@Url.Action("Index",  "Crucigramas", new { Area = "Alumno" ,id=Model.bloque.BloqueId})"
+                               class="btn btn-primary btn-sm btn-rounded pull-xs-right">Repetir<i class="material-icons">settings_backup_restore</i></a>
+                        </div>
+                        <div class="media-right">
+                            <a href="@Url.Action("Index",  "Bloques", new { Area = "Alumno" ,id=Model.bloque.SubTemaId,areaId=Model.bloque.Area.AreaId})"
+                               class="btn btn-primary btn-sm btn-rounded pull-xs-right">Cerrar<i class="material-icons">clear</i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card text-xs-left">
+                <div class="card-header"> Vertical </div>
+                <div class="card-block">
+                    <span style="white-space: pre-line">@Model.Crucigrama.Verticales</span>
+                </div>
+            </div>
+            <div class="card text-xs-left">
+                <div class="card-header"> Horizontal </div>
+                <div class="card-block">
+                    <span style="white-space: pre-line">@Model.Crucigrama.Horizontales</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+
+
+    <!-- Page JS Code -->
+    <script>
+
+        var btnResolver=$('#btnResolver');
+        var btnRepetir=$('#btnRepetir');
+
+        var divResultado = $("#divResultado");
+        var divResultadoTexto = $("#divResultadoTexto");
+
+        $(document).ready(function () {
+            btnRepetir.hide();
+            divResultado.hide();
+            btnResolver.on('click', function () {
+                validar();
+            });
+
+
+            var charLimit = 1;
+            $(".input-sm").keydown(function(e) {         
+                var keys = [];
+                for (var i=65; i<=90;i++){
+                    keys.push(i);
+                }
+                if (e.which == 8 && this.value.length == 0) {
+                    changeFocus(this,false);
+                } else if ($.inArray(e.which, keys) >= 0) {
+                    return true;        
+                } else if (this.value.length >= charLimit) {
+                    changeFocus(this,true);
+                    return false;
+                } else if (e.shiftKey || e.which <= 65 || e.which >= 90) {
+                    return false;
+                }
+            }).keyup (function () {
+                if (this.value.length >= charLimit) {
+                    changeFocus(this,true);
+                    return false;
+                }
+            });
+
+        });
+
+        function changeFocus(element,siguiente){
+
+            var thisIndex = $(element).index('input:text');    
+            var next = thisIndex + 1;    
+            if(!siguiente)
+            {
+                next = thisIndex - 1;   
+            }
+
+            var nextElemId = $('input:text').eq(next).attr('id');
+            if (nextElemId != undefined){                     
+                $('#' + nextElemId).focus();
+            }
+
+        }
+
+
+        function validar() {
+            btnResolver.off('click');
+            btnResolver.hide();
+
+            var respuestas=[];
+            for (var i = 0; i < 12; i++)
+            {
+                var respuestasLinea=[];
+                for (var j = 0; j < 12; j++)
+                {
+                    var letra=$('#inp_'+i+'_'+j).val();
+                    console.log(letra);
+                    respuestasLinea.push(letra);
+                }
+                respuestas.push(respuestasLinea);
+            }
+            var postData = { respuestas: respuestas };
+
+            var url = '@Url.Action("Contestar", "Crucigramas", new { Area = "Alumno" })';
+            url = url+ '/' + @(Model.bloque.BloqueId);
+            $.ajax({
+                url: url,
+                type: "POST",
+                contentType: "application/json; charset=UTF-8",
+                success: function (result) {
+
+                    var acertadas=true;
+                    for (var i = 0; i < 12; i++)
+                    {
+                        for (var j = 0; j < 12; j++)
+                        {
+                            var input=$('#inp_'+i+'_'+j);
+                            if(result.Correctas[i][j])
+                            {
+                                input.addClass("text-success");
+                            }else{
+                                input.addClass("text-danger");
+                                acertadas=false;
+                            }
+                        }
+                    }
+
+                    if (acertadas) {
+                        divResultadoTexto.text("Correcto");
+                        divResultado.addClass("card-success");
+                    } else {
+                        btnRepetir.show();
+                        divResultadoTexto.text("Incorrecto");
+                        divResultado.addClass("card-red");
+                    }
+
+                    divResultado.show();
+                },
+                data: JSON.stringify(postData),
+                dataType: "json",
+                traditional: true
+            });
+
+        }
+
+
+
+    </script>
+}

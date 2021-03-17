@@ -1,0 +1,33 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.JuegosViewViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index", "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.SubTema.TemaId })">@Model.SubTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.SubTema.SubTemaId})">@Model.SubTema.Descripcion</a></li>
+        <li><a href="@Url.Action("Index",  "Juegos", new { Area = "Alumno", id=Model.Juego.SubTemaId})">Juegos</a></li>
+        <li class="active">@Model.Juego.Titulo</li>
+    </ol>
+    <h1 class="page-heading h2">
+        @Model.Juego.Titulo
+    </h1>
+    <div class="row">
+        <div class="col-md-12">
+   
+
+            <div class="card">
+                <a target="_blank" href="/media/upload/juegos/@Model.Juego.Fichero">Fichero</a>
+            </div>
+            <!-- EXPLICACION -->
+            <div class="card">
+                <div class="card-block temario">
+                    @Html.Raw(Model.Juego.Explicacion)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

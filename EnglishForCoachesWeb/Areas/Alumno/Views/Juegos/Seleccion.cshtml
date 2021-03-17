@@ -1,0 +1,56 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.JuegosIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index", "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.SubTema.TemaId })">@Model.SubTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.SubTema.SubTemaId})">@Model.SubTema.Descripcion</a></li>
+        <li class="active">Juegos</li>
+    </ol>
+
+    <h1 class="page-heading h2">Juegos</h1>
+    <div class="row">
+        <div class="col-sm-6">
+
+
+
+            <div class="card">
+                <a> <img src="~/Content/Alumno/images/juegos/online.jpg" alt="Juegos Online" style="width:100%;"> </a>
+                <div class="card-block">
+                    <div class="media m-b-05">
+                        <div class="media-body media-middle">
+                            <h4 class="card-title m-b-0"><a href="@Url.Action("Index", "JuegoOnlines", new { Area = "Alumno", id = Model.SubTema.SubTemaId })">Juegos Online</a></h4>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-white"> <a href="@Url.Action("Index", "JuegoOnlines", new { Area = "Alumno", id = Model.SubTema.SubTemaId })" class="btn btn-primary btn-sm"> Continuar <i class="material-icons">play_circle_outline</i></a> </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-6">
+
+            <div class="card">
+                <a> <img src="~/Content/Alumno/images/juegos/offline.jpg" alt="Juegos Offline" style="width:100%;"> </a>
+                <div class="card-block">
+                    <div class="media m-b-05">
+                        <div class="media-body media-middle">
+                            <h4 class="card-title m-b-0"><a href="@Url.Action("Index", "Juegos", new { Area = "Alumno", id = Model.SubTema.SubTemaId })">Juegos Offline</a></h4>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-white"> <a href="@Url.Action("Index", "Juegos", new { Area = "Alumno", id = Model.SubTema.SubTemaId })" class="btn btn-primary btn-sm"> Continuar <i class="material-icons">play_circle_outline</i></a> </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>

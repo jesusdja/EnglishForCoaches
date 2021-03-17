@@ -1,0 +1,188 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.AudioSentenceExerciseEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.bloque.SubTema.TemaId })">
+                    @Model.bloque.SubTema.Tema.Descripcion
+                </a>
+                / <a href="@Url.Action("Index", "Bloques", new {id = @Model.bloque.SubTema.SubTemaId })">
+                    @Model.bloque.SubTema.Descripcion
+                </a>
+                / <a href="@Url.Action("Create", "Tests", new {id = @Model.bloque.BloqueId })">
+                    @Model.bloque.Descripcion
+                </a> /  Editar fill the gap
+            </h1>
+</div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+    @using (Html.BeginForm("Edit", "AudioSentenceExercises", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal push-10-t" })) {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        @Html.HiddenFor(model => model.AudioSentenceExercise.Id)
+        @Html.HiddenFor(model => model.AudioSentenceExercise.TipoEjercicioId)
+        @Html.HiddenFor(model => model.AudioSentenceExercise.SubTemaId)
+        @Html.HiddenFor(model => model.AudioSentenceExercise.Respuestas, new { @id = "hRespuestas" })
+        @Html.HiddenFor(model => model.AudioSentenceExercise.BloqueId)
+        @Html.HiddenFor(model => model.AudioSentenceExercise.AreaId)
+        @Html.HiddenFor(model => model.AudioSentenceExercise.FicheroAudio)
+        @Html.HiddenFor(model => model.ExamenId)
+
+        if (Model.ExamenId.HasValue) {
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-default" type="button" 
+                            onclick="location.href='@Url.Action("Edit", "ErroresExamens", new { Area = "Admin", id = Model.ExamenId.Value })';">
+                        <i class="fa fa-search"> Volver a examen</i>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+        }
+        <div class="block">
+            <div class="block-content block-content-full">
+
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <div class="form-material">
+                            <button id="btnAudio" onclick="document.getElementById('audio_sentence').play();"
+                                    class="btn btn-rounded @(string.IsNullOrEmpty(Model.AudioSentenceExercise.FicheroAudio) ? "btn-danger":"btn-default")"
+                                    type="button" @(string.IsNullOrEmpty(Model.AudioSentenceExercise.FicheroAudio) || !File.Exists(Server.MapPath("~/media/upload/audio_ejercicio/" + Model.AudioSentenceExercise.FicheroAudio)) ? "disabled" : "")>
+                                <i class="fa fa-volume-up"></i>
+                            </button>
+                            @if (!string.IsNullOrEmpty(Model.AudioSentenceExercise.FicheroAudio)) {
+                                <audio id="audio_sentence">
+                                    <source src="~/media/upload/audio_ejercicio/@Model.AudioSentenceExercise.FicheroAudio" type="audio/mpeg" />
+                                </audio>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.AudioFile, htmlAttributes: new { @class = "" })
+                            @Html.TextBoxFor(model => model.AudioFile, new { type = "file", accept = ".mp3" })
+                            @Html.ValidationMessageFor(model => model.AudioFile)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.AudioSentenceExercise.PreguntaExamen, htmlAttributes: new { @class = "" })
+                            @Html.CheckBox("AudioSentenceExercise.PreguntaExamen", Model.AudioSentenceExercise.PreguntaExamen ?? false)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.AudioSentenceExercise.Enunciado, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.AudioSentenceExercise.Enunciado, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AudioSentenceExercise.Enunciado, "", new { @class = "text-danger" })
+                            <div class="help-block text-right">Frase con huecos (carácter especial #) y conjunto de respuestas</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-11">
+                        <label class="" for="textRespuestas">Respuestas</label>
+                        <div class="form-material">
+                            <input id="textRespuestas" class="form-control" type="text" />
+                            @Html.ValidationMessageFor(model => model.AudioSentenceExercise.Respuestas, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" onclick="anadirRespuesta();" type="button"><i class="fa fa-plus-circle"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <ul id="ulRespuestas"></ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <input type="submit" name="command" value="Guardar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- END Page Content -->
+
+@section Scripts {
+
+    <!-- Page JS Code -->
+    <script>              
+
+
+        var hRespuestas = $("#hRespuestas");
+        var textRespuestas = $("#textRespuestas");
+        var ulRespuestas = $("#ulRespuestas");
+        var arrRespuestas = [];
+
+        function anadirRespuesta() {
+            var val = textRespuestas.val();
+            if (val != '') {
+                arrRespuestas.push(val);
+                ulRespuestas.append('<li id="lires_'+val+'"> ' + val +
+                    '<button class="btn btn-default" onclick="quitarRespuesta(\'lires_' + val + '\');" type="button"><i class="fa fa-minus-circle"></i></button> </li>');
+                hRespuestas.val(arrRespuestas.join('#'));
+                textRespuestas.val('');
+            }
+        }
+
+        function quitarRespuesta(li) {
+            var val = li.replace("lires_", "");
+            var index = arrRespuestas.indexOf(val);
+            if (index > -1) {
+                arrRespuestas.splice(index, 1);
+                $('#' + li).remove();
+            }
+            hRespuestas.val(arrRespuestas.join('#'));
+        }
+
+
+        $(document).ready(function () {
+          
+            var respuestas = hRespuestas.val();
+            if (respuestas != "") {
+                arrRespuestas = respuestas.split('#');
+                for (var i = 0; i < arrRespuestas.length; i++) {
+                    ulRespuestas.append('<li id="lires_' + arrRespuestas[i] + '">' + arrRespuestas[i] +
+                        '<button class="btn btn-default" onclick="quitarRespuesta(\'lires_' + arrRespuestas[i] + '\');" type="button"><i class="fa fa-minus-circle"></i></button> </li>');
+                }
+            }
+        });
+
+    </script>
+}

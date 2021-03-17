@@ -1,0 +1,38 @@
+﻿
+<div class="card">
+    <img id="trueFalse_imgEnunciado" alt="Enunciado">
+    <div class="card-header bg-white p-a-1">
+        <div class="media">
+            <div class="media-left">
+                <h4 class="m-b-0">
+                    <strong id="trueFalse_mostrarNPregunta"></strong>
+                </h4>
+            </div>
+            <div class="media-left" id="trueFalse_divAudio">
+                <button onclick="Reproducir();" id="trueFalse_btn_audio" class="btn btn-sm btn-primary"
+                        type="button">
+                    <i class="material-icons">hearing</i>
+                    <span class="icon-text"> Escuchar</span>
+                </button>
+                <audio id="audio_TrueFalse">
+                    <source id="source_TrueFalse" type="audio/mpeg" />
+                </audio>
+
+            </div>
+            <div class="media-body  media-middle">
+                <h4 class="card-title" id="trueFalse_hEnunciado"></h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row true-false">
+    <button type="button" class="btn btn-success col-md-6" id="trueFalse_btnTrue">
+        <i class="material-icons md-48">thumb_up</i>
+    </button>
+    <button type="button" class="btn btn-danger col-md-6" id="trueFalse_btnFalse">
+        <i class="material-icons md-48">thumb_down</i>
+    </button>
+</div>
+
+

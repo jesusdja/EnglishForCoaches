@@ -1,0 +1,266 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.FillTheBoxEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.bloque.SubTema.TemaId })">
+                    @Model.bloque.SubTema.Tema.Descripcion
+                </a>
+                / <a href="@Url.Action("Index", "Bloques", new {id = @Model.bloque.SubTema.SubTemaId })">
+                    @Model.bloque.SubTema.Descripcion
+                </a>
+                / <a href="@Url.Action("Create", "Tests", new {id = @Model.bloque.BloqueId })">
+                    @Model.bloque.Descripcion
+                </a> /  Editar fill the Box
+            </h1>
+</div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+    @using (Html.BeginForm("Edit", "FillTheBoxs", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        @Html.HiddenFor(model => model.FillTheBox.Id)
+        @Html.HiddenFor(model => model.FillTheBox.TipoEjercicioId)
+        @Html.HiddenFor(model => model.FillTheBox.SubTemaId)
+        @Html.HiddenFor(model => model.FillTheBox.Respuestas, new { @id = "hRespuestas" })
+        @Html.HiddenFor(model => model.FillTheBox.RespuestasIncorrectas, new { @id = "hRespuestasIncorrectas" })
+        @Html.HiddenFor(model => model.FillTheBox.BloqueId)
+        @Html.HiddenFor(model => model.FillTheBox.AreaId)
+        @Html.HiddenFor(model => model.FillTheBox.FicheroAudio)
+        @Html.HiddenFor(model => model.FillTheBox.UrlImagen)
+
+        <div class="block">
+            <div class="block-content block-content-full">
+
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <div class="form-material">
+                            <button onclick="document.getElementById('audio_sentence').play();"
+                                    class="btn btn-rounded @(string.IsNullOrEmpty(Model.FillTheBox.FicheroAudio) ? "btn-danger":"btn-default")"
+                                    type="button" @(string.IsNullOrEmpty(Model.FillTheBox.FicheroAudio) ? "disabled" : "")>
+                                <i class="fa fa-volume-up"></i>
+                            </button>
+                            @if (!string.IsNullOrEmpty(Model.FillTheBox.FicheroAudio))
+                            {
+                                <audio id="audio_sentence">
+                                    <source src="~/media/upload/audio_fillthebox/@Model.FillTheBox.FicheroAudio" type="audio/mpeg" />
+                                </audio>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.AudioFile, htmlAttributes: new { @class = "" })
+                            @Html.TextBoxFor(model => model.AudioFile, new { type = "file", accept = ".mp3" })
+                            @Html.ValidationMessageFor(model => model.AudioFile)
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.FillTheBox.Titulo, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.FillTheBox.Titulo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FillTheBox.Titulo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.TextBoxFor(model => model.ImageFile, new { type = "file", accept = ".jpg" })
+                            @Html.ValidationMessageFor(model => model.ImageFile)
+                            @Html.LabelFor(model => model.ImageFile, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.FillTheBox.UrlImagen))
+                {
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="form-material">
+                                <img src="~/media/upload/imagen_fillthebox/@(Model.FillTheBox.UrlImagen)?d=@DateTime.Now.Millisecond" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.FillTheBox.Enunciado, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.FillTheBox.Enunciado, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FillTheBox.Enunciado, "", new { @class = "text-danger" })
+                            <div class="help-block text-right">Frase con huecos (carácter especial #) y conjunto de respuestas</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-11">
+                        <label class="" for="textRespuestas">Respuestas</label>
+                        <div class="form-material">
+                            <input id="textRespuestas" class="form-control" type="text" />
+                            @Html.ValidationMessageFor(model => model.FillTheBox.Respuestas, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" onclick="anadirRespuesta();" type="button"><i class="fa fa-plus-circle"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <ul id="ulRespuestas"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-11">
+                        <label class="" for="textRespuestasIncorrectas">Respuestas Incorrectas</label>
+                        <div class="form-material">
+                            <input id="textRespuestasIncorrectas" class="form-control" type="text" />
+                            @Html.ValidationMessageFor(model => model.FillTheBox.RespuestasIncorrectas, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" onclick="anadirRespuestaIncorrecta();" type="button"><i class="fa fa-plus-circle"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <ul id="ulRespuestasIncorrectas"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.FillTheBox.Explicacion, htmlAttributes: new { @class = "" })
+                            @Html.TextAreaFor(model => model.FillTheBox.Explicacion, new { @class = "form-control", @rows = "3" })
+                            @Html.ValidationMessageFor(model => model.FillTheBox.Explicacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <input type="submit" name="command" value="Guardar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- END Page Content -->
+
+@section Scripts {
+
+    <!-- Page JS Code -->
+    <script>              
+
+
+        var hRespuestas = $("#hRespuestas");
+        var textRespuestas = $("#textRespuestas");
+        var ulRespuestas = $("#ulRespuestas");
+        var arrRespuestas = [];
+
+        var hRespuestasIncorrectas = $("#hRespuestasIncorrectas");
+        var textRespuestasIncorrectas = $("#textRespuestasIncorrectas");
+        var ulRespuestasIncorrectas = $("#ulRespuestasIncorrectas");
+        var arrRespuestasIncorrectas = [];
+
+        function anadirRespuesta() {
+            var val = textRespuestas.val();
+            if (val != '') {
+                arrRespuestas.push(val);
+                ulRespuestas.append('<li id="'+val+'"> ' + val +
+                    '<button class="btn btn-default" onclick="quitarRespuesta(\'' + val + '\');" type="button"><i class="fa fa-minus-circle"></i></button> </li>');
+                hRespuestas.val(arrRespuestas.join('#'));
+                textRespuestas.val('');
+            }
+        }
+        function anadirRespuestaIncorrecta() {
+            var val = textRespuestasIncorrectas.val();
+            if (val != '') {
+                arrRespuestasIncorrectas.push(val);
+                ulRespuestasIncorrectas.append('<li id="' + val + '"> ' + val +
+                    '<button class="btn btn-default" onclick="quitarRespuestaIncorrecta(\'' + val + '\');" type="button"><i class="fa fa-minus-circle"></i></button> </li>');
+                hRespuestasIncorrectas.val(arrRespuestasIncorrectas.join('#'));
+                textRespuestasIncorrectas.val('');
+            }
+        }
+
+        function quitarRespuesta(val) {
+            var index = arrRespuestas.indexOf(val);
+            if (index > -1) {
+                arrRespuestas.splice(index, 1);
+                $('#' + val).remove();
+
+            }
+            hRespuestas.val(arrRespuestas.join('#'));
+        }
+
+        function quitarRespuestaIncorrecta(val) {
+            var index = arrRespuestasIncorrectas.indexOf(val);
+            if (index > -1) {
+                arrRespuestasIncorrectas.splice(index, 1);
+                $('#' + val).remove();
+
+            }
+            hRespuestasIncorrectas.val(arrRespuestasIncorrectas.join('#'));
+        }
+
+        $(document).ready(function () {
+          
+            var respuestas = hRespuestas.val();
+            if (respuestas != "") {
+                arrRespuestas = respuestas.split('#');
+                for (var i = 0; i < arrRespuestas.length; i++) {
+                    ulRespuestas.append('<li id="' + arrRespuestas[i] + '">' + arrRespuestas[i] +
+                        '<button class="btn btn-default" onclick="quitarRespuesta(\'' + arrRespuestas[i] + '\');" type="button"><i class="fa fa-minus-circle"></i></button> </li>');
+                }
+            }
+
+
+            var respuestasIncorrectas = hRespuestasIncorrectas.val();
+            if (respuestasIncorrectas != "") {
+                arrRespuestasIncorrectas = respuestasIncorrectas.split('#');
+                for (var i = 0; i < arrRespuestasIncorrectas.length; i++) {
+                    ulRespuestasIncorrectas.append('<li id="' + arrRespuestasIncorrectas[i] + '">' + arrRespuestasIncorrectas[i] +
+                        '<button class="btn btn-default" onclick="quitarRespuestaIncorrecta(\'' + arrRespuestasIncorrectas[i] + '\');" type="button"><i class="fa fa-minus-circle"></i></button> </li>');
+                }
+            }
+        });
+
+    </script>
+}

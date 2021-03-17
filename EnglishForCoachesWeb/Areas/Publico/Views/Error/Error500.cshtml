@@ -1,0 +1,77 @@
+﻿@model EnglishForCoachesWeb.Areas.Publico.Models.BuscarViewModel
+
+@{
+    ViewBag.Title = "Page not found - English for Coaches - englishforcoaches.com";
+    Layout = "~/Areas/Publico/Views/Shared/_PublicoLayout.cshtml";
+}
+<!-- Category Page Content -->
+<section id="rst-itemcontent">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="rst-section-title rst-section-title-box rst-item-content-title">
+                    <h2>Sorry, there has been an error processing your request.</h2>
+                </div>
+                <div class="row">
+                    <article class="col-xs-12 rst-item-content">
+                        <h4>Go back to <a href="http://englishforcoaches.com">home</a> or use the search form:</h4>
+
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+
+                                        <input class="rst-pageinput search" type="text" placeholder="Search..." name="name" id="name">
+                                        <button class="rst-pagebutton" id="btnBuscar"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+
+
+                                </div>
+                            </div>
+                        </form>
+
+                    </article>
+                    <!-- End Posts Contents -->
+                </div>
+            </div>
+            <div class="col-sm-4">
+
+                <aside class="widget widget_popular">
+                        @{
+                            Html.RenderPartial("~/Areas/Publico/Views/Shared/_ListaArticulosRecientes.cshtml", Model.ArticulosRecientes, new ViewDataDictionary());
+                        }
+                </aside>
+                <!-- end widget popular -->
+
+            </div>
+            <!-- End Content Sidebar -->
+        </div>
+    </div>
+</section>
+<!-- End Category Page Content -->
+
+
+
+@section Scripts {
+    <!-- Page JS Code -->
+    <script>
+        function Buscar()
+        {
+            var campoTexto = $('#name');
+
+            if (campoTexto.val() == 'Buscar...')
+            { campoTexto.val() = ''; }
+            location.href = '@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/search/")' + campoTexto.val();
+            return false;
+        }
+
+        $(function () {
+            $('#btnBuscar').on('click', Buscar);
+        });
+
+    </script>
+}

@@ -1,0 +1,151 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.ExtrasViewViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.Extra.SubTema.TemaId })">@Model.Extra.SubTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.Extra.SubTema.SubTemaId})">@Model.Extra.SubTema.Descripcion</a></li>
+        <li><a href="@Url.Action("Index",  "Extras", new { Area = "Alumno",id=Model.Extra.SubTema.SubTemaId})">Extras</a></li>
+        <li><a href="@Url.Action("Categoria",  "Extras", new { Area = "Alumno", id=Model.Extra.CategoriaExtraId,subtemaId=Model.Extra.SubTema.SubTemaId})">@Model.Extra.CategoriaExtra.Descripcion</a></li>
+        <li class="active">@Model.Extra.Titulo</li>
+    </ol>
+    <h1 class="page-heading h2">
+        @Model.Extra.Titulo
+    </h1>
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- VIDEO -->@if (!string.IsNullOrEmpty(Model.Extra.UrlVideo))
+            {
+                <div class="video-container">
+                    <iframe width="100%" src="@Model.Extra.UrlVideo" frameborder="0"></iframe>
+                </div>
+            }
+            <!-- VIDEO -->
+            <!-- IMAGEN -->
+            @if (!string.IsNullOrEmpty(Model.Extra.Foto))
+            {
+                <div class="card">
+                    <img src="~/media/upload/extras_imagenes/@Model.Extra.Foto" width="100%">
+                </div>
+            }
+            <!-- IMAGEN -->
+
+            <div class="row">
+                <!-- AUDIO -->@if (!string.IsNullOrEmpty(Model.Extra.Audio))
+                {
+                    <div class="col-md-1">
+                        <button onclick="Reproducir();" id="btn_audioExtra"
+                                class="btn btn-secondary btn-circle"
+                                type="button">
+                            <i class="material-icons">hearing</i>
+                        </button>
+                        <audio id="audio_Extra">
+                            <source src="~/media/upload/extras_audios/@Model.Extra.Audio" type="audio/mpeg" />
+                        </audio>
+
+                    </div>
+                }
+            </div>
+            <!-- AUDIO -->
+            <div class="row">
+                <!-- CONSEJO -->
+                @if (!string.IsNullOrEmpty(Model.Extra.Consejo))
+                {
+                    <div class="col-md-12 left">
+                        <div class="alert alert-info alert-dismissible fade in"
+                             role="alert">
+                            <button type="button" class="close" data-dismiss="alert"
+                                    aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>¡CONSEJO!</strong> @Model.Extra.Consejo
+                        </div>
+                    </div>
+                }
+                <!-- CONSEJO -->
+            </div>
+
+
+
+
+
+            <!-- AUDIO -->
+            <!-- EXPLICACION -->
+            <div class="card">
+                <div class="card-block temario">
+                    @Html.Raw(Model.Extra.Explicacion)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<span class="mostrarInfo">
+
+    <!-- CONSEJO -->
+    @if (!string.IsNullOrEmpty(Model.Extra.Consejo))
+    {
+    <div class="card-block">
+        <button id="btn_Consejo" class="btn btn-info btn-circle try-sweet-simpleMessage" type="button" title="Consejo"> <i class="material-icons">info_outline</i> </button>
+    </div>
+    }
+    <!-- CONSEJO -->
+    <!-- AUDIO -->
+@if (!string.IsNullOrEmpty(Model.Extra.Audio))
+{
+    <div class="card-block">
+        <button onclick="Reproducir();" id="btn_vocabulario_850" class="btn btn-secondary btn-circle" type="button" title="Audio"> <i class="material-icons">hearing</i> </button>
+    </div>
+}
+    <!-- AUDIO -->
+</span>
+
+
+@section Scripts {
+<script src="~/Content/Alumno/vendor/sweetalert.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $('#btn_Consejo').on('click', function () {
+		swal({
+			title:"Consejo!",
+			text: "@Html.Raw(Model.Extra.Consejo)",
+		    confirmButtonColor: "#039BE5"
+		});
+	});
+
+	$(window).scroll(function(){
+		alert("dd");
+		if ($(this).scrollTop() > 0){
+			$('.mostrarInfo').slideDown(300);
+		} else {
+			$('.mostrarInfo').slideUp(300);
+		};
+	});
+
+
+	function GenerarEventoEnded(button, audio) {
+	    return function () {
+	        button.removeClass("flash");
+	        audio.off('ended')
+	    };
+	}
+
+	function Reproducir() {
+	    var button = $('#btn_audioExtra');
+	    var audio = $('#audio_Extra');
+
+
+	    button.addClass('flash');
+	    audio.on('ended', GenerarEventoEnded(button, audio));
+	    document.getElementById('audio_Extra').play();
+	}
+});
+</script>
+    }

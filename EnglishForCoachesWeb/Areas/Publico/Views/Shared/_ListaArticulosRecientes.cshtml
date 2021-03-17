@@ -1,0 +1,19 @@
+﻿@model IEnumerable<EnglishForCoachesWeb.Database.Articulo>
+<ul>
+    <li>Last articles</li>
+    @foreach (var item in Model)
+    {
+        <li>
+            <article>
+                <div class="rst-postpic">
+                    <a href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/"+item.Categoria.DescripcionSeo+"/"+ item.TituloSeo)"><img src="~/Imagenes/@(item.ArticuloId)_s.jpg" alt="@item.Titulo" /></a>
+                </div>
+                <div class="rst-postinfo">
+                    <h6><a href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/"+item.Categoria.DescripcionSeo+"/"+ item.TituloSeo)">@item.Titulo</a></h6>
+                    <time><i class="fa fa-clock-o"></i>@item.FechaPublicacion.ToString("MMMM dd, yyyy", new System.Globalization.CultureInfo("en"))</time>
+                </div>
+            </article>
+        </li>
+    }
+
+</ul>

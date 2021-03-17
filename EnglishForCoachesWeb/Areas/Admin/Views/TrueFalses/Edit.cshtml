@@ -1,0 +1,150 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.TrueFalseEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.bloque.SubTema.TemaId })">
+                    @Model.bloque.SubTema.Tema.Descripcion
+                </a>
+                / <a href="@Url.Action("Index", "Bloques", new {id = @Model.bloque.SubTema.SubTemaId })">
+                    @Model.bloque.SubTema.Descripcion
+                </a>                 
+                / <a href="@Url.Action("Create", "TrueFalses", new {id = @Model.bloque.BloqueId })">
+                    @Model.bloque.Descripcion
+                </a> / Editar TrueFalse
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+
+    @using (Html.BeginForm("Edit", "TrueFalses", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal push-10-t" })) {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        @Html.HiddenFor(model => model.TrueFalse.Audio)
+        @Html.HiddenFor(model => model.TrueFalse.Id)
+        @Html.HiddenFor(model => model.TrueFalse.TipoEjercicioId)
+        @Html.HiddenFor(model => model.TrueFalse.SubTemaId)
+        @Html.HiddenFor(model => model.TrueFalse.BloqueId)
+        @Html.HiddenFor(model => model.TrueFalse.AreaId)
+        @Html.HiddenFor(model => model.TrueFalse.UrlImagen)
+        @Html.HiddenFor(model => model.ExamenId)
+
+
+        if (Model.ExamenId.HasValue) {
+            <div class="block-content block-content-full">
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-default" type="button"
+                                onclick="location.href='@Url.Action("Edit", "ErroresExamens", new { Area = "Admin", id = Model.ExamenId.Value })';">
+                            <i class="fa fa-search"> Volver a examen</i>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="block">
+            <div class="block-content block-content-full">
+
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div class="form-material">
+                            @Html.TextBoxFor(model => model.ImageFile, new { type = "file", accept = ".jpg" })
+                            @Html.ValidationMessageFor(model => model.ImageFile)
+                            @Html.LabelFor(model => model.ImageFile, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.TrueFalse.Enunciado, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.TrueFalse.Enunciado, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TrueFalse.Enunciado, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.TrueFalse.UrlImagen)) {
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="form-material">
+                                <img src="~/media/upload/TrueFalse/@(Model.TrueFalse.UrlImagen)?d=@DateTime.Now.Millisecond" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.TrueFalse.RespuestaCorrecta, htmlAttributes: new { @class = "" })
+
+                            @Html.RadioButtonFor(model => model.TrueFalse.RespuestaCorrecta, true) True
+                            @Html.RadioButtonFor(model => model.TrueFalse.RespuestaCorrecta, false) False
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-9">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.TrueFalse.Explicacion, htmlAttributes: new { @class = "" })
+                            @Html.TextAreaFor(model => model.TrueFalse.Explicacion, new { @class = "form-control", @row = "3" })
+                            @Html.ValidationMessageFor(model => model.TrueFalse.Explicacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <div class="form-material">
+                            <button onclick="document.getElementById('audio_extra').play();"
+                                    class="btn btn-rounded @(string.IsNullOrEmpty(Model.TrueFalse.Audio) ? "btn-danger":"btn-default")"
+                                    type="button" @(string.IsNullOrEmpty(Model.TrueFalse.Audio) ? "disabled" : "")>
+                                <i class="fa fa-volume-up"></i>
+                            </button>
+                            @if (!string.IsNullOrEmpty(Model.TrueFalse.Audio)) {
+                                <audio id="audio_extra">
+                                    <source src="~/media/upload/TrueFalse/Audios/@Model.TrueFalse.Audio" type="audio/mpeg" />
+                                </audio>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="form-material">
+                            @Html.TextBoxFor(model => model.AudioFile, new { type = "file", accept = ".mp3" })
+                            @Html.ValidationMessageFor(model => model.AudioFile)
+                            @Html.LabelFor(model => model.AudioFile, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.TrueFalse.PreguntaExamen, htmlAttributes: new { @class = "" })
+                            @Html.CheckBox("TrueFalse.PreguntaExamen", Model.TrueFalse.PreguntaExamen ?? false)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <input type="submit" name="command" value="Guardar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- END Page Content -->

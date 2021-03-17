@@ -1,0 +1,240 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.SopaLetrasCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.juegoOnline.SubTema.TemaId })">
+                    @Model.juegoOnline.SubTema.Tema.Descripcion
+                </a>
+                / <a href="@Url.Action("Index", "Bloques", new {id = @Model.juegoOnline.SubTema.SubTemaId })">
+                    @Model.juegoOnline.SubTema.Descripcion
+                </a> /  @Model.juegoOnline.Descripcion
+            </h1>
+            <h3>
+                Nuevo ejercicio
+            </h3>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+
+    @using (Html.BeginForm("Create", "SopaLetras", FormMethod.Post, new { @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        @Html.HiddenFor(model => model.SopaLetras.Id)
+        @Html.HiddenFor(model => model.SopaLetras.SubTemaId)
+        @Html.HiddenFor(model => model.SopaLetras.TipoJuegoOnlineId)
+        @Html.HiddenFor(model => model.SopaLetras.JuegoOnlineId)
+
+        @Html.HiddenFor(model => model.Comentarios, new { @id = "hComentarios" })
+        <div class="block">
+            <div class="block-content block-content-full">
+
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.SopaLetras.Enunciado, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.SopaLetras.Enunciado, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SopaLetras.Enunciado, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="block">
+            <div class="block-content block-content-full">
+                <label class="" for="textRespuestas">Comentarios</label>
+
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div class="form-material">
+                            @*<input id="textPalabra" class="form-control" type="text" placeholder="Palabra" />*@
+
+
+
+                            @Html.DropDownList("Vocabulario", Enumerable.Empty<SelectListItem>(), htmlAttributes: new { @id = "ddlVocabulario", @class = "js-select2 form-control" })
+
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="form-material">
+                            <input id="textComentario" class="form-control" type="text" placeholder="Comentario" />
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" onclick="anadirComentario();" type="button"><i class="fa fa-plus-circle"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <ul id="ulComentarios"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <input type="submit" name="command" value="Guardar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+        <div id="divSopaLetras">
+
+           
+        </div>
+    }
+
+</div>
+<!-- END Page Content -->
+
+@section Scripts {
+    <link rel="stylesheet" href="~/Scripts/select2/select2.min.css">
+    <link rel="stylesheet" href="~/Scripts/select2/select2-bootstrap.css">
+
+    <script src="~/Scripts/select2/select2.full.min.js"></script>
+    <script src="~/Scripts/masked-inputs/jquery.maskedinput.min.js"></script>
+    <script src="~/Scripts/wordfind.js"></script>
+
+    <!-- Page JS Code -->
+    <script>
+        var hComentarios = $("#hComentarios");
+        var textPalabra = $("#textPalabra");
+
+        var ddlVocabulario = $("#ddlVocabulario");
+        var divSopaLetras = $("#divSopaLetras");
+
+        var textComentario = $("#textComentario");
+        var ulComentarios = $("#ulComentarios");
+        var arrComentarios = [];
+
+        function anadirComentario() {
+            var valPalabra = ddlVocabulario.val();
+            var textoPalabra = $("#ddlVocabulario option:selected").text();
+            var valComentario = textComentario.val();
+            if (valPalabra != '' && valComentario != '') {
+                arrComentarios.push(valPalabra + '|' + valComentario + '|' + textoPalabra);
+                ulComentarios.append('<li id="' + valPalabra + '"><span style="font-weight: bold;"> ' + textoPalabra + '</span>: ' + valComentario +
+                    '<button class="btn btn-default" onclick="quitarComentario(\'' + valPalabra + '\',\'' + valComentario + '\',\'' + textoPalabra + '\');" type="button"><i class="fa fa-minus-circle"></i></button> </li>');
+                hComentarios.val(arrComentarios.join('#'));
+                ddlVocabulario.val('');
+                textComentario.val('');
+            }
+            cargarSopaLetras();
+        }
+
+        function quitarComentario(val, valComentario, textoPalabra) {
+            var index = arrComentarios.indexOf(val + '|' + valComentario + '|' + textoPalabra);
+            if (index > -1) {
+                arrComentarios.splice(index, 1);
+                $('#' + val).remove();
+
+            }
+            hComentarios.val(arrComentarios.join('#'));
+            cargarSopaLetras();
+        }
+
+        function cargarVocabulario() {
+            $.getJSON('@Url.Action("GetVocabulario")', {
+               // turno: turno
+            })
+                .done(function (data) {
+
+                        //Create new option
+                    //append turno turnos drop down
+                    ddlVocabulario.empty();
+                    ddlVocabulario.append($('<option>'));
+                    for (var i = 0; i < data.length; i++) {
+                        var grupo = data[i]
+                        if (ddlVocabulario.is("select")) {
+
+                            ddlVocabulario.append($('<option>', {
+                                value: grupo.Id,
+                                text: grupo.Nombre_es
+                            }));
+                        }
+                    }
+                    jQuery('.js-select2').select2({
+                        minimumInputLength :1
+                    });
+                })
+                .fail(function (jqxhr, textStatus, error) {
+                    var err = textStatus + ", " + error;
+                    console.log("Request Failed: " + err);
+                });
+        }
+
+       function cargarSopaLetras(){
+            var words = [];
+            for (var i = 0; i < arrComentarios.length; i++) {
+                var arrDatos = arrComentarios[i].split('|');
+                words.push(arrDatos[2]);
+            }
+
+            var puzzle = wordfind.newPuzzle(words, {
+                // Set dimensions of the puzzle
+                height: 12,
+                width: 12,
+                // or enable all with => orientations: wordfind.validOrientations,
+                orientations: wordfind.validOrientations,//['horizontal', 'vertical'],
+                // Set a random character the empty spaces
+                fillBlanks: true,
+                preferOverlap: false
+            });
+           console.log(puzzle);
+           divSopaLetras.empty();
+
+           for (var i = 0; i < puzzle.length; i++) {
+               var lineaPuzzle = puzzle[i];
+               var lineaDiv = $(' <div class="form-group"></div>');
+               divSopaLetras.append(lineaDiv);
+           
+               for (var j = 0; j < lineaPuzzle.length; j++) {
+                   var celdaPuzzle=lineaPuzzle[j];
+
+                   var celdaDiv = $(' <div class="col-xs-1"><input type="text" disabled class="form-control" value="' + celdaPuzzle +'"></div>');
+                   lineaDiv.append(celdaDiv);
+               
+               }
+           }
+        }
+
+
+        $(document).ready(function () {
+            cargarVocabulario();
+            var comentarios = hComentarios.val();
+            if (comentarios) {
+                arrComentarios = comentarios.split('#');
+                for (var i = 0; i < arrComentarios.length; i++) {
+                    var arrDatos = arrComentarios[i].split('|');
+                    ulComentarios.append('<li id="' + arrDatos[0] + '"><span style="font-weight: bold;"> ' + arrDatos[2] + '</span>: ' + arrDatos[1] +
+                        '<button class="btn btn-default" onclick="quitarComentario(\'' + arrDatos[0] + '\',\'' + arrDatos[1] + '\',\'' + arrDatos[2] + '\');" type="button"><i class="fa fa-minus-circle"></i></button> </li>');
+                }
+                cargarSopaLetras();
+            }
+
+        });
+
+    </script>
+}

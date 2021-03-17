@@ -1,0 +1,95 @@
+.rst-header-logo {
+    margin: 26px 0 0;
+}
+
+@media (max-width: 980px) {
+    .rst-header-logo img {
+        margin-top: 20px !important;
+    }
+}
+
+@media (max-width: 660px) {
+    .rst-boxinfo {
+        bottom: 20px;
+    }
+}
+.rst-boxinfo .rst-postpic-cat {
+    background: #cb2222;
+    font-weight: 700;
+    padding: 4px 9px;
+    text-transform: uppercase;
+}
+
+.rst-boxinfo .rst-postpic-cat span{
+    color: #fff;
+}
+
+.rst-postinfo time, .comment-date, .comment-date i {
+    color: #999999;
+}
+
+.rst-catbanner-post {
+    width: 100%;
+}
+
+.rst-item-content {
+    margin: 40px 0;
+}
+
+.rst-catlist > a {
+    text-transform: inherit;
+}
+
+.widget.widget_popular > ul > li.active {
+    width: 100%;
+}
+
+.widget.widget_popular > ul > li:first-child {
+    cursor: initial;
+}
+
+.cloud li{
+    display: inline-block;
+    margin: 10px;
+}
+
+.cloud li.size5 a{
+    font-size: 220%;
+}
+
+.cloud li.size4 a{
+    font-size: 180%;
+}
+
+.cloud li.size3 a{
+    font-size: 150%;
+}
+
+.cloud li.size2 a{
+    font-size: 125%;
+}
+
+.cloud li.size1 a{
+    font-size: 90%;
+}
+
+.rst-pageinput.search{
+    width: auto;
+    display: inline;
+}
+
+.rst-mainslide, .rst-posttype {
+    background-color: #000;
+}
+
+.rst-mainslide img, .rst-posttype img {
+    opacity: 0.7;
+}
+
+.rfef{
+    margin: 6px 0;
+}
+
+#rst-popular article{
+        min-height: 500px;
+}

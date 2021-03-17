@@ -1,0 +1,235 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.FrasesEditViewModel
+
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+
+
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.SubTema.TemaId })">
+                    @Model.SubTema.Tema.Descripcion
+                </a>/
+                <a href="@Url.Action("Index", "Bloques", new {id = @Model.SubTema.SubTemaId })">
+                    @Model.SubTema.Descripcion
+                </a> /
+                <a href="@Url.Action("Index", "Frases", new {id = @Model.GramaticaId })">
+                    @Model.GramaticaTitulo
+                </a> /
+                Editar Frase
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+
+    @using (Html.BeginForm("Edit", "Frases", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal push-10-t" }))
+    {
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.Frase.FraseId)
+        @Html.HiddenFor(model => model.Frase.FicheroAudio_en)
+        @Html.HiddenFor(model => model.Frase.FicheroAudio_es)
+        @Html.HiddenFor(model => model.GramaticaId)
+        @Html.HiddenFor(model => model.GramaticaTitulo)
+        @Html.HiddenFor(model => model.src)
+        @Html.HiddenFor(model => model.VocabularioIds, new { @id = "hVocabularioIds" })
+
+        //busqueda
+        @Html.HiddenFor(model => model.TextoBusqueda)
+        @Html.HiddenFor(model => model.TemaIdBusqueda)
+        @Html.HiddenFor(model => model.SubtemaIdBusqueda)
+        @Html.HiddenFor(model => model.GramaticaIdBusqueda)
+        @Html.HiddenFor(model => model.PaginaBusqueda)
+
+
+        <div class="block">
+            <div class="block-content block-content-full">
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        @Html.LabelFor(model => model.Frase.GramaticaId, htmlAttributes: new { @class = "" })
+                        @Html.DropDownListFor(model => model.Frase.GramaticaId, Model.gramaticaSelectList, "Gramatica", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <div class="form-material">
+                            <button onclick="document.getElementById('audio_vocabulario_es').play();"
+                                    class="btn btn-rounded @(string.IsNullOrEmpty(Model.Frase.FicheroAudio_es) ? "btn-danger":"btn-default")"
+                                    type="button" @(string.IsNullOrEmpty(Model.Frase.FicheroAudio_es) ? "disabled" : "")>
+                                <i class="fa fa-volume-up"></i>
+                            </button>
+                            @if (!string.IsNullOrEmpty(Model.Frase.FicheroAudio_es))
+                            {
+                                <audio id="audio_vocabulario_es">
+                                    <source src="~/media/upload/frases_mp3/@Model.Frase.FicheroAudio_es" type="audio/mpeg" />
+                                </audio>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Frase.Palabra_es, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Frase.Palabra_es, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Frase.Palabra_es, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.AudioFile_es, htmlAttributes: new { @class = "" })
+
+                            @Html.TextBoxFor(model => model.AudioFile_es, new { type = "file", accept = ".mp3" })
+                            @Html.ValidationMessageFor(model => model.AudioFile_es)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <div class="form-material">
+                            <button onclick="document.getElementById('audio_vocabulario_en').play();"
+                                    class="btn btn-rounded @(string.IsNullOrEmpty(Model.Frase.FicheroAudio_en) ? "btn-danger":"btn-default")"
+                                    type="button" @(string.IsNullOrEmpty(Model.Frase.FicheroAudio_en) ? "disabled" : "")>
+                                <i class="fa fa-volume-up"></i>
+                            </button>
+                            @if (!string.IsNullOrEmpty(Model.Frase.FicheroAudio_en))
+                            {
+                                <audio id="audio_vocabulario_en">
+                                    <source src="~/media/upload/frases_mp3/@Model.Frase.FicheroAudio_en" type="audio/mpeg" />
+                                </audio>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Frase.Palabra_en, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Frase.Palabra_en, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Frase.Palabra_en, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+
+                            @Html.LabelFor(model => model.AudioFile_en, htmlAttributes: new { @class = "" })
+
+                            @Html.TextBoxFor(model => model.AudioFile_en, new { type = "file", accept = ".mp3" })
+                            @Html.ValidationMessageFor(model => model.AudioFile_en)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Frase.Comentario, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Frase.Comentario, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Frase.Comentario, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-11">
+                        @Html.Label("Vocabulario", htmlAttributes: new { @class = "" })
+                        @Html.DropDownList("Vocabulario", Model.vocabularioSelectList, "Vocabulario", new { @class = "form-control", @id = "ddlVocabulario" })
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" onclick="anadirRespuesta();" type="button"><i class="fa fa-plus-circle"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <ul id="ulVocabularioIds"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <input type="submit" value="Guardar Frase" name="command" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<!-- END Page Content -->
+
+@section Scripts {
+
+    <!-- Page JS Code -->
+<script>
+
+
+        var hVocabularioIds = $("#hVocabularioIds");
+        var ddlVocabulario = $("#ddlVocabulario");
+        var ulVocabularioIds = $("#ulVocabularioIds");
+        var arrVocabularioIds = [];
+
+        var arrVocabulario = [];
+        @foreach(var vocabulario in Model.vocabularioSelectList){
+            @:arrVocabulario.push({ id:@vocabulario.Value,text:"@vocabulario.Text"});
+        }
+
+function anadirRespuesta() {
+    var val = ddlVocabulario.val();
+    if (val != '') {
+        arrVocabularioIds.push(val);
+        var palabra = arrVocabulario.filter(function (item) {
+            return item.id == val;
+        });
+        ulVocabularioIds.append('<li id="lires_' + val + '"> ' + palabra[0].text +
+            '<button class="btn btn-default" onclick="quitarRespuesta(\'lires_' + val + '\');" type="button"><i class="fa fa-minus-circle"></i></button> </li>');
+        hVocabularioIds.val(arrVocabularioIds.join('#'));        
+    }
+}
+
+function quitarRespuesta(li) {
+    var val = li.replace("lires_", "");
+    var index = arrVocabularioIds.indexOf(val);
+    if (index > -1) {
+        arrVocabularioIds.splice(index, 1);
+                $('#' + li).remove();
+    }
+    hVocabularioIds.val(arrVocabularioIds.join('#'));
+}
+
+
+        $(document).ready(function () {
+
+            var respuestas = hVocabularioIds.val();
+            if (respuestas != "") {
+                arrVocabularioIds = respuestas.split('#');
+                for (var i = 0; i < arrVocabularioIds.length; i++) {
+                    if (arrVocabularioIds[i] != "") {
+                        var palabra = arrVocabulario.filter(function (item) {
+                            return item.id == arrVocabularioIds[i];
+                        });
+                        ulVocabularioIds.append('<li id="lires_' + arrVocabularioIds[i] + '">' + palabra[0].text +
+                            '<button class="btn btn-default" onclick="quitarRespuesta(\'lires_' + arrVocabularioIds[i] + '\');" type="button"><i class="fa fa-minus-circle"></i></button> </li>');
+                    }
+                }
+            }
+});
+
+</script>
+}

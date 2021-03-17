@@ -1,0 +1,172 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.DocumentoCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                Nuevo Documento
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+
+    @using (Html.BeginForm("Create", "Documentos", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+
+        <div class="block">
+            <div class="block-content block-content-full">
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        Tema
+                        @Html.DropDownListFor(model => model.Documento.TemaId, Model.SubTemasSelectList, new { @class = "form-control", id = "ddlTemas", onchange = "inicializarSelectSubTemas()" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        Subtema
+                        @Html.DropDownListFor(model => model.Documento.SubTemaId, Model.SubTemasSelectList, new { @class = "form-control", id = "ddlSubTemas" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Documento.Titulo, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Documento.Titulo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Documento.Titulo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.TextAreaFor(model => model.Documento.Descripcion, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.Documento.Descripcion, "", new { @class = "text-danger" })
+                            @Html.LabelFor(model => model.Documento.Descripcion, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.TextBoxFor(model => model.File, new { type = "file", accept = ".*" })
+                            @Html.ValidationMessageFor(model => model.File)
+                            @Html.LabelFor(model => model.File, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <div class="form-group">
+                    @for (var i = 0; i < Model.GruposUsuarios.Count(); i++)
+                {
+                        <div class="col-sm-3">
+                            @Html.HiddenFor(model => Model.GruposUsuarios[i].Id)
+                            @Html.HiddenFor(model => Model.GruposUsuarios[i].Descripcion)
+                            @Html.CheckBoxFor(model => Model.GruposUsuarios[i].Seleccionado)
+                            @Html.LabelFor(model => Model.GruposUsuarios[i].Seleccionado, Model.GruposUsuarios[i].Descripcion)
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+                    </div>
+                    <div class="block-content block-content-full">
+                        <div class="form-group">
+                            <div class="col-sm-12 text-right">
+                                @* El value afecta a la acción *@
+                                <input type="submit" value="Guardar Documento" name="command" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+<!-- END Page Content -->
+
+@section Scripts {
+
+
+    <!-- Page JS Code -->
+    <script>
+
+        var arrayTemasSelect = [];
+        var arraySubtemasSelect = [];
+
+        var ddlTemas = $('#ddlTemas');
+        var ddlSubTemas = $('#ddlSubTemas');
+
+    @foreach (var tema in Model.TemaList)
+        {
+            @:arrayTemasSelect.push({ Text: "@tema.Descripcion", Value: "@tema.TemaId" });
+        }
+    @foreach (var subtema in Model.SubTemaList)
+        {
+            @:arraySubtemasSelect.push({ Text: "@subtema.Descripcion", Value: "@subtema.SubTemaId", TemaId: "@subtema.TemaId" });
+        }
+
+
+        function inicializarSelectTemas() {
+            console.log("temas");
+            console.log(arrayTemasSelect.length);
+            ddlTemas.html('');
+            $('<option/>').val(0).html("-").appendTo(ddlTemas);
+            for (var i = 0; i < arrayTemasSelect.length; i++) {
+                $('<option/>').val(arrayTemasSelect[i].Value).html(arrayTemasSelect[i].Text).appendTo(ddlTemas);
+
+            }
+        }
+
+        function inicializarSelectSubTemas() {
+            console.log("subtemas");
+            console.log(arraySubtemasSelect.length);
+            ddlSubTemas.html('');
+            $('<option/>').val(0).html("-").appendTo(ddlSubTemas);
+            for (var i = 0; i < arraySubtemasSelect.length; i++) {
+                if (arraySubtemasSelect[i].TemaId == ddlTemas.val()) {
+                    $('<option/>').val(arraySubtemasSelect[i].Value).html(arraySubtemasSelect[i].Text).appendTo(ddlSubTemas);
+                }
+            }
+        }
+
+   
+
+
+
+        $(function () {
+
+            inicializarSelectTemas();
+            inicializarSelectSubTemas();
+
+            $(document).ready(function () {
+
+            });
+                                  
+                                   
+        });
+
+
+                              
+    </script>
+}

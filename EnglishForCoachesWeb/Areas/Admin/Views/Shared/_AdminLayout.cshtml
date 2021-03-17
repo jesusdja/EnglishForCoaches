@@ -1,0 +1,241 @@
+﻿@using EnglishForCoachesWeb.Helpers
+@using System.Security.Claims
+
+<!DOCTYPE html>
+<!--[if IE 9]>         <html class="ie9 no-focus"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-focus">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+
+    <title>@ViewBag.Title - English for Football - englishforcoaches.com</title>
+
+    <meta name="description" content="English for Football - englishforcoaches.com">
+    <meta name="author" content="Grupo Campus">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+
+    <!-- Icons -->
+    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+    <link rel="shortcut icon" href="~/Content/Intranet/assets/img/favicon.png">
+
+    <!-- END Icons -->
+    <!-- Stylesheets -->
+    <!-- Material Design Icons  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Web fonts -->
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700">
+
+    <!-- Page JS Plugins CSS go here -->
+    <!-- OneUI CSS framework -->
+    <!--link rel="stylesheet" id="css-main" href="assets/css/oneui.min.css"-->
+    @Styles.Render("~/Content/css")
+
+
+    <link rel="stylesheet" href="~/Scripts/bootstrap-datepicker/bootstrap-datepicker3.min.css">
+    <link rel="stylesheet" href="~/Scripts/jquery-tags-input/jquery.tagsinput.min.css">
+    <link rel="stylesheet" href="~/Scripts/summernote/summernote.min.css">
+    <link rel="stylesheet" href="~/Scripts/summernote/summernote-bs3.min.css">
+
+    <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
+    <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/flat.min.css"> -->
+    <!-- END Stylesheets -->
+</head>
+<body>
+    <!-- Page Container -->
+    <!--
+        Available Classes:
+
+        'sidebar-l'                  Left Sidebar and right Side Overlay
+        'sidebar-r'                  Right Sidebar and left Side Overlay
+        'sidebar-mini'               Mini hoverable Sidebar (> 991px)
+        'sidebar-o'                  Visible Sidebar by default (> 991px)
+        'sidebar-o-xs'               Visible Sidebar by default (< 992px)
+
+        'side-overlay-hover'         Hoverable Side Overlay (> 991px)
+        'side-overlay-o'             Visible Side Overlay by default (> 991px)
+
+        'side-scroll'                Enables custom scrolling on Sidebar and Side Overlay instead of native scrolling (> 991px)
+
+        'header-navbar-fixed'        Enables fixed header
+    -->
+    <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
+
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <!-- Sidebar Scroll Container -->
+            <div id="sidebar-scroll">
+                <!-- Sidebar Content -->
+                <!-- Adding .sidebar-mini-hide to an element will hide it when the sidebar is in mini mode -->
+                <div class="sidebar-content">
+                    <!-- Side Header -->
+                    <div class="side-header side-content bg-white-op">
+                        <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
+                        <button class="btn btn-link text-gray pull-right hidden-md hidden-lg" type="button" data-toggle="layout" data-action="sidebar_close">
+                            <i class="fa fa-times"></i>
+                        </button>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="h5 text-white" href="@Url.Action("Index", "Articulos", new { Area = "Admin" })" title="englishforcoaches.com">
+                                <img src="~/Content/Intranet/assets/img/logo_admin.png" alt="englishforcoaches.com" /> <span class="logo font-w600 sidebar-mini-hide"></span>
+                            </a>
+                        }
+                    </div>
+                    <!-- END Side Header -->
+                    <!-- Side Content -->
+                    <div class="side-content">
+                        <ul class="nav-main">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li>
+                                    <a class="@Html.IsSelected(controllers: "Articulos")" href="@Url.Action("Index", "Articulos", new { Area = "Admin" })"><i class="si si-book-open"></i><span class="sidebar-mini-hide">Artículos</span></a>
+                                </li>
+                                <li>
+                                    <a class="@Html.IsSelected(controllers: "Comentarios")" href="@Url.Action("Index", "Comentarios", new { Area = "Admin" })"><i class="si si-speech"></i><span class="sidebar-mini-hide">Comentarios</span></a>
+                                </li>
+                                <li>
+                                    <a class="@Html.IsSelected(controllers: "Clientes")" href="@Url.Action("Index", "Clientes", new { Area = "Admin" })"><i class="si si-shield"></i><span class="sidebar-mini-hide">Clientes</span></a>
+                                </li>
+                            }
+
+                            @if (User.IsInRole("Admin") || User.IsInRole("AdministradorGrupo"))
+                            {
+                                <li>
+                                    <a class="@Html.IsSelected(controllers: "Usuario")" href="@Url.Action("Index", "Usuario", new { Area = "Admin" })"><i class="si si-user"></i><span class="sidebar-mini-hide">Usuarios</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li>
+                                    <a class="@Html.IsSelected(controllers: "AccesoUsuarios")" href="@Url.Action("Index", "AccesoUsuarios", new { Area = "Admin" })"><i class="si si-login"></i><span class="sidebar-mini-hide">Acceso usuarios</span></a>
+                                </li>
+                                <li>
+                                    <a class="@Html.IsSelected(controllers: "Vocabularios")" href="@Url.Action("Index", "Vocabularios", new { Area = "Admin" })"><i class="si si-list"></i><span class="sidebar-mini-hide">Vocabulario</span></a>
+                                </li>
+                                <li>
+                                    <a class="@Html.IsSelected(controllers: "Frases")" href="@Url.Action("Gestor", "Frases", new { Area = "Admin" })"><i class="fa fa-comment-o"></i><span class="sidebar-mini-hide">Frases</span></a>
+                                </li>
+                                @*<li>
+                                        <a class="@Html.IsSelected(controllers: "Extras")" href="@Url.Action("Index", "Extras", new { Area = "Admin" })"><i class="si si-star"></i><span class="sidebar-mini-hide">Extras</span></a>
+                                    </li>*@
+                            }
+                            @if (User.IsInRole("Admin") || User.IsInRole("AdministradorGrupo"))
+                            {
+                                <li>
+                                    <a class="@Html.IsSelected(controllers: "Noticias")" href="@Url.Action("Index", "Noticias", new { Area = "Admin" })"><i class="si si-folder"></i><span class="sidebar-mini-hide">Noticias</span></a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li>
+                                    <a class="@Html.IsSelected(controllers: "Documentos")" href="@Url.Action("Index", "Documentos", new { Area = "Admin" })"><i class="si si-docs"></i><span class="sidebar-mini-hide">Documentos</span></a>
+                                </li>
+                                <li>
+                                    <a class="@Html.IsSelected(controllers: "ErroresExamen")" href="@Url.Action("Index", "ErroresExamens", new { Area = "Admin" })"><i class="fa fa-close"></i><span class="sidebar-mini-hide">Errores de examen</span></a>
+                                </li>
+                                <li>
+                                    <a class="@Html.IsSelected(controllers: "Videos")" href="@Url.Action("Index", "Videos", new { Area = "Admin" })"><i class="fa fa-file-video-o"></i><span class="sidebar-mini-hide">Videos</span></a>
+                                </li>
+                                <li>
+                                    <a class="@Html.IsSelected(controllers: "Temas")" href="@Url.Action("Index", "Temas", new { Area = "Admin" })"><i class="fa fa-book"></i><span class="sidebar-mini-hide">Temas</span></a>
+                                </li>
+                                <li class="nav-main-heading"><span class="sidebar-mini-hide">Contenidos</span></li>
+                                Html.RenderAction("ListarTemas", "SubTemas");
+                            }
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index", "Home", new { Area = "Alumno" })"><i class="si si-screen-desktop"></i><span class="sidebar-mini-hide">Entrar como alumno</span></a>
+                                </li>
+                            }
+                            @{var ClienteUrl = ((ClaimsIdentity)User.Identity).FindFirst("ClienteUrl").Value;
+                            }
+                            @if (User.IsInRole("AdministradorGrupo"))
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index", "Home", new { Area = "Alumno",cliente=ClienteUrl })"><i class="si si-screen-desktop"></i><span class="sidebar-mini-hide">Entrar como alumno</span></a>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+
+                    <!-- END Side Content -->
+                </div>
+                <!-- Sidebar Content -->
+            </div>
+            <!-- END Sidebar Scroll Container -->
+        </nav>
+        <!-- END Sidebar -->
+        <!-- Header -->
+        <header id="header-navbar" class="content-mini content-mini-full">
+            @using Microsoft.AspNet.Identity
+            @if (Request.IsAuthenticated)
+            {
+                <!-- Header Navigation Right -->
+                <ul class="nav-header pull-right">
+                    <li>
+                        <div class="btn-group">
+                            <button class="btn btn-default btn-image dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true">
+                                @*<img src="~/Content/Intranet/assets/img/avatar.png" alt="Avatar">*@
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                @*<li>
+                                        <a tabindex="-1" href="@Url.Action("Manage", "Account", new { Area = "Admin" })">
+                                            <i class="si si-user pull-right"></i>Perfil
+                                        </a>
+                                    </li>*@
+                                <li>
+                                    @using (Html.BeginForm("LogOff", "Account", new { area = "Admin" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                    }
+                                    <a tabindex="-1" href="javascript:document.getElementById('logoutForm').submit()">
+                                        <i class="si si-logout pull-right"></i>Salir
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <!-- END Header Navigation Right -->
+            }
+
+            <!-- Header Navigation Left -->
+            <ul class="nav-header pull-left">
+                <li class="hidden-md hidden-lg">
+                    <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
+                    <button class="btn btn-default" data-toggle="layout" data-action="sidebar_toggle" type="button">
+                        <i class="fa fa-navicon"></i>
+                    </button>
+                </li>
+            </ul>
+            <!-- END Header Navigation Left -->
+        </header>
+        <!-- END Header -->
+        <!-- Main Container -->
+        <main id="main-container">
+            @RenderBody()
+        </main>
+        <!-- END Main Container -->
+
+        @Html.Partial("~/Areas/Admin/Views/Shared/_Footer.cshtml")
+    </div>
+    <!-- END Page Container -->
+    <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
+    <!--script src="assets/js/oneui.min.js"></!--script-->
+    @Scripts.Render("~/bundles/oneui")
+    @Scripts.Render("~/bundles/appjs")
+    @RenderSection("scripts", required: false)
+
+    <!-- Page JS Plugins + Page JS Code -->
+
+</body>
+</html>

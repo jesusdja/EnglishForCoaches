@@ -1,0 +1,36 @@
+﻿tr.verde > td {
+    background-color: #96f5be;
+}
+
+
+#crucigrama .col-xs-1 {
+    padding: 0;
+}
+
+#crucigrama input {
+    padding: 0px;
+    border-radius: 0;
+    text-align: center;
+}
+
+#crucigrama .form-group {
+    margin-bottom: 0px;
+}
+
+div.form-material img {
+    max-height: 600px;
+}
+
+#divSopaLetras .col-xs-1 {
+    padding: 0;
+}
+
+#divSopaLetras input {
+    padding: 0px;
+    border-radius: 0;
+    text-align: center;
+}
+
+#divSopaLetras .form-group {
+    margin-bottom: 0px;
+}

@@ -1,0 +1,53 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.ExtrasIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.Subtema.TemaId })">@Model.Subtema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.Subtema.SubTemaId})">@Model.Subtema.Descripcion</a></li>
+        <li class="active">Extras</li>
+    </ol>
+
+    <h1 class="page-heading h2">@Model.Subtema.Descripcion</h1>
+
+    <h1 class="page-heading h2">Extras</h1>
+    <div class="row">
+        <div class="card-columns">
+            @foreach (var item in Model.categorias)
+            {
+                var estadistica = Model.ExtraDesbloqueadoEstadisticas.FirstOrDefault(cat => cat.CateGoriaExtraId == item.CategoriaExtraId);
+                string textoBoton = "Continuar";
+                if (estadistica.NExtras == estadistica.NDesbloqueados)
+                {
+                    textoBoton = "Completado";
+                }
+                if (estadistica.NDesbloqueados == 0)
+                {
+                    textoBoton = "Empezar";
+                }
+                string colorBarra = Model.ColorEstilo(estadistica.Porcentaje);
+
+                <div class="card">
+                    <div class="card-block">
+                        <div class="media m-b-05">
+                            <div class="media-left media-middle"> <i class="material-icons md-48">@item.Icono</i> </div>
+                            <div class="media-body media-middle">
+                                <h4 class="card-title m-b-0"><a href="@Url.Action("Categoria", "Extras", new { Area = "Alumno", id = item.CategoriaExtraId  ,subtemaId=Model.Subtema.SubTemaId})">@item.Descripcion</a></h4>
+                                <small class="text-muted">Extras: @estadistica.NDesbloqueados de @estadistica.NExtras</small>
+                            </div>
+                        </div>
+                    </div>
+                    <progress class="progress progress-@colorBarra progress-striped m-b-0" value="@estadistica.Porcentaje" max="100">@estadistica.Porcentaje%</progress>
+                    <div class="card-footer bg-white"> <a href="@Url.Action("Categoria", "Extras", new { Area = "Alumno", id = item.CategoriaExtraId ,subtemaId=Model.Subtema.SubTemaId})" class="btn btn-@(textoBoton=="Completado"?"success":"primary") btn-sm"> @textoBoton <i class="material-icons">play_circle_outline</i></a> </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>

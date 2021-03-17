@@ -1,0 +1,103 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.FrasesCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.SubTema.TemaId })">
+                    @Model.SubTema.Tema.Descripcion
+                </a>/
+                <a href="@Url.Action("Index", "Bloques", new {id = @Model.SubTema.SubTemaId })">
+                    @Model.SubTema.Descripcion
+  </a> /
+                <a href="@Url.Action("Index", "Frases", new {id = @Model.GramaticaId })">
+                    @Model.GramaticaTitulo
+                </a> /
+                Nueva frase
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+    @using (Html.BeginForm("Create", "Frases", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.GramaticaId)
+        @Html.HiddenFor(model => model.GramaticaTitulo)
+
+        <div class="block">
+            <div class="block-content block-content-full">
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Frase.Palabra_es, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Frase.Palabra_es, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Frase.Palabra_es, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.TextBoxFor(model => model.AudioFile_es, new { type = "file", accept = ".mp3" })
+                            @Html.ValidationMessageFor(model => model.AudioFile_es)
+                            @Html.LabelFor(model => model.AudioFile_es, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Frase.Palabra_en, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Frase.Palabra_en, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Frase.Palabra_en, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.TextBoxFor(model => model.AudioFile_en, new { type = "file", accept = ".mp3" })
+                            @Html.ValidationMessageFor(model => model.AudioFile_en)
+                            @Html.LabelFor(model => model.AudioFile_en, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Frase.Comentario, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Frase.Comentario, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Frase.Comentario, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+            <div class="block-content block-content-full">
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <input type="submit" name="command" class="btn btn-default" value="Guardar Frase" />
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+<!-- END Page Content -->

@@ -1,0 +1,241 @@
+﻿@{
+    Layout = "~/Areas/Usuario/Views/Shared/_UsuarioLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Usuario" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Tema",  "Home", new { Area = "Usuario" })">Gramática</a></li>
+        <li class="active">Cortesia, disculpas y felicitaciones</li>
+    </ol>
+    <h1 class="page-heading h2">
+        <button class="btn btn-white pull-xs-right" type="button" data-toggle="sidebar" data-target="#sidebarRight">Temario <span class="material-icons">menu</span></button>
+        Cortesia, disculpas y felicitaciones
+    </h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div id="ejercicio" class="card-block center">
+                    <a href="@Url.Action("Area",  "Home", new { Area = "Usuario" })"><div class="btn btn-primary btn-circle" data-toggle="tooltip" title="WRITING"><i class="material-icons">create</i></div></a><!--WRITING-->
+                    <a href="@Url.Action("Area",  "Home", new { Area = "Usuario" })"><div class="btn btn-warning btn-circle" data-toggle="tooltip" title="LISTENING"><i class="material-icons">hearing</i></div></a><!--LISTENING-->
+                    <a href="@Url.Action("Area",  "Home", new { Area = "Usuario" })"><div class="btn btn-danger btn-circle" data-toggle="tooltip" title="ANSWERING"><i class="material-icons">record_voice_over</i></div></a><!--ANSWERING-->
+                    <a href="@Url.Action("Area",  "Home", new { Area = "Usuario" })"><div class="btn btn-success btn-circle" data-toggle="tooltip" title="PRACTISING"><i class="material-icons">forum</i></div></a><!--PRACTISING-->
+                    <a href="@Url.Action("Area",  "Home", new { Area = "Usuario" })"><div class="btn btn-primary btn-circle" data-toggle="tooltip" title="TRAINING"><i class="material-icons">event_available</i></div></a><!--TRAINING-->
+                    <a href="@Url.Action("Area",  "Home", new { Area = "Usuario" })"><div class="btn btn-warning btn-circle" data-toggle="tooltip" title="IMPROVING"><i class="material-icons">trending_up</i></div></a><!--IMPROVING-->
+                    <a href="@Url.Action("Area",  "Home", new { Area = "Usuario" })"><div class="btn btn-danger btn-circle" data-toggle="tooltip" title="LEARNING"><i class="material-icons">note_add</i></div></a><!--LEARNING-->
+                    <a href="@Url.Action("Area",  "Home", new { Area = "Usuario" })"><div class="btn btn-success btn-circle" data-toggle="tooltip" title="PLAYING"><i class="material-icons">stars</i></div></a><!--PLAYING-->
+                </div>
+            </div>
+
+            <h3>
+                3. Lorem ipsum dolor sit
+                <a class="btn btn-sm btn-white" href="@Url.Action("VocabularioSubtema",  "Home", new { Area = "Usuario" })">
+                    <i class="material-icons">list</i>
+                    <span class="icon-text">Vocabulario</span>
+                </a>
+                <a class="btn btn-sm btn-white" href="@Url.Action("AudioSubtema",  "Home", new { Area = "Usuario" })">
+                    <i class="material-icons">hearing</i>
+                    <span class="icon-text">Audio sentences</span>
+                </a>
+            </h3>
+
+            <div class="card">
+                <div class="card-block temario">
+                    <p>¡¡Hola!!</p>
+                    <p>Al ser la primera Unidad didáctica, te recordamos como funciona. Todas las Unidades didácticas están divididas en varias partes</p>
+                    <ul>
+                        <li>Unidades didácticas de temas de interés</li>
+                        <li>Vocabulario separado por secciones</li>
+                        <li>Conversaciones y frases</li>
+                        <li>audios</li>
+                        <li>Refranes</li>
+                        <li>etc etc</li>
+                    </ul>
+                    <p>En esta unidad didáctica 1 vamos a ver:</p>
+                    <ol start="1">
+                        <li><strong><u>Unidades</u></strong></li>
+                    </ol>
+                    <ul>
+                        <li>Cortesía, disculpas y felicitaciones</li>
+                        <li>Saludos y presentaciones</li>
+                        <li>Tratamientos de cortesía</li>
+                        <li>Expresiones, interjecciones y modos para expresar sorpresa</li>
+                        <li>Tus primeras preguntas</li>
+                        <li>Modos para expresar opinión</li>
+                    </ul>
+                    <ol start="2">
+                        <li><strong><u>Vocabulario</u></strong></li>
+                    </ol>
+                    <ul>
+                        <li>Familia</li>
+                        <li>Animales</li>
+                        <li>Objetos cotidianos</li>
+                        <li>Profesiones</li>
+                        <li>Colores</li>
+                    </ul>
+                    <ol start="3">
+                        <li><strong><u>Conversación de las unidades</u></strong></li>
+                    </ol>
+                    <ol start="4">
+                        <li><strong><u>Refranero del vocabulario</u></strong></li>
+                    </ol>
+                    <p> Cada unidad didáctica comprende diferentes apartados diferentes de ejercicios</p>
+                    <p><strong>Listening.</strong> Aqui tienes los audios de frases de la unidad y leccion </p>
+                    <p><strong>Writing.</strong> Do it yourself!!! Encontraréis frases ya elaboradas que tendrás que escuchar y escribir</p>
+                    <p><strong>Palabras.</strong> Aquí encontráis palabras en castellano y tenéis que rellenar la casilla con la palabra en inglés. Está en la parte de ejercicios.</p>
+                    <p>Aquí encontráis palabras en inglés y tenéis que rellenar la palabra en castellano. Está tambien en la parte de ejercicios</p>
+                    <p><strong>El refranero.</strong> Aquí tenéis refranes (con muchas trampas) en las que tenéis que elegir entre tres opciones.</p>
+                    <p>¡¡¡¡Suerte!!!!</p>
+                    <p>En los ejercicios de vocabulario te recuerdo que a la hora de traducir un verbo debemos poner el verbo y después, la partícula entre paréntesis. Ejemplo: play (to), drink (to), love (to). Esto es porque sino aparecerian todos los verbos en la &quot;T&quot;. Las palabras pueden tener varios significados; aquí reflejamos el significado que aparece en nuestra unidad por lo que a la hora de elegir una traducción u otra ten en cuenta ésto.</p>
+                    <p>Todo el temario de unidad didáctica está dividido en dos niveles (iniciación y avanzado). Los examenes solo incluirán ejemplos de la primera parte (separada por una línea continua de la segunda) ya que se entiende que la segunda parte, bajo la línea y en cursiva, tiene una dificultad avanzada en relación con la gramática que paralelamente estudiamos. Si incluimos y dividimos, es para daros más información de aquella que corresponde al nivel que llevamos en la unidad.</p>
+                    <p>Los ejercicios son voluntarios, pero tened en cuenta que el examen, que consta de 30 preguntas, son cuestiones que ya están en el cuestionario de preguntas. Cuanto más practiquéis, mejor os saldrá el examen. Recordad: practice makes perfect!!</p>
+                    <p>Además, si quieres acceder a los extras tienes que hacer muchos ejercicios.</p>
+                    <p>Como sabéis, se pasa a la gramática 2 y unidad didáctica 2 una vez que se ha superado el examen de la lección 1 y la unidad 1. Para superar el examen debeis contestar bien 28 preguntas de 30.</p>
+                    <p>Good luck!!!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section sidebar {
+
+    <div class="sidebar sidebar-right si-si-3 sidebar-visible-lg-up ls-top-navbar-xs-up sidebar-light bg-white sidebar-visible" id="sidebarRight" data-position="right" data-scrollable data-visible="lg-up">
+        <div class="card">
+            <div class="card-header">
+                <h5>Temario <button class="btn btn-sm btn-white pull-xs-right" type="button" data-toggle="sidebar" data-target="#sidebarRight"><span class="material-icons">input</span></button></h5>
+            </div>
+
+            <div class="card-block text-xs-center">
+                <a class="btn btn-success" href="@Url.Action("Examen",  "Home", new { Area = "Usuario" })">
+                    <i class="material-icons">lock_open</i>
+                    <span class="icon-text">Examen</span>
+                </a>
+            </div>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="text-muted">1.</div>
+                        </div>
+                        <div class="media-body">
+                            <a href="#">Lorem ipsum dolor</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="text-muted">2.</div>
+                        </div>
+                        <div class="media-body">
+                            <a href="#">Lorem ipsum dolor</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item active">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="text-muted">3.</div>
+                        </div>
+                        <div class="media-body">
+                            <a href="#">Lorem ipsum dolor</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="text-muted">4.</div>
+                        </div>
+                        <div class="media-body">
+                            <a href="#">Lorem ipsum dolor</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="text-muted">5.</div>
+                        </div>
+                        <div class="media-body">
+                            <a href="#">Lorem ipsum dolor</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="text-muted">6.</div>
+                        </div>
+                        <div class="media-body">
+                            <a href="#">Lorem ipsum dolor</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="text-muted">7.</div>
+                        </div>
+                        <div class="media-body">
+                            <a href="#">Lorem ipsum dolor</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="text-muted">8.</div>
+                        </div>
+                        <div class="media-body">
+                            <a href="#">Lorem ipsum dolor</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="text-muted">9.</div>
+                        </div>
+                        <div class="media-body">
+                            <a href="#">Lorem ipsum dolor</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="text-muted">10.</div>
+                        </div>
+                        <div class="media-body">
+                            <a href="#">Lorem ipsum dolor</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="text-muted">11.</div>
+                        </div>
+                        <div class="media-body">
+                            <a href="#">Lorem ipsum dolor</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+}
+
+
+@section Scripts {
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+}

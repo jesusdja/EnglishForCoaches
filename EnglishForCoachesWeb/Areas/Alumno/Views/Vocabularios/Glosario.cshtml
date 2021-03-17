@@ -1,0 +1,221 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.VocabulariosIndexViewModel
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li class="active">Mi glosario</li>
+    </ol>
+
+    <h1 class="page-heading h2">
+        Mi glosario
+        <a href="@Url.Action("Glosario", "Vocabularios", new { Area = "Alumno", idioma="en",letra=Model.Letra, textoBusqueda = Model.TextoBusqueda })" class="language en @(Model.Idioma=="en"?"":"off")"></a>
+        <a href="@Url.Action("Glosario", "Vocabularios", new { Area = "Alumno", idioma="es",letra=Model.Letra, textoBusqueda = Model.TextoBusqueda })" class="language es @(Model.Idioma=="en"?"off":"")"></a>
+    </h1>
+
+
+    <div class="row">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "searchForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="col-md-3">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3">
+                        <i class="material-icons md-18 text-muted">search</i>
+                    </span>
+                    @Html.TextBoxFor(model => model.TextoBusqueda, new { @class = "form-control", placeholder = "Buscar…" })
+                    @Html.HiddenFor(model => model.Letra)
+                    @Html.HiddenFor(model => model.Idioma)
+
+                </div>
+                @Html.ValidationMessageFor(model => model.TextoBusqueda, "", new { @class = "text-danger" })
+            </div>
+        }
+        <div class="col-md-9">
+            <nav class="center">
+                <ul class="pagination pagination-sm">
+                    @foreach (var letra in Model.letras)
+                    {
+                        <li class="page-item@(Model.Letra == letra ? " active" : "")">
+                            <a class="page-link" href="@Url.Action("Glosario", "Vocabularios", new { Area = "Alumno", idioma = Model.Idioma, letra = letra })">
+                                @letra@if (Model.Letra == letra)
+                                { <span class='sr-only'>(current)</span>}
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    @if (Model.vocabulario.Count == 0)
+    {
+        <div class="row">
+            <div class="col-md-12 text-xs-center">
+                <p>No hay resultados</p>
+            </div>
+        </div>
+    }
+    @foreach (var item in Model.vocabulario)
+    {
+        <div class="card">
+            <div class="card-block bg-white">
+                <div class="row">
+                    <div class="col-md-1">
+                        <button onclick="Reproducir('@item.VocabularioId');" id="btn_vocabulario_@item.VocabularioId"
+                                class="btn btn-secondary btn-circle"
+                                type="button" @(string.IsNullOrEmpty(item.FicheroAudio) ? "disabled" : "")>
+                            <i class="material-icons">hearing</i>
+                        </button>
+                        @if (!string.IsNullOrEmpty(item.FicheroAudio))
+                        {
+                            <audio preload="none" id="audio_vocabulario_@item.VocabularioId">
+                                <source src="~/media/upload/audio/@item.FicheroAudio" type="audio/mpeg" />
+                            </audio>
+                        }
+
+
+                    </div>
+                    <div class="col-md-3">
+                        <h4 style="padding-top: 6px;">@(Model.Idioma == "en" ? item.Palabra_en : item.Palabra_es)</h4>
+                        <small class="text-muted">@(Model.Idioma == "en" ? item.CategoriaVocabulario.Descripcion_en : item.CategoriaVocabulario.Descripcion)</small>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="row definicion">
+                            <div class="col-md-5">
+                                <h4 style="padding-top: 6px;">@(Model.Idioma == "es" ? item.Palabra_en : item.Palabra_es)</h4>
+
+                            </div>
+                            <div class="col-md-7">
+                                <small>@item.Definicion</small>
+                            </div>
+                        </div>
+
+                        @if (item.DefinicionVocabularios.Any() && Model.Idioma == "en")
+                        {
+                            foreach (var def in item.DefinicionVocabularios)
+                            {
+                                <div class="row definicion">
+                                    <div class="col-md-5">
+                                        <h4 style="padding-top: 6px;">@def.Palabra_es</h4>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <small>@def.Definicion</small>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                        <div class="col-md-12">
+                            <small class="text-muted">@(Model.Idioma == "es" ? item.CategoriaVocabulario.Descripcion_en : item.CategoriaVocabulario.Descripcion)</small>
+                        </div>
+                    </div>
+                    <div class="col-md-1 right">
+                        <div id="div_glosario_@item.VocabularioId" data-toggle="tooltip" title="Quitar de mi glosario" class="btn" vocabularioId="@item.VocabularioId">
+                            <i class="material-icons @(Model.glosario.Contains(item.VocabularioId) ? "text-warning" : "text-muted-light")"
+                               id="icon_glosario_@item.VocabularioId">star</i>
+                            <small class="text-muted area">Quitar de mi glosario</small>
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(@item.Explicacion))
+                        {
+                            <div class="card-block">
+                                <button class="btn btn-info btn-circle try-sweet-simpleMessage" data-toggle="tooltip" type="button" title="Explicación" data-explicacion="@item.Explicacion" onclick="ClickExplicacion(this)"> <i class="material-icons">info_outline</i> </button>
+                            </div>
+                        }
+                        @if (@item.Frases.Count>0)
+                        {
+                            <div class="card-block">
+                                <button class="btn btn-info btn-circle try-sweet-simpleMessage" data-toggle="tooltip" type="button" title="Frases" data-vocabularioId="@item.VocabularioId" onclick="ClickFrases(this)"> <i class="material-icons">chat_bubble_outline</i> </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+
+<script src="~/Content/Alumno/vendor/sweetalert.min.js"></script>
+<!-- Page JS Code -->
+<script>
+        function ClickExplicacion(btn) {
+            var message = $(btn).attr("data-explicacion")
+
+
+            swal({
+                title: "Explicación",
+                text: message,
+                confirmButtonColor: "#039BE5"
+            });
+        }
+        function ClickFrases(btn) {
+            var vocabularioId = $(btn).attr("data-vocabularioId")
+            $.get('@Url.Action("Frases", "Vocabularios", new {Area = "Alumno" })/' + vocabularioId, function (data) {
+                console.log(data);
+                swal({
+                    title: "Frases",
+                    text: data,
+                     html: true,
+                    confirmButtonColor: "#039BE5"
+                    });
+            });
+        }
+        $(document).ready(function () {
+            var spanSubmit = $('#basic-addon3');
+
+            spanSubmit.on('click', function () {
+                $(this).closest('form').submit();
+            });
+
+            $('[id^="div_glosario_"]').each(function (index) {
+                $(this).on('click', function () {
+                    var id=$(this).attr("vocabularioId");
+                    AddRemoveGlosario('@Url.Action("AddGlosario", "Vocabularios", new {Area = "Alumno" })/'+id,id);
+                });
+            });
+
+
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    
+
+        function AddRemoveGlosario(url, vocabularioId) {
+            $.get(url, function (data) {
+                console.log(data);
+                var icon=$("#icon_glosario_" + vocabularioId);
+                if(data=="Eliminado")
+                {
+                    icon.removeClass("text-warning");
+                    icon.addClass("text-muted-light");
+                }else{
+                    icon.removeClass("text-muted-light");
+                    icon.addClass("text-warning");
+                }
+            });
+        }
+
+
+        function GenerarEventoEnded(button, audio) {
+            return function () {
+                button.removeClass("flash");
+                audio.off('ended')
+            };
+        }
+
+        function Reproducir(id) {
+            var button = $('#btn_vocabulario_' + id);
+            var audio = $('#audio_vocabulario_' + id);
+
+
+            button.addClass('flash');
+            audio.on('ended', GenerarEventoEnded(button, audio));
+            document.getElementById('audio_vocabulario_'+id).play();
+        }
+
+</script>
+}

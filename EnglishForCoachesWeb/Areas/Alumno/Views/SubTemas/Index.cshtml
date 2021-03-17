@@ -1,0 +1,234 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.SubTemasIndexViewModel
+
+@using System.Security.Claims
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <ol class="breadcrumb m-b-0">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li class="active">@Model.Tema.Descripcion</li>
+    </ol>
+    <h1 class="page-heading h2">@Model.Tema.Descripcion</h1>
+    <div class="row">
+        <div class="col-md-8">
+
+            @if (!string.IsNullOrEmpty(Model.Tema.UrlVideo))
+            {
+                <div class="video-container">
+                    @Html.Raw(Model.Tema.UrlVideo)
+                </div>
+            }
+
+            <div class="card">
+                <div class="card-block">
+                    @Model.Tema.Introduccion
+                </div>
+            </div>
+
+            <!-- Lessons -->
+            <div class="card">
+                <ul class="list-group">
+                    @{ int numero = 0;}
+                    @foreach (var item in Model.listadoSubTemasDesbloqueados)
+                    {
+                        numero++;
+                        <li class="list-group-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="text-muted">@numero.</div>
+                                </div>
+                                <div class="media-body"> <a href="@Url.Action("View", "SubTemas", new { Area = "Alumno",id=@item.SubTemaId })">@item.Descripcion</a> </div>
+                                <div class="media-right"> <i class="material-icons green">lock_open</i> </div>
+                            </div>
+                        </li>
+                    }
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-left">
+                                <div class="text-muted"></div>
+                            </div>
+                            @if (!Model.TemaSuperado)
+                            {
+                                if (Model.listadoSubTemasDesbloqueados.Count > 0)
+                                {
+                                    if (Model.listadoSubTemasBloqueados.Count > 0)
+                                    {
+                                        string url = Url.Action("Examen", "Examen", new { Area = "Alumno", id = Model.listadoSubTemasDesbloqueados.Last().SubTemaId });
+                                        if (!Model.examenesDesbloqueados.Contains(Model.listadoSubTemasDesbloqueados.Last().SubTemaId))
+                                        {
+                                            url = "javascript:Comprar(" + Model.listadoSubTemasDesbloqueados.Last().SubTemaId + ")";
+                                        }
+                                        <div class="media-body right"> <a id="a_@Model.listadoSubTemasDesbloqueados.Last().SubTemaId" href="@url"><small>Desbloquear siguiente</small></a> </div>
+                                        <div class="media-right">
+                                            @if (Model.examenesDesbloqueados.Contains(Model.listadoSubTemasDesbloqueados.Last().SubTemaId))
+                                            {
+                                                <i class="material-icons">lock_open</i>
+                                            }
+                                            else
+                                            {
+                                                <i id="i_@Model.listadoSubTemasDesbloqueados.Last().SubTemaId" class="material-icons">lock</i>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="media-body right"> <a href="@Url.Action("Examen", "Examen", new { Area = "Alumno", id = Model.listadoSubTemasDesbloqueados.Last().SubTemaId })"><small>Examen final</small></a> </div>
+                                        <div class="media-right"> <i class="material-icons">star</i> </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    </li>
+                    @foreach (var item in Model.listadoSubTemasBloqueados)
+                    {
+                        numero++;
+                        <li class="list-group-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="text-muted">@numero.</div>
+                                </div>
+                                <div class="media-body">
+                                    <div class="text-muted-light"> @item.Descripcion</div>
+                                    @{
+                                        var BloquearSubtemas = ((ClaimsIdentity)User.Identity).FindFirst("BloquearSubtemas").Value;
+                                        if (Convert.ToBoolean(BloquearSubtemas))
+                                        {
+                                            if (!Model.listadoSubTemasAcceso.Contains(item.SubTemaId))
+                                            {
+                                                <div class="text-danger"> No tienes acceso a este subtema</div>
+                                            }
+                                        }
+                                    }
+
+                                </div>
+                                <div class="media-right"> <i class="material-icons red">lock_outline</i> </div>
+                            </div>
+                        </li>
+                                        }
+
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+
+            <div class="card">
+                <ul class="list-group list-group-fit">
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-left">
+                                <i class="material-icons text-muted-light">school</i>
+                            </div>
+                            <div class="media-body media-middle">
+                                @Model.NLecciones <small class="text-muted">lecciones</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-left">
+                                <i class="material-icons text-muted-light">description</i>
+                            </div>
+                            <div class="media-body media-middle">
+                                @Model.NUnidades <small class="text-muted">unidades</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-left">
+                                <i class="material-icons text-muted-light">create</i>
+                            </div>
+                            <div class="media-body media-middle">
+                                @Model.NPracticas <small class="text-muted">prácticas</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-left">
+                                <i class="material-icons text-muted-light">list</i>
+                            </div>
+                            <div class="media-body media-middle">
+                                @Model.NVocabulario <small class="text-muted">entradas de vocabulario</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-left">
+                                <i class="material-icons text-muted-light">hearing</i>
+                            </div>
+                            <div class="media-body media-middle">
+                                @Model.NFrases <small class="text-muted">frases</small>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <script src="~/Content/Alumno/vendor/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        function Comprar(id) {
+            swal({
+                title: "Desbloquear examen",
+                text: "¿Estás seguro de que desas desbloquear este examen?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#039BE5",
+                confirmButtonText: "Desbloquear",
+                closeOnConfirm: false
+            }, function () {
+
+
+                var url = '@Url.Action("Desbloquear", "Examen", new { Area = "Alumno" })';
+                url = url + '/' + id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function (result) {
+                        if (result == "NoPuntos") {
+                            swal({
+                                title: "No se ha podido desbloquear",
+                                text: "No tienes puntos suficientes",
+                                type: "error",
+                                confirmButtonColor: "#039BE5"
+                            });
+                        }
+                        else {
+
+                            var url = '@Url.Action("Examen", "Examen", new { Area = "Alumno"})/'+id;
+                            $('#a_' + id).attr("href", url);
+                            $('#i_' + id).text("lock_open");
+                            swal({
+                                title: "Desbloqueado",
+                                text: "El examen ha sido desbloqueado",
+                                type: "success",
+                                confirmButtonColor: "#039BE5"
+                            });
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+
+                        swal({
+                            title: "No se ha podido desbloquear",
+                            text: "Error: "+xhr.responseText,
+                            type: "error",
+                            confirmButtonColor: "#039BE5"
+                        });
+                    }
+                });
+            });
+        }
+
+    </script>
+}

@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "~/Areas/Usuario/Views/Shared/_UsuarioLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Usuario" })">Dashboard</a></li>
+        <li class="active">Perfil</li>
+    </ol>
+
+            <form action="#" class="form-horizontal">
+                <div class="form-group row">
+                    <label for="avatar" class="col-sm-3 form-control-label">Avatar</label>
+                    <div class="col-sm-9">
+                        <div class="media">
+                            <div class="media-left">
+                                <img src="~/Content/Usuario/images/avatar.jpg" alt="Avatar" class="img-circle">
+                            </div>
+                            <div class="media-body media-middle">
+                                <label class="file">
+                                    <input type="file" id="file">
+                                    <span class="file-custom"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="name" class="col-sm-3 form-control-label">Nombre</label>
+                    <div class="col-sm-8">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" placeholder="Nombre" value="Pedro">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" placeholder="Apellido 1" value="Martinez">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" placeholder="Apellido 2" value="Lopez">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-3 form-control-label">Email</label>
+                    <div class="col-sm-8 col-md-8">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">
+                                <i class="material-icons md-18 text-muted">mail</i>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Email Address" value="xxxx@xxxx.com">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="password" class="col-sm-3 form-control-label">Contraseña</label>
+                    <div class="col-sm-4 col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon3">
+                                <i class="material-icons md-18 text-muted">lock</i>
+                            </span>
+                            <input type="password" class="form-control" placeholder="Nueva contraseña">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon3">
+                                <i class="material-icons md-18 text-muted">lock</i>
+                            </span>
+                            <input type="password" class="form-control" placeholder="Repetir contraseña">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-8 col-sm-offset-3">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="#" class="btn btn-success btn-rounded">Save Changes</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>

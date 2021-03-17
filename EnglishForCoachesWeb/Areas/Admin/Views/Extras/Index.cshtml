@@ -1,0 +1,188 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.ExtraIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                Extra
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="block">
+                <div class="block-header">
+                    <ul class="block-options">
+                        <li>
+                            <button type="button" onclick="location.href='@Url.Action("Create", "Extras", new { Area = "Admin"})';"><i class="si si-note"></i> Nuevo Extra</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="block-header">
+                    @using (Html.BeginForm("Index", "Extras", FormMethod.Post, new { id = "FormBusqueda" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.HiddenFor(model => model.Pagina, new { id = "HidPagina" })
+                        <div class="col-sm-4">
+                            @Html.DropDownListFor(model => model.CategoriaBusquedaId, Model.categoriasSelectList, new { @class = "form-control", onchange = "this.form.submit()" })
+                        </div>
+
+                        <div class="col-sm-8">
+                            <div class="input-group input-group-lg">
+                                @Html.TextBoxFor(model => model.TextoBusqueda, new { @class = "form-control", placeholder = "Buscar…" })
+
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+
+                <div class="block-content">
+                    <table class="table table-hover table-borderless">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.listadoExtras[0].Titulo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.listadoExtras[0].CategoriaExtra.Descripcion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.listadoExtras[0].Orden)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.listadoExtras)
+                            {
+                                <tr>
+                                    <td>
+                                            @item.Titulo 
+                                       
+                                    </td>
+                                    <td>
+                                       @item.CategoriaExtra.Descripcion
+
+                                    </td>
+
+                                    <td>
+                                        @{
+                                            string disabledTop = "";
+                                            string disabledDown = "";
+                                        }
+                                        @if (item.Orden == Model.listadoExtras.First().Orden && 1== Model.Pagina)
+                                        {
+                                            disabledTop = "disabled";
+                                        }
+                                        @if (item.Orden == Model.listadoExtras.Last().Orden && Model.NPaginas == Model.Pagina)
+                                        {
+                                            disabledDown = "disabled";
+                                        }
+                                        <button @disabledTop value="@item.ExtraId" posicion="top" class="arrowTopDown btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Subir posición">
+                                            <i class="fa fa-arrow-up"></i>
+                                        </button>
+
+                                        <button @disabledDown value="@item.ExtraId" posicion="down" class="arrowTopDown btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Bajar posición">
+                                            <i class="fa fa-arrow-down"></i>
+                                        </button>
+
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group">
+                                            <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Editar gramática"
+                                                    onclick="location.href='@Url.Action("Edit", "Extras", new {Area = "Admin" , id=item.ExtraId })';">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+
+
+                                            <button onclick="if(confirm('¿Está seguro que desea borrar el Extra?')) location.href='@Url.Action("Delete", "Extras", new {Area = "Admin" , id=item.ExtraId })';"
+                                                    class="removeItem btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Eliminar Extra">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                            }
+                        </tbody>
+                    </table>
+                    <nav>
+                        <ul class="pagination pagination-sm">
+                            <li class="@(1 == Model.Pagina ? "disabled":"")">
+                                <a href="javascript:IrAPagina(@(Model.Pagina-5))"><i class="fa fa-angle-double-left"></i></a>
+                            </li>
+                            @for (int i = Model.PaginaMin; i <= Model.PaginaMax; i++)
+                            {
+                                <li class="@(i == Model.Pagina ? "active":"")">
+                                    <a href="javascript:IrAPagina(@i)">@i</a>
+                                </li>
+                            }
+                            <li class="@(Model.NPaginas == Model.Pagina ? "disabled":"")">
+                                <a href="javascript:IrAPagina(@(Model.Pagina+5))"><i class="fa fa-angle-double-right"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- END Page Content -->
+
+
+@section Scripts {
+
+    <!-- Page JS Code -->
+    <script>
+        var HidPagina = $("#HidPagina");
+
+
+        function IrAPagina(pagina) {
+            HidPagina.val(pagina);
+            document.getElementById("FormBusqueda").submit();
+        }
+
+
+
+        //SUBIR/BAJAR ORDEN SUBTEMA
+        $('.arrowTopDown').click(function (event) {
+            var id = $(this).attr("value");
+            var posicion = $(this).attr("posicion");
+            $.ajax({
+                url: '@Url.Action("modificarOrden", "Extras", new { Area = "Admin" })?id=' + id + "&posicion=" + posicion,
+                type: "POST",
+                success: function () {
+                    // Recargo la página
+                    location.reload();
+                }
+            });
+        });
+
+
+
+        $(document).ready(function () {
+
+
+        });
+
+    </script>
+
+    }

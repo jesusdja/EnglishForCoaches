@@ -1,0 +1,310 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.WordByWordIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.bloque.SubTema.TemaId })">@Model.bloque.SubTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.bloque.SubTema.SubTemaId})">@Model.bloque.SubTema.Descripcion</a></li>
+        <li><a href="@Url.Action("Index",  "Bloques", new { Area = "Alumno" ,id=Model.bloque.SubTemaId,areaId=Model.bloque.Area.AreaId})">@Model.bloque.Area.Descripcion</a></li>
+        <li class="active">@Model.bloque.Descripcion</li>
+    </ol>
+
+    <div class="card-group">
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="m-b-0">
+                    <strong>@Model.WordByWords.Count</strong>
+                </h4>
+                <small class="text-muted-light">TOTAL</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-success m-b-0">
+                    <strong id="mostrarCorrectas">0</strong>
+                </h4>
+                <small class="text-muted-light">CORRECTAS</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-danger m-b-0">
+                    <strong id="mostrarIncorrectas">0</strong>
+                </h4>
+                <small class="text-muted-light">INCORRECTAS</small>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block center">
+                <h4 class="text-primary m-b-0">
+                    <strong id="mostrarRestantes">@Model.WordByWords.Count</strong>
+                </h4>
+                <small class="text-muted-light">RESTANTES</small>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.bloque.Explicacion))
+    {
+        <div class="card card-stats-primary">
+            <div class="card-block">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <i class="material-icons text-muted-light">info_outline</i>
+                    </div>
+                    <div class="media-body media-middle">
+                        @Model.bloque.Explicacion
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-header bg-white p-a-1">
+            <div class="media">
+                <div class="media-left media-middle">
+                    <h4 class="m-b-0">
+                        <strong id="mostrarNPregunta"></strong>
+                    </h4>
+                </div>
+                <div class="media-body media-middle">
+                    <h4 class="card-title">
+                        <div id="divEnunciado" style="display: inline;">
+                        </div>
+                        <button type="button" class="btn btn-white" id="btnResolver">
+                            <i class="material-icons">done</i>
+                            <span class="icon-text">Resolver</span>
+                        </button>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-success center" id="divExplicacion">
+        <div class="card-block">
+            <div class="media">
+                <div class="media-body media-middle" id="divExplicacionTexto">
+                    Explicacion
+                </div>
+                <div class="media-right" id="divSiguiente">
+                    <a href="javascript:SiguientePregunta();" class="btn btn-primary btn-sm btn-rounded pull-xs-right">Siguiente <i class="material-icons">send</i></a>
+                </div>
+                <div class="media-right" id="divFinalizar">
+                    <a href="@Url.Action("Index",  "Bloques", new { Area = "Alumno" ,id=Model.bloque.SubTemaId,areaId=Model.bloque.Area.AreaId})"
+                       class="btn btn-primary btn-sm btn-rounded pull-xs-right">Finalizar <i class="material-icons">send</i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section sidebar {
+
+    <div class="sidebar sidebar-right si-si-3 sidebar-visible-lg-up ls-top-navbar-xs-up sidebar-light bg-white sidebar-visible" id="sidebarRight" data-position="right" data-scrollable="" data-visible="lg-up">
+
+        <div class="sidebar-heading">Bloque</div>
+        <ul class="list-group list-group-fit">
+            @{ int numero = 0;}
+            @foreach (var item in Model.WordByWords)
+            {
+                numero++;
+                <li class="list-group-item" id="li_wordbyword_@item.Id">
+                    <span class="media">
+                        <span class="media-left">
+                            <span id="span_wordbyword_@item.Id" class="btn btn-white btn-circle@(Model.mistakes.Contains(item.Id)?" btn-danger":"")">#@numero</span>
+                        </span>
+                        <span class="media-body media-middle" id="span_wordbyword_texto_@item.Id">
+                            
+                        </span>
+                    </span>
+                </li>
+            }
+        </ul>
+    </div>
+
+}
+
+
+
+@section Scripts {
+    <!-- Page JS Code -->
+
+@Scripts.Render("~/bundles/AlumnoJQueryJs")
+
+    <script>
+        var arrayPreguntas = [];
+
+@foreach (var d in Model.WordByWords)
+{
+    @:arrayPreguntas.push("@d.Id");
+            }
+
+    var current = 0;
+    var acertadas = 0;
+    var falladas = 0;
+        
+    var divExplicacion = $('#divExplicacion');
+    var divExplicacionTexto = $('#divExplicacionTexto');
+
+    var divEnunciado = $('#divEnunciado');
+    var btnResolver = $('#btnResolver');
+
+
+    var mostrarCorrectas = $('#mostrarCorrectas');
+    var mostrarIncorrectas = $('#mostrarIncorrectas');
+    var mostrarRestantes = $('#mostrarRestantes');
+    var mostrarNPregunta = $('#mostrarNPregunta');
+
+    var divSiguiente = $('#divSiguiente');
+    var divFinalizar = $('#divFinalizar');
+
+        
+    $(document).ready(function () {
+        var firstLi = $('#li_wordbyword_' + arrayPreguntas[current]);
+        firstLi.addClass("active");
+
+        divEnunciado.sortable();
+        divEnunciado.disableSelection();
+        CargarPregunta();
+
+        divFinalizar.hide();
+        divExplicacion.hide();
+    });
+
+    function CargarPregunta() {
+        btnResolver.on('click', function () {
+            Resolver();
+        });        
+        btnResolver.show();
+        intentos = 0;
+        mostrarNPregunta.text('#'+ (current+1));
+        var url = '@Url.Action("GetWordByWord", "WordByWords", new { Area = "Alumno" })';
+        url = url + '/' + arrayPreguntas[current];
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                divEnunciado.empty();
+                for (var i = 0; i < result.Enunciado.length; i++) {
+                    divEnunciado.append("<div class='bloque frase text-default' id='divTrozo_" + i + "'>" + result.Enunciado[i] + "</div>");
+                }                
+
+                divEnunciado.sortable("enable");
+                divEnunciado.disableSelection();
+            }
+        });
+    }
+
+        function Resolver() {
+            btnResolver.off('click');
+            btnResolver.hide();
+            divEnunciado.sortable("disable");
+        var trozosFrase = divEnunciado.find('div').get();
+        var texto = "";
+        var respuestas = [];
+        for (var i = 0; i < trozosFrase.length; i++) {
+            var trozo = $(trozosFrase[i]);
+            respuestas.push(trozo.text())
+            texto = texto + trozo.text() + " ";
+        }
+        var span_wordbyword_texto = $('#span_wordbyword_texto_' + arrayPreguntas[current]);
+        if (texto.length > 20)
+        {
+            texto = texto.substring(0, 20);
+        }
+        span_wordbyword_texto.text(texto);
+
+        var postData = { respuestas: respuestas };
+
+        divExplicacion.removeClass("card-success");
+        divExplicacion.removeClass("card-red");
+
+        var url = '@Url.Action("Contestar", "WordByWords", new { Area = "Alumno" })';
+        url = url + '/' + arrayPreguntas[current];
+        $.ajax({
+            url: url,
+            type: "POST",
+            success: function (result) {
+                var aciertos = result.Correctas;
+                var correcta = true;
+
+                var trozosFrase = divEnunciado.find('div').get();
+
+                for (var i = 0; i < aciertos.length; i++) {
+                    var divTrozo = $(trozosFrase[i]);
+                    divTrozo.removeClass("text-default");
+                    if(aciertos[i])
+                    {
+                        divTrozo.addClass("text-success");
+                    } else {
+                        divTrozo.addClass("text-danger");
+                        correcta = false;
+                    }
+                }
+                
+                var span_wordbyword = $('#span_wordbyword_' + arrayPreguntas[current]);
+                span_wordbyword.removeClass("btn-white");
+                span_wordbyword.removeClass("btn-danger");
+                span_wordbyword.removeClass("btn-success");
+                if (correcta)
+                {
+                    acertadas++;
+                    divExplicacionTexto.text("Correcto");
+                    span_wordbyword.removeClass("btn-danger");
+                    span_wordbyword.addClass("btn-success");
+                    divExplicacion.addClass("card-success");
+                } else {
+                    falladas++;
+                    divExplicacionTexto.text("Incorrecto");
+                    span_wordbyword.removeClass("btn-success");
+                    span_wordbyword.addClass("btn-danger");
+                    divExplicacion.addClass("card-red");
+                }
+
+
+                divExplicacionTexto.text(result.Explicacion);
+
+                mostrarCorrectas.text(acertadas);
+                mostrarIncorrectas.text(falladas);
+                mostrarRestantes.text(arrayPreguntas.length - (acertadas + falladas));
+
+                divExplicacion.show();
+
+                if (current == arrayPreguntas.length - 1) {
+                    divSiguiente.hide();
+                    divFinalizar.show();
+                } else {
+                    divSiguiente.show();
+                    divFinalizar.hide();
+                }
+
+            },
+            data: postData,
+            dataType: "json",
+            traditional: true
+        });
+
+    }
+
+    function SiguientePregunta() {
+
+        var currentLi = $('#li_wordbyword_' + arrayPreguntas[current]);
+        currentLi.removeClass("active");
+        current++;
+        var nextLi = $('#li_wordbyword_' + arrayPreguntas[current]);
+        nextLi.addClass("active");
+
+        CargarPregunta();
+
+        divExplicacion.hide();
+    }
+    </script>
+}

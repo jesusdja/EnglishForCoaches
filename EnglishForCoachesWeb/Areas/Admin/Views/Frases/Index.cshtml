@@ -1,0 +1,122 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.FrasesIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.Gramatica.SubTema.TemaId })">
+                    @Model.Gramatica.SubTema.Tema.Descripcion
+                </a>/
+                <a href="@Url.Action("Index", "Bloques", new {id = @Model.Gramatica.SubTema.SubTemaId })">
+                    @Model.Gramatica.SubTema.Descripcion
+                </a> /
+                    @Model.Gramatica.Titulo
+</h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="block">
+                <div class="block-header">
+                    <ul class="block-options">
+                        <li>
+                            <button type="button" onclick="location.href='@Url.Action("Create", "Frases", new { Area = "Admin", Id=Model.Gramatica.GramaticaId })';"><i class="si si-note"></i> Nueva frase</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="block-header">
+
+                </div>
+
+                <div class="block-content">
+                    <table class="table table-hover table-borderless">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Español
+                                </th>
+                                <th>
+                                    Audio es
+                                </th>
+                                <th>
+                                    Inglés
+                                </th>
+                                <th>
+                                    Audio en
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.listadoFrases)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Palabra_es
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.FicheroAudio_es))
+                                        {
+                                            <i class="si si-check text-success"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="si si-close text-danger"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @item.Palabra_en
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.FicheroAudio_en))
+                                        {
+                                            <i class="si si-check text-success"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="si si-close text-danger"></i>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group">
+                                            <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Editar frase"
+                                                    onclick="location.href='@Url.Action("Edit", "Frases", new {Area = "Admin", id= item.FraseId })';">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Copiar frase"
+                                                    onclick="location.href='@Url.Action("Copy", "Frases", new {Area = "Admin", id= item.FraseId })';">
+                                                <i class="fa fa-files-o"></i>
+                                            </button>
+
+                                            <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Eliminar frase"
+                                                    onclick="if(confirm('¿Está seguro que desea borrar la frase?')) location.href='@Url.Action("Delete", "Frases", new {Area = "Admin" , id=item.FraseId })';">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- END Page Content -->

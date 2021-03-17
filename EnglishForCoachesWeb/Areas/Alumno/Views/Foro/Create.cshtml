@@ -1,0 +1,93 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.ForoCreateViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Foro", new { Area = "Alumno" })">Foro</a></li>
+        <li class="active">Nuevo hilo en @Model.ForoCategoria.Titulo</li>
+    </ol>
+    <h1 class="page-heading">Nuevo hilo</h1>
+
+
+   
+@using (Html.BeginForm("Create", "Foro", FormMethod.Post, new { @class = "" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(model => model.ForoCategoria.ForoCategoriaId)
+
+
+
+
+
+    <div class="card" >
+        <div class="card-header">
+            <h4 class="card-title">Título</h4>
+        </div>
+        <div class="card-block">
+                        @Html.EditorFor(model => model.hilo.Titulo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.hilo.Titulo, "", new { @class = "text-danger" })
+        </div>
+  
+        <div class="card-header">
+            <h4 class="card-title">Comentario</h4>
+        </div>
+        <div class="card-body">
+            @Html.TextAreaFor(model => model.hilo.Texto, new { @class = "", id = "summernote" })
+        </div>
+
+        <div class="card-block">
+            <div class="media">
+                <div class="right" >
+                    <button type="submit" class="btn btn-primary btn-sm btn-rounded pull-xs-right">Enviar<i class="material-icons">send</i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+}
+</div>
+
+
+@section Scripts {
+    <!-- Required by summernote -->
+    @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.5.0/css/font-awesome.min.css">
+        <script src="~/Scripts/summernote/summernote.min.js"></script>*@
+
+
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+    <!-- Page JS Code -->
+    <script>
+        (function ($) {
+            /**
+             * jQuery plugin wrapper for compatibility
+             */
+            $.fn.APSummernote = function () {
+                if (!this.length) return;
+                if (typeof $.fn.summernote != 'undefined') {
+                    this.summernote({
+                        popover: {
+                            image: [],
+                            link: [],
+                            air: []
+                        }
+                    });
+                }
+            };
+
+            $('#summernote').APSummernote();
+
+        }(jQuery));
+    </script>
+}

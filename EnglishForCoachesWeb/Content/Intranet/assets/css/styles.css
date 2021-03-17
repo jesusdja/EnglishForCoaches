@@ -1,0 +1,26 @@
+﻿.logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    vertical-align: middle;
+}
+
+.side-header img {
+    margin-left: -4px;
+    margin-right: 6px;
+}
+
+ul.lista li {
+    margin-bottom: 15px;
+}
+
+p.lead {
+    margin-bottom: 10px !important;
+}
+
+input[type="file"] {
+    width: 100%;
+}
+
+.field-validation-error{
+    color: #e10a0a;
+}

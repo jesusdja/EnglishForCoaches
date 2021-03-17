@@ -1,0 +1,12 @@
+﻿@using EnglishForCoachesWeb.Helpers
+@model IEnumerable<EnglishForCoachesWeb.Database.Ejercicios.Tema>
+
+
+@foreach (var item in Model)
+{
+    <li>
+        <a class="@Html.IsSelected( controllers: "SubTemas", id:item.TemaId.ToString() )" href="@Url.Action("Index", "SubTemas", new { Area = "Admin", Id=@item.TemaId } )">
+            <i class="material-icons" style="font-size: 16px;">@item.IconoUsuario</i><span class="sidebar-mini-hide">@item.Descripcion</span>
+        </a>
+    </li>
+}

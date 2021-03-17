@@ -1,0 +1,203 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.ArticuloCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                Nuevo artículo
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+    @using (Html.BeginForm("Create", "Articulos", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="block">
+            <div class="block-content block-content-full">
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.EditorFor(model => model.Articulo.Titulo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Articulo.Titulo, "", new { @class = "text-danger" })
+                            @Html.LabelFor(model => model.Articulo.Titulo, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.TextBoxFor(model => model.ImagenPreguntaFile, new { type = "file", accept = "image/x-png, image/gif, image/jpeg" })
+                            @Html.ValidationMessageFor(model => model.ImagenPreguntaFile)
+                            @Html.LabelFor(model => model.ImagenPreguntaFile, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.TextAreaFor(model => model.Articulo.Cuerpo, new { @class = "form-control" , id = "js-summernote" })
+                            @Html.ValidationMessageFor(model => model.Articulo.Cuerpo, "", new { @class = "text-danger" })
+                            @Html.LabelFor(model => model.Articulo.Cuerpo, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="block">
+                <div class="block-content block-content-full">
+
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <div class="form-material">
+                                @Html.DropDownListFor(model => model.Articulo.CategoriaId, Model.CategoriaSelectList, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Articulo.CategoriaId, null, new { @class = "help-block animated fadeInDown" })
+                                @Html.LabelFor(model => model.Articulo.CategoriaId, htmlAttributes: new { @class = "" })
+                            </div>
+                            
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-material">
+                                @Html.EditorFor(model => model.Articulo.FechaPublicacion, new { htmlAttributes = new { @placeholder = "dd-mm-aaaa hh:mm", @class = "form-control datetimepicker" } })
+                                @Html.ValidationMessageFor(model => model.Articulo.FechaPublicacion, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Articulo.FechaPublicacion, htmlAttributes: new { @class = "" })
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-material">
+                                @Html.EditorFor(model => model.Tags, new { htmlAttributes = new { @class = "js-tags-input form-control" } })
+                                @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Tags, htmlAttributes: new { @class = "" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="block-content block-content-full">
+                <div class="form-group">
+                    <div class="col-sm-4 text-center">
+                        @* El value afecta a la acción *@
+                        <input type="submit" value="Guardar borrador" name="command" class="btn btn-default" />
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        @* El value afecta a la acción *@
+                        <input type="submit" value="Guardar y publicar" name="command" class="btn btn-success" />
+                    </div>
+                    @*<div class="col-sm-4 text-center">
+                        <button class="btn btn-default"><i class="si si-eye"></i> Previsualizar</button>
+                    </div>*@
+                </div>
+            </div>
+    }
+</div>
+<!-- END Page Content -->
+
+
+
+
+
+                        @section Scripts {
+
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+                            <script src="~/Scripts/masked-inputs/jquery.maskedinput.min.js"></script>
+                            <script src="~/Scripts/jquery-tags-input/jquery.tagsinput.min.js"></script>
+
+                            <!-- Page JS Code -->
+                            <script>
+                                $(function () {
+                                    // Init datepicker (with .js-datepicker and .input-daterange class)
+                                    $('.datetimepicker').datetimepicker({
+                                        locale: 'es'
+                                    });
+
+                                    // Init Tags Inputs (with .js-tags-input class)
+                                    jQuery('.js-tags-input').tagsInput({
+                                        height: '36px',
+                                        width: '100%',
+                                        defaultText: 'Add tag',
+                                        removeWithBackspace: true,
+                                        delimiter: [',']
+                                    });
+
+
+                                    // Init Masked Inputs
+                                    // a - Represents an alpha character (A-Z,a-z)
+                                    // 9 - Represents a numeric character (0-9)
+                                    // * - Represents an alphanumeric character (A-Z,a-z,0-9)
+                                    jQuery('.js-masked-date').mask('99/99/9999');
+                                    jQuery('.js-masked-date-dash').mask('99-99-9999');
+                                    jQuery('.js-masked-phone').mask('(999) 999-9999');
+                                    jQuery('.js-masked-phone-ext').mask('(999) 999-9999? x99999');
+                                    jQuery('.js-masked-taxid').mask('99-9999999');
+                                    jQuery('.js-masked-ssn').mask('999-99-9999');
+                                    jQuery('.js-masked-pkey').mask('a*-999-a999');
+
+                                    var arrayBotones = [
+                                            ['styleList', ['style']],
+                                            ['style', ['bold', 'italic', 'underline', 'clear']],
+                                            ['fontsize', ['fontsize']],
+                                            ['color', ['color']],
+                                            ['para', ['ul', 'ol', 'paragraph']],
+                                            ['height', ['height']],
+                                            ['table', ['table']],
+                                            ['insert', ['link', 'picture', 'video', 'hr']],
+                                            ['misc', ['fullscreen', 'codeview']],
+                                            ['help', ['help']]
+                                    ];
+
+                                    console.log(arrayBotones);
+                                    // Init full text editor
+                                    jQuery('#js-summernote').summernote({
+                                        height: 350,
+                                        minHeight: null,
+                                        maxHeight: null,
+                                        toolbar: arrayBotones
+                                    });
+
+                                });
+                                jQuery.fn.selectText = function () {
+                                    var range, selection;
+                                    return this.each(function () {
+                                        if (document.body.createTextRange) {
+                                            range = document.body.createTextRange();
+                                            range.moveToElementText(this);
+                                            range.select();
+                                        } else if (window.getSelection) {
+                                            selection = window.getSelection();
+                                            range = document.createRange();
+                                            range.selectNodeContents(this);
+                                            selection.removeAllRanges();
+                                            selection.addRange(range);
+                                        }
+                                    });
+                                };
+
+
+                                $('#js-summernote').on('summernote.paste', function (customEvent, nativeEvent) {
+                                    setTimeout(function () {
+                                        console.log($('.note-editable'));
+                                        $('.note-editable').selectText();
+                                        $("#js-summernote").summernote("removeFormat");
+                                    }, 100);
+                                });
+                              
+                            </script>
+                        }

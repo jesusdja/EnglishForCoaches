@@ -1,0 +1,203 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.GramaticasCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.SubTema.TemaId })">
+                    @Model.SubTema.Tema.Descripcion
+                </a>
+                / <a href="@Url.Action("Index", "Bloques", new {id = @Model.SubTema.SubTemaId })">
+                    @Model.SubTema.Descripcion
+                </a> /
+                Nueva gramática
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+
+    @using (Html.BeginForm("Create", "Gramaticas", FormMethod.Post, new {@class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.SubTema.SubTemaId)
+        @Html.HiddenFor(model => model.SubTema.TemaId)
+
+        <div class="block">
+            <div class="block-content block-content-full">
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.LabelFor(model => model.Gramatica.Titulo, htmlAttributes: new { @class = "" })
+                            @Html.EditorFor(model => model.Gramatica.Titulo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Gramatica.Titulo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            @Html.TextAreaFor(model => model.Gramatica.GramaticaCuerpo.Cuerpo, new { @class = "form-control", id = "js-summernote" })
+                            @Html.ValidationMessageFor(model => model.Gramatica.GramaticaCuerpo.Cuerpo, "", new { @class = "text-danger" })
+                            @Html.LabelFor(model => model.Gramatica.GramaticaCuerpo.Cuerpo, htmlAttributes: new { @class = "" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" >
+                    <div class="col-sm-12">
+                        <h5>
+                            Clientes
+                        </h5>
+                        @for (var j = 0; j < Model.Clientes.Count; j++)
+                        {
+                            <div class="col-sm-4">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(m => m.Clientes[j].Selected, new { id = "chk_" + j })
+                                        @Html.HiddenFor(m => m.Clientes[j].Text)
+                                        @Html.HiddenFor(m => m.Clientes[j].Value)
+                                        <span>@Model.Clientes[j].Text</span>
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+            <div class="block-content block-content-full">
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        @* El value afecta a la acción *@
+                        <input type="submit" value="Guardar gramática" name="command" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+    }
+</div>
+<!-- END Page Content -->
+
+@section Scripts {
+
+    @*<script src="~/Scripts/summernote/summernote.min.js"></script>*@
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+    <script src="~/Scripts/masked-inputs/jquery.maskedinput.min.js"></script>
+    <script src="~/Scripts/jquery-tags-input/jquery.tagsinput.min.js"></script>
+
+    <!-- Page JS Code -->
+    <script>
+                                $(function () {
+                                    
+
+
+                                    // Init Masked Inputs
+                                    // a - Represents an alpha character (A-Z,a-z)
+                                    // 9 - Represents a numeric character (0-9)
+                                    // * - Represents an alphanumeric character (A-Z,a-z,0-9)
+                                    jQuery('.js-masked-date').mask('99/99/9999');
+                                    jQuery('.js-masked-date-dash').mask('99-99-9999');
+                                    jQuery('.js-masked-phone').mask('(999) 999-9999');
+                                    jQuery('.js-masked-phone-ext').mask('(999) 999-9999? x99999');
+                                    jQuery('.js-masked-taxid').mask('99-9999999');
+                                    jQuery('.js-masked-ssn').mask('999-99-9999');
+                                    jQuery('.js-masked-pkey').mask('a*-999-a999');
+
+                                    var arrayBotones = [
+                                            ['styleList', ['style']],
+                                            ['style', ['bold', 'italic', 'underline', 'clear']],
+                                            ['fontsize', ['fontsize']],
+                                            ['color', ['color']],
+                                            ['para', ['ul', 'ol', 'paragraph']],
+                                            ['height', ['height']],
+                                            ['table', ['table']],
+                                            ['insert', ['link', 'picture', 'video', 'hr']],
+                                            ['misc', ['fullscreen', 'codeview']],
+                                            ['help', ['help']]
+                                    ];
+
+                                    console.log(arrayBotones);
+                                    // Init full text editor
+                                    jQuery('#js-summernote').summernote({
+                                        height: 350,
+                                        minHeight: null,
+                                        maxHeight: null,
+                                        toolbar: arrayBotones
+                                    });
+
+                                });
+                                jQuery.fn.selectText = function () {
+                                    var range, selection;
+                                    return this.each(function () {
+                                        if (document.body.createTextRange) {
+                                            range = document.body.createTextRange();
+                                            range.moveToElementText(this);
+                                            range.select();
+                                        } else if (window.getSelection) {
+                                            selection = window.getSelection();
+                                            range = document.createRange();
+                                            range.selectNodeContents(this);
+                                            selection.removeAllRanges();
+                                            selection.addRange(range);
+                                        }
+                                    });
+                                };
+
+
+                                $('#js-summernote').on('summernote.paste', function (customEvent, nativeEvent) {
+                                    setTimeout(function () {
+                                        console.log($('.note-editable'));
+                                        $('.note-editable').selectText();
+                                        $("#js-summernote").summernote("removeFormat");
+                                    }, 100);
+                                });
+                                /*
+                                Insert
+                                    picture: open image dialog
+                                    link: open link dialog
+                                    video: open video dialog
+                                    table: insert a table
+                                    hr: insert a horizontal rule
+                                Font Style
+                                    fontname: set font family
+                                    fontsize: set font size
+                                    color: set foreground and background color
+                                    bold: toggle font weight
+                                    italic: toggle italic
+                                    underline: toggle underline
+                                    strikethrough: toggle strikethrough
+                                    superscript: toggle superscript
+                                    subscript: toggle subscript
+                                    clear: clear font style
+                                Paragraph style
+                                    style: format selected block
+                                    ol: toggle ordered list
+                                    ul: toggle unordered list
+                                    paragraph: dropdown for paragraph align
+                                    height: set line height
+                                Misc
+                                    fullscreen: toggle fullscreen editing mode
+                                    codeview: toggle wysiwyg and html editing mode
+                                    undo: undo
+                                    redo: redo
+                                    help: open help dialog
+
+                                */
+    </script>
+}

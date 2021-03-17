@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <div class="demo-container">
+        <button onclick="playHTMLSound();">HTML</button>
+        <button onclick="load();">LOAD</button>
+
+        <button onclick="webAudioSound();">SoundJS</button>
+    </div>
+    <!-- <audio id="snare" src="https://s3.amazonaws.com/nrf-codepen-assets/snare-2.mp3" preload="auto"></audio> -->
+    <audio id="snare" src="../media/upload/BeatTheGoalie/148.aiff" preload="auto"></audio>
+    <!--<script src="https://code.createjs.com/1.0.0/soundjs.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.core.min.js"></script>-->
+    <script src="https://code.createjs.com/1.0.0/soundjs.min.js"></script>
+
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    <style>
+        .demo-container {
+            background-color: blue;
+            height: 10em;
+            text-align: center;
+        }
+
+        button {
+            height: 4em;
+            border-radius: 10%;
+            margin-top: 50px;
+        }
+    </style>
+</body>
+</html>
+
+
+
+
+<script type="text/javascript">
+    /* Downloaded from https://www.codeseek.co/ */
+    // var soundSnare = "Snare";
+    var bell = "Bell";
+
+    // createjs.Sound.registerSound("https://s3.amazonaws.com/nrf-codepen-assets/snare-2.mp3", soundSnare);
+
+    function playHTMLSound() {
+        document.getElementById("snare").load();
+   
+        var promise = document.getElementById("snare").play();
+        console.log(promise);
+        if (promise !== undefined) {
+            promise.then(function() {
+                // Autoplay started!
+            }).catch(function (error) {
+                console.log(error);
+                // Autoplay was prevented.
+                // Show a "Play" button so that user can start playback.
+            });
+        }
+
+    }
+    function load() {
+      //  createjs.Sound.registerSound("../media/upload/BeatTheGoalie/148.mp3", bell);
+        createjs.Sound.registerSound("../media/upload/BeatTheGoalie/148.aiff", bell);
+        //createjs.Sound.registerSound("http://englishforcoaches.com/media/upload/BeatTheGoalie/148.mp3", bell);
+        
+    }
+
+    function webAudioSound() {
+        //// createjs.Sound.play(soundSnare);
+        createjs.Sound.play(bell);
+
+        //var sound = new Howl({
+        //    src: ['../media/upload/BeatTheGoalie/148.mp3']
+        //});
+        //sound.play();
+
+        //var sound = new Howl({
+        //    src: ['../media/upload/BeatTheGoalie/148.mp3'],
+        //    autoplay: true,
+        //    loop: false,
+        //    volume: 0.5,
+        //    format: ['aiff'],
+        //    onend: function () {
+        //        console.log('Finished!');
+        //    }
+        //});
+    }
+</script>

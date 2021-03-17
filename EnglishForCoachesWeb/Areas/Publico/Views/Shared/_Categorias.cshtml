@@ -1,0 +1,7 @@
+﻿@model IEnumerable<EnglishForCoachesWeb.Database.Categoria>
+
+
+@foreach (var categoria in Model)
+{
+    <li><a href="@(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/"+categoria.DescripcionSeo)" title="@categoria.Descripcion">@categoria.Descripcion</a></li>
+}

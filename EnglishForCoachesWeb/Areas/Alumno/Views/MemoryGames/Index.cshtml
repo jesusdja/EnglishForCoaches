@@ -1,0 +1,205 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.MemoryGameIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.juegoOnline.SubTema.TemaId })">@Model.juegoOnline.SubTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.juegoOnline.SubTema.SubTemaId})">@Model.juegoOnline.SubTema.Descripcion</a></li>
+
+        <li class="active">@Model.juegoOnline.Descripcion</li>
+    </ol>
+
+
+
+    @if (!string.IsNullOrWhiteSpace(Model.juegoOnline.Explicacion))
+    {
+        <div class="card card-stats-primary">
+            <div class="card-block">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <i class="material-icons text-muted-light">info_outline</i>
+                    </div>
+                    <div class="media-body media-middle">
+                        @Model.juegoOnline.Explicacion
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @{int numero = 0; }
+
+
+    <div id='divPreguntas' class="row">
+        @for (var i = 0; i < Model.Casillas.Count; i++)
+        {
+            numero++;
+            <div class="col-md-2 col-sm-4 col-xs-4 MG_container">
+
+                <img src="../../../../Content/Alumno/images/MemoryGame/bg_carta.png" class="mg-imagen" />
+                <div class="MG_card" id="card_@i" data-value="@Model.Casillas[i].Dato" data-pareja="@Model.Casillas[i].Pareja">
+                    <div class="front" id="card_@(i)_front">
+                        <img src="../../../../Content/Alumno/images/MemoryGame/carta.jpg" class="mg-imagen" />
+                    </div>
+                    @if (Model.Casillas[i].Tipo == "Palabra")
+                    {
+                        <div id="card_@(i)_back" class="back">
+                            <span class="texto">@Model.Casillas[i].Dato</span>
+                            <img src="../../../../Content/Alumno/images/MemoryGame/fondo_texto.jpg" class="mg-imagen" />
+
+                            <span class="label label-pill label-success"><i class="material-icons">done</i></span>
+                           
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="card_@(i)_back" class="back">
+                            <img src="../../../../media/upload/MemoryGame/@Model.Casillas[i].Dato" class="mg-imagen" />
+                            
+                            <span class="label label-pill label-success"><i class="material-icons">done</i></span>
+
+                        </div>
+                    }
+                </div>
+
+            </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="card card-success center" id="divResultado">
+            <div class="card-block">
+                <div class="media">
+                    <div class="media-body media-middle" id="divResultadoTexto">
+                        Resultado
+                    </div>
+                    <div class="media-right" id="btnRepetir">
+                        <a href="@Url.Action("Index",  "MemoryGames", new { Area = "Alumno" ,id=Model.juegoOnline.JuegoOnlineId})"
+                           class="btn btn-primary btn-sm btn-rounded pull-xs-right">Repetir<i class="material-icons">settings_backup_restore</i></a>
+                    </div>
+                    <div class="media-right">
+                        <a href="@Url.Action("Index",  "JuegoOnlines", new { Area = "Alumno" ,id=Model.juegoOnline.SubTemaId})"
+                           class="btn btn-primary btn-sm btn-rounded pull-xs-right">Cerrar<i class="material-icons">clear</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section Scripts {
+
+@Scripts.Render("~/bundles/AlumnoJQueryJs")
+@*<script src="~/Content/Alumno/vendor/jquery.ui.swappable.js"></script>*@
+
+    <!-- Page JS Code -->
+    <script>
+
+        var nPalabras=@Model.Casillas.Count;
+        var solucionadas=0;
+        
+        var divResolver=$('#divResolver');
+        var btnResolver=$('#btnResolver');
+        var btnRepetir=$('#btnRepetir');
+        
+        var divPreguntas = $("#divPreguntas");
+
+        var divResultado = $("#divResultado");
+        var divResultadoTexto = $("#divResultadoTexto");
+
+        var casillaSeleccionada;
+        
+        function DesGirarCarta(carta) {
+            return function () {
+                carta.removeClass('flipped');
+                cartasGiradas--;
+                carta.on( 'click', function(){
+                    GirarCarta(this);
+                });
+                return false;
+            };
+        }
+        
+        var cartasGiradas=0;
+        function GirarCarta(fuente) {
+            if(cartasGiradas<2){
+                var casilla=$(fuente);
+                casilla.off('click');
+                casilla.addClass('flipped');
+                cartasGiradas++;
+                if(!casillaSeleccionada)
+                {
+                    casillaSeleccionada=casilla;
+                }else{
+                    if(casillaSeleccionada.attr('data-value')==casilla.attr('data-pareja'))
+                    {
+                        $("#"+casilla.attr('id')+"_back").addClass('MG_acierto');
+                        $("#"+casillaSeleccionada.attr('id')+"_back").addClass('MG_acierto');
+                        casillaSeleccionada=null;
+                        solucionadas+=2;
+                        cartasGiradas=0;
+                        comprobar();
+                    }else{
+                            
+                        setTimeout(DesGirarCarta(casillaSeleccionada), 1000);                            
+                        setTimeout(DesGirarCarta(casilla), 1000);
+                        casillaSeleccionada=null;
+                    }
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            btnRepetir.hide();
+            divResultado.hide();
+
+            for (var i=0;i< nPalabras;i++)
+            {               
+                //flipable  
+                $('#card_'+i).on( 'click', function(){
+                    GirarCarta(this);
+                });
+            }
+
+            btnResolver.on('click', function () {
+                validar();
+            });
+
+        });
+
+        
+
+
+        function comprobar() {
+                  
+            if (nPalabras==solucionadas) {
+                divResultadoTexto.text("Correcto");
+                divResultado.addClass("card-success");
+                divResultado.show();
+            } 
+        }
+
+    
+
+
+</script>
+}

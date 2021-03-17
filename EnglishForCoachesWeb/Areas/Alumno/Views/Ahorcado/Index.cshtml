@@ -1,0 +1,384 @@
+﻿@model EnglishForCoachesWeb.Areas.Alumno.Models.AhorcadoIndexViewModel
+
+@{
+    Layout = "~/Areas/Alumno/Views/Shared/_AlumnoLayout.cshtml";
+}
+
+
+<div class="container">
+    <ol class="breadcrumb">
+
+        <li><a href="@Url.Action("Index",  "Home", new { Area = "Alumno" })">Dashboard</a></li>
+        <li><a href="@Url.Action("Index",  "Subtemas", new { Area = "Alumno",id=Model.juegoOnline.SubTema.TemaId })">@Model.juegoOnline.SubTema.Tema.Descripcion</a></li>
+        <li><a href="@Url.Action("View",  "Subtemas", new { Area = "Alumno" ,id=Model.juegoOnline.SubTema.SubTemaId})">@Model.juegoOnline.SubTema.Descripcion</a></li>
+
+        <li class="active">@Model.juegoOnline.Descripcion</li>
+    </ol>
+
+
+
+    @if (!string.IsNullOrWhiteSpace(Model.juegoOnline.Explicacion))
+    {
+        <div class="card card-stats-primary">
+            <div class="card-block">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <i class="material-icons text-muted-light">info_outline</i>
+                    </div>
+                    <div class="media-body media-middle">
+                        @Model.juegoOnline.Explicacion
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+    <div class="card">
+
+        <img id="ahorcado_imgEnunciado" alt="Enunciado">
+
+        <div class="card-header bg-white p-a-1">
+            <div class="media">
+
+
+                <div class="media-left" id="ahorcado_divAudio">
+                    <button onclick="Reproducir();" id="ahorcado_btn_audio" class="btn btn-sm btn-primary"
+                            type="button">
+                        <i class="material-icons">hearing</i>
+                        <span class="icon-text"> Escuchar</span>
+                    </button>
+                    <audio id="audio_Ahorcado">
+                        <source id="source_Ahorcado" type="audio/mpeg" />
+                    </audio>
+
+                </div>
+
+
+                <div class="media-body  media-middle">
+                    <h4 class="card-title" id="ahorcado_hEnunciado"></h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ahorcado -->
+    <div class="card">
+        <div class="card-block bg-white ahorcadoContainer">
+            <div id="ahorcado" class="noselect" touch-action="none" style="touch-action:none;">
+
+                <div class="row">
+                    <div class="col-md-12 center">
+                        <h1 id="divMascara" class="mascara">{{viewModel.mascara}}</h1>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <img id="imgAhorcado" class="hangman_grafico" />
+                    </div>
+
+                    <div class="col-sm-9">
+                        <ul id="divTeclado" class="tecladoAhorcado"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="divComentario">
+                <div class="card-block">
+                    <div class="media">
+                        <div class="media-body media-middle" id="divComentarioTexto">
+                            Comentario
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="divResultado">
+                <div class="card-block">
+                    <div class="media">
+                        <div class="media-body media-middle" id="divResultadoTexto">
+                            Resultado
+                        </div>
+                        <div class="media-right" id="divSiguiente">
+                            <a href="javascript:SiguientePregunta();" class="btn btn-primary btn-sm btn-rounded pull-xs-right">Siguiente <i class="material-icons">send</i></a>
+                        </div>
+                        <div class="media-right" id="btnRepetir">
+                            <a href="@Url.Action("Index",  "Ahorcado", new { Area = "Alumno" ,id=Model.juegoOnline.JuegoOnlineId})"
+                               class="btn btn-primary btn-sm btn-rounded pull-xs-right">Repetir<i class="material-icons">settings_backup_restore</i></a>
+                        </div>
+                        <div class="media-right" id="divFinalizar">
+                            <a href="@Url.Action("Index",  "JuegoOnlines", new { Area = "Alumno" ,id=Model.juegoOnline.SubTemaId})"
+                               class="btn btn-primary btn-sm btn-rounded pull-xs-right">Cerrar<i class="material-icons">clear</i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<audio id="audio_acierto">
+    <source id="audio_acierto_source" src="~/Content/Alumno/audio/acierto.mp3" type="audio/mpeg" />
+</audio>
+
+<audio id="audio_fallo">
+    <source src="~/Content/Alumno/audio/fallo.mp3" type="audio/mpeg" />
+</audio>
+
+
+
+
+
+@section Scripts {
+
+    <!-- Page JS Code -->
+    <script>
+                    var  arrayRespuestas = [];
+
+                        var arrayPreguntas = [];
+
+    @foreach (var d in Model.Ahorcados)
+    {
+        @:arrayPreguntas.push("@d.Id");
+    }
+
+                        var current = 0;
+
+
+        var letrasAcertadas = [];
+        var letrasFalladas = [];
+        var alphabet= ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+            'i', 'j', 'k', 'l', 'm', 'n', '\u00F1', 'o', 'p', 'q', 'r', 's',
+            't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+        var btnResolver=$('#btnResolver');
+                        var btnRepetir = $('#btnRepetir');
+                        var divSiguiente = $('#divSiguiente');
+                        var divFinalizar = $('#divFinalizar');
+
+        var divResultado = $("#divResultado");
+                    var divResultadoTexto = $("#divResultadoTexto");
+
+                    var divComentario = $("#divComentario");
+                    var divComentarioTexto = $("#divComentarioTexto");
+
+                    var divAhorcado = $("#ahorcado");
+        var nAciertos = 0;
+
+        var divMascara = $("#divMascara");
+        var imgAhorcado = $("#imgAhorcado");
+                        var divTeclado = $("#divTeclado");
+
+                    var source_Ahorcado = $("#source_Ahorcado");
+                    var ahorcado_hEnunciado = $("#ahorcado_hEnunciado");
+
+
+        var mascara = "@Model.MascaraInicial";
+        var ahorcado_btn_audio = $('#ahorcado_btn_audio');
+                        var audio_Ahorcado = $('#audio_Ahorcado');
+                        var ahorcado_divAudio = $('#ahorcado_divAudio');
+                        var ahorcado_imgEnunciado = $('#ahorcado_imgEnunciado');
+
+
+
+
+        function Reproducir() {
+            ahorcado_btn_audio.addClass('flash');
+            audio_Ahorcado.on('ended', GenerarEventoEnded(ahorcado_btn_audio, audio_Ahorcado));
+
+            var audio = document.getElementById('audio_Ahorcado');
+            audio.pause();
+            audio.load();//suspends and restores all audio element
+
+            audio.oncanplaythrough = audio.play();
+
+        }
+        function GenerarEventoEnded(ahorcado_btn_audio, audio) {
+            return function () {
+                ahorcado_btn_audio.removeClass("flash");
+                audio.off('ended')
+            };
+        }
+
+        function generarMascara(mascara) {
+
+            divMascara.text(mascara);
+        }
+
+        function cargarTeclado() {
+
+            for (var i = 0; i < alphabet.length; i++) {
+                divTeclado.append('<li id="divLetra_' + alphabet[i] + '" class="letraAhorcado" >' + alphabet[i] + '</li>');
+            }
+            activarLetras();
+        }
+
+        function CargarPregunta() {
+            var url = '@Url.Action("GetAhorcado", "Ahorcado", new { Area = "Alumno" })';
+            url = url + '/' + arrayPreguntas[current];
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (result) {
+                    if (result.Audio) {
+                        source_Ahorcado.attr("src", "../../../media/upload/Ahorcado/Audios/" + result.Audio);
+                        ahorcado_divAudio.show();
+                    } else {
+                        ahorcado_divAudio.hide();
+                    }
+                    if (result.Imagen) {
+                        console.log("../../../media/upload/Ahorcado/" + result.Imagen);
+                        ahorcado_imgEnunciado.attr("src", "../../../media/upload/Ahorcado/" + result.Imagen);
+                        ahorcado_imgEnunciado.attr("alt", result.Enunciado);
+                        ahorcado_imgEnunciado.show();
+                    } else {
+                        ahorcado_imgEnunciado.hide();
+                    }
+                    ahorcado_hEnunciado.text(result.Enunciado);
+
+                    divMascara.empty();
+                    mascara = result.MascaraInicial;
+                    generarMascara(mascara);
+                    reiniciarTeclado();
+                }
+            });
+        }
+
+
+                    function activarLetras() {
+                        $(".letraAhorcado").unbind('touchstart mousedown');
+            $(".letraAhorcado").bind('touchstart mousedown', function (e) {
+                seleccionarLetra(this);
+            });
+        }
+
+        function desActivarLetras() {
+            $(".letraAhorcado").unbind('touchstart mousedown');
+        }
+        function cargarFallos() {
+            imgAhorcado.attr("src", "../../../Content/Alumno/images/Ahorcado/" + letrasFalladas.length + ".png");
+
+        }
+
+        function cargarAhorcado() {
+            divMascara.empty();
+            CargarPregunta();
+            generarMascara(mascara);
+            cargarTeclado();
+            cargarFallos();
+
+                    }
+
+                    $(document).ready(function () {
+                        btnRepetir.hide();
+                        divResultado.hide();
+                        divComentario.hide();
+                        cargarAhorcado();
+
+                    });
+
+
+
+                    function reiniciarTeclado() {
+                        $(".letraAhorcado").removeClass("fallo");
+                        $(".letraAhorcado").removeClass("acierto");
+                        arrayRespuestas = [];
+                        letrasAcertadas = [];
+                        letrasFalladas = [];
+                        cargarFallos();
+                        activarLetras();
+                    }
+
+                    function seleccionarLetra(divLetra) {
+                        desActivarLetras();
+                        var $divLetra = $(divLetra)
+                        if (arrayRespuestas.indexOf($divLetra.text()) > -1) {
+                            activarLetras();
+                        } else {
+                            arrayRespuestas.push($divLetra.text())
+                            contestar($divLetra);
+                        }
+                    }
+
+
+
+                    function SiguientePregunta() {
+
+                        current++;
+
+                        CargarPregunta();
+
+                        divResultado.hide();
+                        divResultado.removeClass("card-success");
+                        divResultado.removeClass("card-red");
+                    }
+
+
+                    function contestar($divLetra) {
+                        console.log($divLetra.text());
+                        var postData = {
+                            palabra: mascara,
+                            letra: $divLetra.text(),
+                            letrasAcertadas: letrasAcertadas
+                        };
+
+                        var url = '@Url.Action("Contestar", "Ahorcado", new { Area = "Alumno" })';
+                        url = url + '/' + arrayPreguntas[current];
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            contentType: "application/json; charset=UTF-8",
+                            success: function (result) {
+                                mascara = result.Mascara;
+                                generarMascara(result.Mascara);
+                                if (result.Correcto) {
+                                    nAciertos++;
+
+                                    letrasAcertadas.push($divLetra.text().toUpperCase());
+
+                                    document.getElementById('audio_acierto').play();
+                                    $divLetra.addClass("acierto");
+
+                                } else {
+                                    letrasFalladas.push($divLetra.text().toUpperCase());
+                                    cargarFallos();
+                                    document.getElementById('audio_fallo').play();
+                                    $divLetra.addClass("fallo");
+                                }
+
+                                if (current == arrayPreguntas.length - 1) {
+                                    divSiguiente.hide();
+                                    divFinalizar.show();
+                                }
+                                divResultado.removeClass("card-danger");
+                                divResultado.removeClass("card-success");
+                                if (letrasFalladas.length == 10) {
+                                    divResultadoTexto.text("No has logrado completar la palabra\r\n " + result.Explicacion);
+                                    divResultado.addClass("card-danger");
+                                    divResultado.show();
+                                } else {
+                                    activarLetras();
+
+                                    if (result.Finalizado) {
+                                        divResultadoTexto.text("¡¡¡Has acertado la palabra!!!\r\n " + result.Explicacion);
+                                        divResultado.addClass("card-success");
+
+
+                                        divResultado.show();
+
+                                    }
+                                }
+                            },
+                            data: JSON.stringify(postData),
+                            dataType: "json",
+                            traditional: true
+                        });
+                    }
+
+    </script>
+}

@@ -1,0 +1,119 @@
+﻿@model EnglishForCoachesWeb.Areas.Admin.Models.GramaticasMoveViewModel
+
+@{
+    ViewBag.Title = "Mover";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+    <div class="row items-push">
+        <div class="col-sm-12">
+            <h1 class="page-heading">
+                <a href="@Url.Action("Index", "Subtemas", new {id = @Model.SubTema.TemaId })">
+                    @Model.SubTema.Tema.Descripcion
+                </a>
+                / <a href="@Url.Action("Index", "Bloques", new {id = @Model.SubTema.SubTemaId })">
+                    @Model.SubTema.Descripcion
+                </a> /               
+                Mover Gramatica
+            </h1>
+        </div>
+    </div>
+</div>
+<!-- END Page Header -->
+<!-- Page Content -->
+<div class="content content-narrow">
+    @using (Html.BeginForm("Move", "Gramaticas", FormMethod.Post, new { @class = "form-horizontal push-10-t" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.Gramatica.GramaticaId)
+
+        <div class="block">
+            <div class="block-content block-content-full">  
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        Tema
+                        <select id="ddlTemas" class="form-control" onchange="inicializarSelectSubTemas()"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        Subtema
+                        @Html.DropDownListFor(model => model.SubTemaCopiarId, Model.SubTemasSelectList, new { @class = "form-control", id="ddlSubTemas" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-content block-content-full">
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <input type="submit" name="command" class="btn btn-default" value="Mover" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- END Page Content -->
+
+@section Scripts {
+ <!--  JS Code -->
+<script>
+    var arrayTemasSelect = [];
+    var arraySubtemasSelect = [];
+
+    var ddlTemas = $('#ddlTemas');
+    var ddlSubTemas = $('#ddlSubTemas');
+
+    @foreach (var tema in Model.TemaList)
+        {
+            @:arrayTemasSelect.push({ Text: "@tema.Descripcion", Value: "@tema.TemaId" });
+                                        }
+    @foreach (var subtema in Model.SubTemaList)
+    {
+        @:arraySubtemasSelect.push({ Text: "@subtema.Descripcion", Value: "@subtema.SubTemaId", TemaId: "@subtema.TemaId" });
+            }
+
+
+    function inicializarSelectTemas() {
+        console.log("temas");
+        console.log(arrayTemasSelect.length);
+        ddlTemas.html('');
+        for (var i = 0; i < arrayTemasSelect.length; i++) {
+            $('<option/>').val(arrayTemasSelect[i].Value).html(arrayTemasSelect[i].Text).appendTo(ddlTemas);
+
+        }
+    }
+
+    function inicializarSelectSubTemas() {
+        console.log("subtemas");
+        console.log(arraySubtemasSelect.length);
+        ddlSubTemas.html('');
+        for (var i = 0; i < arraySubtemasSelect.length; i++) {
+            if (arraySubtemasSelect[i].TemaId == ddlTemas.val()) {
+                $('<option/>').val(arraySubtemasSelect[i].Value).html(arraySubtemasSelect[i].Text).appendTo(ddlSubTemas);
+            }
+        }
+    }
+
+   
+
+    $(function () {
+
+        console.log("inicio");
+
+        inicializarSelectTemas();
+        inicializarSelectSubTemas();
+
+        $(document).ready(function () {
+
+        });
+    });
+
+
+</script>
+
+}
